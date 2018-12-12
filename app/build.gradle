@@ -1,0 +1,94 @@
+apply plugin: 'com.android.application'
+
+repositories {
+    mavenLocal()
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+    defaultConfig {
+        applicationId "com.techradge.fabler"
+        minSdkVersion 17
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        resConfigs "auto"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE-FIREBASE.txt'
+        exclude 'META-INF/NOTICE'
+    }
+}
+
+ext {
+    supportLibVersion = '28.0.0'
+    butterknifeVersion = '8.8.1'
+    roomVersion = '1.1.1'
+    glideVersion = '4.7.1'
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Support Libraries
+    //noinspection GradleCompatible
+    implementation "com.android.support:appcompat-v7:${supportLibVersion}"
+    implementation "com.android.support:recyclerview-v7:${supportLibVersion}"
+    implementation "com.android.support:cardview-v7:${supportLibVersion}"
+    implementation "com.android.support:support-v4:${supportLibVersion}"
+    implementation "com.android.support:design:${supportLibVersion}"
+
+    // Room - Database
+    implementation "android.arch.persistence.room:runtime:${roomVersion}"
+    annotationProcessor "android.arch.persistence.room:compiler:${roomVersion}"
+
+    // ButterKnife
+    implementation "com.jakewharton:butterknife:${butterknifeVersion}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
+
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
+    // Firebase Google Analytics
+    implementation 'com.google.firebase:firebase-core:16.0.0'
+
+    // Firebase Realtime Database
+    implementation 'com.google.firebase:firebase-database:16.0.1'
+
+    // Firebase Storage
+    implementation 'com.google.firebase:firebase-storage:16.0.1'
+
+    // Firebase Push Notification
+    //implementation 'com.google.firebase:firebase-messaging:17.3.4'
+
+    // Firebase FirebaseUI Auth only
+    implementation 'com.firebaseui:firebase-ui-auth:4.1.0'
+
+    // Facebook Login
+    implementation('com.facebook.android:facebook-android-sdk:4.26.0')
+
+    // Glide: Displaying images
+    implementation "com.github.bumptech.glide:glide:${glideVersion}"
+
+    // Circular ImageView
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testImplementation 'junit:junit:4.12'
+}
+
+apply plugin: 'com.google.gms.google-services'
