@@ -105,6 +105,7 @@ public class LoginActivity extends AppCompatActivity {
 
             prefManager.setUserLoggedIn(true);
             prefManager.setUserFullName(user.getFullName());
+            prefManager.setUserEmail(user.getEmail());
             startWelcomeActivity(user);
 
         } catch (Exception e) {

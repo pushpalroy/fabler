@@ -14,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity
     public DrawerLayout drawer;
     @BindView(R.id.nav_view)
     public NavigationView navigationView;
+    private PrefManager prefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,13 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        prefManager = new PrefManager(this);
+        View headerView = navigationView.getHeaderView(0);
+        TextView name = headerView.findViewById(R.id.tv_name);
+        TextView email = headerView.findViewById(R.id.tv_email);
+        name.setText(prefManager.getUserFullName());
+        email.setText(prefManager.getUserEmail());
 
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);

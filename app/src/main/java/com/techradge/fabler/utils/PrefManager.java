@@ -17,6 +17,7 @@ public class PrefManager {
     private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
     private static final String IS_USER_LOGGED_IN = "IsUserLoggedIn";
     private static final String USER_FULL_NAME = "userFullName";
+    private static final String USER_EMAIL = "userEmail";
 
     @SuppressLint("CommitPrefEdits")
     public PrefManager(Context context) {
@@ -50,5 +51,14 @@ public class PrefManager {
 
     public String getUserFullName() {
         return pref.getString(USER_FULL_NAME, "Guest");
+    }
+
+    public void setUserEmail(String userEmail) {
+        editor.putString(USER_EMAIL, userEmail);
+        editor.commit();
+    }
+
+    public String getUserEmail() {
+        return pref.getString(USER_EMAIL, "Guest@fabler.com");
     }
 }
