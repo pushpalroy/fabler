@@ -20,6 +20,8 @@ import com.techradge.fabler.R;
 import com.techradge.fabler.database.firebase.Database;
 import com.techradge.fabler.model.Story;
 import com.techradge.fabler.ui.activity.ComposeActivity;
+import com.techradge.fabler.ui.activity.ReadActivity;
+import com.techradge.fabler.ui.adapter.StoryClickListener;
 import com.techradge.fabler.ui.adapter.StoryRecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements StoryClickListener {
 
     @BindView(R.id.fab)
     public FloatingActionButton fab;
@@ -75,7 +77,7 @@ public class HomeFragment extends Fragment {
     private void setRecyclerView() {
         mStoryList = new ArrayList<>();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        mAdapter = new StoryRecyclerViewAdapter(mStoryList, getActivity());
+        mAdapter = new StoryRecyclerViewAdapter(mStoryList, getActivity(), this);
         storyRecyclerView.setLayoutManager(linearLayoutManager);
         storyRecyclerView.setAdapter(mAdapter);
 
@@ -101,13 +103,16 @@ public class HomeFragment extends Fragment {
             mStoryList.add(story);
             mAdapter.notifyItemInserted(mStoryList.size() - 1);
             mAdapter.notifyDataSetChanged();
-
-            if (story != null) {
-                String title = story.getTitle();
-                String body = story.getStory();
-                String author = story.getAuthor();
-                String time = story.getTime();
-            }
         }
+    }
+
+    @Override
+    public void onStoryClick(int position, Story story) {
+        Intent readIntent = new Intent(getActivity(), ReadActivity.class);
+        readIntent.putExtra("title", story.getTitle());
+        readIntent.putExtra("story", story.getStory());
+        readIntent.putExtra("author", story.getAuthor());
+        readIntent.putExtra("time", story.getTime());
+        startActivity(readIntent);
     }
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:scrollbars="none">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:fontFamily="@font/sans_pro"
+            android:maxLines="3"
+            android:padding="5dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold"
+            tools:text="Title" />
+
+        <TextView
+            android:id="@+id/tv_author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title"
+            android:background="#00000000"
+            android:fontFamily="@font/sans_pro"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textStyle="bold"
+            tools:text="By Author" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_author"
+            android:background="#00000000"
+            android:fontFamily="@font/sans_pro"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            tools:text="Sun May 05" />
+
+        <TextView
+            android:id="@+id/tv_body"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tv_time"
+            android:layout_marginTop="10dp"
+            android:background="#00000000"
+            android:fontFamily="@font/sans_pro"
+            android:padding="5dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            tools:text="Story" />
+    </RelativeLayout>
+</ScrollView>

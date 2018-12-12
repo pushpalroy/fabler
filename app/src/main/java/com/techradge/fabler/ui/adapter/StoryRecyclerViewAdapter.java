@@ -20,10 +20,12 @@ public class StoryRecyclerViewAdapter extends RecyclerView.Adapter<StoryRecycler
 
     protected Context context;
     private List<Story> storyList;
+    private StoryClickListener storyClickListener;
 
-    public StoryRecyclerViewAdapter(List<Story> storyList, Context context) {
+    public StoryRecyclerViewAdapter(List<Story> storyList, Context context, StoryClickListener storyClickListener) {
         this.context = context;
         this.storyList = storyList;
+        this.storyClickListener = storyClickListener;
     }
 
     @NonNull
@@ -36,9 +38,9 @@ public class StoryRecyclerViewAdapter extends RecyclerView.Adapter<StoryRecycler
     }
 
     @Override
-    public void onBindViewHolder(@NonNull StoryViewHolder storyViewHolder, int position) {
+    public void onBindViewHolder(@NonNull StoryViewHolder storyViewHolder, final int position) {
 
-        Story story = storyList.get(position);
+        final Story story = storyList.get(position);
 
         if (story.getTitle() != null)
             storyViewHolder.title.setText(story.getTitle());
@@ -56,6 +58,13 @@ public class StoryRecyclerViewAdapter extends RecyclerView.Adapter<StoryRecycler
             storyViewHolder.comments.setText(story.getComments());
         else
             storyViewHolder.comments.setText("0");
+
+        storyViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                storyClickListener.onStoryClick(position, story);
+            }
+        });
     }
 
     @Override
