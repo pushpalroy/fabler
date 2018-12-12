@@ -24,7 +24,7 @@
             android:name=".ui.activity.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ui.activity.ComposeActivity"></activity>
+        <activity android:name=".ui.activity.ComposeActivity"/>
         <activity android:name=".ui.activity.ReadActivity" />
     </application>
 

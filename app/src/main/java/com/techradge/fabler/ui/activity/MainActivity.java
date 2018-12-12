@@ -15,8 +15,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.techradge.fabler.R;
 import com.techradge.fabler.ui.fragment.HomeFragment;
+import com.techradge.fabler.utils.PrefManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -92,6 +96,19 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_profile) {
 
+        } else if (id == R.id.nav_logout) {
+            AuthUI.getInstance()
+                    .signOut(this)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        public void onComplete(@NonNull Task<Void> task) {
+                            PrefManager prefManager = new PrefManager(MainActivity.this);
+                            prefManager.setUserLoggedIn(false);
+                            prefManager.setUserFullName("Guest");
+                            Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                            startActivity(loginIntent);
+                            finish();
+                        }
+                    });
         }
 
         if (fragment != null) {

@@ -115,7 +115,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void launchHomeScreen() {
         startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-        //finish();
+        finish();
     }
 
     //	viewpager change listener
