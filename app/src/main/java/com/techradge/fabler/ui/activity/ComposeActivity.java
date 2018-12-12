@@ -1,4 +1,4 @@
-package com.techradge.fabler.ui;
+package com.techradge.fabler.ui.activity;
 
 import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Color;
@@ -80,10 +80,14 @@ public class ComposeActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_save) {
-            saveStoryOffline(createStory());
+            if (!(titleEditor.getText().toString().isEmpty() &&
+                    storyEditor.getText().toString().isEmpty()))
+                saveStoryOffline(createStory());
             return true;
         } else if (id == R.id.action_publish) {
-            storyDataOp.insertStoryData(createStory(), getApplicationContext());
+            if (!(titleEditor.getText().toString().isEmpty() &&
+                    storyEditor.getText().toString().isEmpty()))
+                storyDataOp.insertStoryData(createStory(), getApplicationContext());
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -104,7 +108,9 @@ public class ComposeActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        saveStoryOffline(createStory());
+        if (!(titleEditor.getText().toString().isEmpty() &&
+                storyEditor.getText().toString().isEmpty()))
+            saveStoryOffline(createStory());
     }
 
     private void saveStoryOffline(final Story story) {

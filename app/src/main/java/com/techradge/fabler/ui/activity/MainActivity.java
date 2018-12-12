@@ -1,5 +1,6 @@
-package com.techradge.fabler.ui;
+package com.techradge.fabler.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.techradge.fabler.R;
+import com.techradge.fabler.ui.fragment.HomeFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +46,10 @@ public class MainActivity extends AppCompatActivity
 
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);
+
+        Fragment fragment = new HomeFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
     }
 
     @Override
@@ -71,7 +77,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -80,12 +85,12 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             fragment = new HomeFragment();
         } else if (id == R.id.nav_compose) {
-
+            Intent composeIntent = new Intent(MainActivity.this, ComposeActivity.class);
+            navigationView.getMenu().getItem(0).setChecked(true);
+            startActivity(composeIntent);
         } else if (id == R.id.nav_draft) {
 
         } else if (id == R.id.nav_profile) {
-
-        } else if (id == R.id.nav_settings) {
 
         }
 

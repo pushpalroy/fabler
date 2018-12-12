@@ -1,4 +1,4 @@
-package com.techradge.fabler.ui;
+package com.techradge.fabler.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
