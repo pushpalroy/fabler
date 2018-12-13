@@ -17,7 +17,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/colorTitle"
         android:textStyle="bold"
-        tools:text="Title" />
+        tools:text="@string/title" />
 
     <TextView
         android:id="@+id/tv_widget_author"
@@ -31,7 +31,7 @@
         android:paddingBottom="16dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/colorTitle"
-        tools:text="Author" />
+        tools:text="@string/by_author" />
 
     <TextView
         android:id="@+id/tv_widget_story"
@@ -47,6 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/tv_widget_author"
+        android:contentDescription="@string/list_of_stories"
         android:divider="@null" />
 
 </RelativeLayout>

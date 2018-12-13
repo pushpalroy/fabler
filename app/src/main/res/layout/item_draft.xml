@@ -3,7 +3,6 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
-    style="@style/CardView"
     android:layout_width="match_parent"
     android:layout_height="200dp"
     android:layout_marginStart="4dp"
@@ -25,9 +24,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="3"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
 
                 <TextView
                     android:id="@+id/tv_title"
@@ -38,7 +37,7 @@
                     android:maxLines="1"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textStyle="bold"
-                    tools:text="Title" />
+                    tools:text="@string/title" />
 
                 <TextView
                     android:id="@+id/tv_time"
@@ -49,7 +48,7 @@
                     android:gravity="end"
                     android:maxLines="1"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    tools:text="time" />
+                    tools:text="@string/time" />
             </LinearLayout>
 
             <TextView
@@ -60,16 +59,17 @@
                 android:ellipsize="end"
                 android:maxLines="4"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                tools:text="The engine came to a slow stop. Kevin got off and darted straight past the coffee shop to the ATM machine. Before checking how much he needed for the month he quickly peeked at his cellphone screen. The message counter was stuck at zero. Kevin calmly typed a message." />
+                tools:text="@string/sample_story" />
         </LinearLayout>
 
         <ImageView
             android:id="@+id/icon_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:src="@drawable/ic_delete" />
+            android:padding="5dp"
+            android:src="@drawable/ic_delete"
+            android:contentDescription="@string/delete" />
     </RelativeLayout>
 </android.support.v7.widget.CardView>

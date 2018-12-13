@@ -4,7 +4,6 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
-    style="@style/CardView"
     android:layout_width="match_parent"
     android:layout_height="220dp"
     android:layout_marginStart="4dp"
@@ -26,9 +25,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="3"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
 
                 <TextView
                     android:id="@+id/tv_title"
@@ -39,7 +38,7 @@
                     android:maxLines="1"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textStyle="bold"
-                    tools:text="Title" />
+                    tools:text="@string/title" />
 
                 <TextView
                     android:id="@+id/tv_time"
@@ -50,7 +49,7 @@
                     android:gravity="end"
                     android:maxLines="1"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    tools:text="time" />
+                    tools:text="@string/time" />
             </LinearLayout>
 
             <TextView
@@ -59,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                tools:text="author" />
+                tools:text="@string/by_author" />
 
             <TextView
                 android:id="@+id/tv_story"
@@ -69,7 +68,7 @@
                 android:ellipsize="end"
                 android:maxLines="4"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                tools:text="The engine came to a slow stop. Kevin got off and darted straight past the coffee shop to the ATM machine. Before checking how much he needed for the month he quickly peeked at his cellphone screen. The message counter was stuck at zero. Kevin calmly typed a message." />
+                tools:text="@string/sample_story" />
         </LinearLayout>
 
         <LinearLayout
@@ -82,18 +81,19 @@
                 android:id="@+id/btn_like"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
+                android:contentDescription="@string/like_button"
                 android:src="@android:color/darker_gray"
                 app:allow_random_color="false"
-                app:big_shine_color="#FF6666"
+                app:big_shine_color="@color/colorBigShine"
                 app:btn_color="@color/colorVeryLightGrey"
-                app:btn_fill_color="#FF6666"
+                app:btn_fill_color="@color/colorFillShine"
                 app:click_animation_duration="200"
                 app:enable_flashing="false"
                 app:shine_animation_duration="2500"
                 app:shine_count="10"
                 app:shine_turn_angle="10"
                 app:siShape="@raw/heart"
-                app:small_shine_color="#CC9999"
+                app:small_shine_color="@color/colorShine"
                 app:small_shine_offset_angle="20" />
 
             <TextView
@@ -109,6 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
+                android:contentDescription="@string/comments"
                 android:src="@drawable/ic_comment" />
 
             <TextView

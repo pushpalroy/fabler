@@ -14,6 +14,7 @@
         <ImageView
             android:layout_width="@dimen/img_width_height"
             android:layout_height="@dimen/img_width_height"
+            android:contentDescription="@string/a_good_read_icon"
             android:src="@drawable/ic_read" />
 
         <TextView
@@ -36,5 +37,4 @@
             android:textSize="@dimen/slide_desc" />
 
     </LinearLayout>
-
 </RelativeLayout>

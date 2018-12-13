@@ -7,11 +7,9 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-    <string name="title">Title</string>
     <string name="story">Your story</string>
     <string name="add_to_widget">ADD TO WIDGET</string>
     <string name="story_label">Story</string>
-    <string name="home">Home</string>
     <string name="drafts">Drafts</string>
     <string name="profile">Profile</string>
     <string name="loader_message">Loading Stories</string>
@@ -38,5 +36,26 @@
     <string name="slide_3_desc">For the readers who love reading stories, poems, quotes, and novels!</string>
     <string name="slide_4_title">Express Yourself!</string>
     <string name="slide_4_desc">Share your thoughts and emotions through your creative writings!</string>
+    <string name="comments">Comments</string>
+    <string name="compose">Compose</string>
+    <string name="read">Read</string>
+    <string name="send">Send</string>
+    <string name="home">Home</string>
+    <string name="title">Title</string>
+    <string name="by_author">By Author</string>
+    <string name="sample_date">Sun May 05</string>
+    <string name="sample_story">The engine came to a slow stop. Kevin got off and darted straight past the coffee shop to the ATM machine. Before checking how much he needed for the month he quickly peeked at his cellphone screen. The message counter was stuck at zero. Kevin calmly typed a message.</string>
+    <string name="time">time</string>
+    <string name="like_button">Like Button</string>
+    <string name="name">Name</string>
+    <string name="email_address">Email address</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="write_your_words_icon">Write Your Words Icon</string>
+    <string name="explore_writers_icon">Explore writers icon</string>
+    <string name="a_good_read_icon">A good read icon</string>
+    <string name="express_yourself_icon">Express yourself icon</string>
+    <string name="list_of_stories">List of stories</string>
+    <string name="logout">Logout</string>
+    <string name="save">Save</string>
 
 </resources>

@@ -7,19 +7,19 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_nav_home"
-            android:title="Home" />
+            android:title="@string/home" />
         <item
             android:id="@+id/nav_compose"
             android:icon="@drawable/ic_nav_compose"
-            android:title="Compose" />
+            android:title="@string/compose" />
         <item
             android:id="@+id/nav_draft"
             android:icon="@drawable/ic_nav_draft"
-            android:title="Drafts" />
+            android:title="@string/drafts" />
 
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_nav_logout"
-            android:title="Logout" />
+            android:title="@string/logout" />
     </group>
 </menu>

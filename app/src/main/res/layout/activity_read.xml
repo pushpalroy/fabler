@@ -17,7 +17,7 @@
             android:layout_height="?android:attr/actionBarSize"
             android:fitsSystemWindows="true"
             android:theme="@style/ToolBarStyle"
-            app:title="Read" />
+            app:title="@string/read" />
 
     </android.support.design.widget.AppBarLayout>
 

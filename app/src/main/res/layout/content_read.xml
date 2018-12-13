@@ -14,38 +14,38 @@
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#00000000"
+            android:background="@color/colorEditTextBg"
             android:fontFamily="@font/sans_pro"
             android:maxLines="3"
             android:padding="5dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold"
-            tools:text="Title" />
+            tools:text="@string/title" />
 
         <TextView
             android:id="@+id/tv_author"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_title"
-            android:background="#00000000"
+            android:background="@color/colorEditTextBg"
             android:fontFamily="@font/sans_pro"
             android:maxLines="1"
             android:padding="5dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textStyle="bold"
-            tools:text="By Author" />
+            tools:text="@string/by_author" />
 
         <TextView
             android:id="@+id/tv_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_author"
-            android:background="#00000000"
+            android:background="@color/colorEditTextBg"
             android:fontFamily="@font/sans_pro"
             android:maxLines="1"
             android:padding="5dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            tools:text="Sun May 05" />
+            tools:text="@string/sample_date" />
 
         <TextView
             android:id="@+id/tv_body"
@@ -53,10 +53,10 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/tv_time"
             android:layout_marginTop="10dp"
-            android:background="#00000000"
+            android:background="@color/colorEditTextBg"
             android:fontFamily="@font/sans_pro"
             android:padding="5dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            tools:text="Story" />
+            tools:text="@string/story" />
     </RelativeLayout>
 </ScrollView>

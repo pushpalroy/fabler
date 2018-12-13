@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
@@ -13,13 +14,15 @@
             android:id="@+id/et_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#00000000"
+            android:background="@color/colorEditTextBg"
             android:fontFamily="@font/sans_pro"
             android:hint="@string/title"
+            android:inputType="text"
             android:maxLines="3"
             android:padding="10dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="Autofill" />
 
         <EditText
             android:id="@+id/et_body"
@@ -27,10 +30,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/et_title"
             android:layout_marginTop="10dp"
-            android:background="#00000000"
+            android:background="@color/colorEditTextBg"
             android:fontFamily="@font/sans_pro"
             android:hint="@string/story"
+            android:inputType="text"
             android:padding="10dp"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            tools:ignore="Autofill" />
     </RelativeLayout>
 </ScrollView>

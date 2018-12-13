@@ -12,5 +12,5 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        tools:text="Story" />
+        tools:text="@string/story" />
 </LinearLayout>

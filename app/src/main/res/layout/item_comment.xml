@@ -3,7 +3,6 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
-    style="@style/CardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
@@ -21,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            tools:text="author" />
+            tools:text="@string/by_author" />
 
         <TextView
             android:id="@+id/tv_comment"
@@ -29,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            tools:text="The engine came to a slow stop. Kevin got off and darted straight past the coffee shop to the ATM machine. Before checking how much he needed for the month he quickly peeked at his cellphone screen. The message counter was stuck at zero. Kevin calmly typed a message." />
+            tools:text="@string/sample_story" />
     </LinearLayout>
 
 </android.support.v7.widget.CardView>
