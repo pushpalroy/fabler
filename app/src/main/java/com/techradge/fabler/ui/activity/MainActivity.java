@@ -14,8 +14,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -119,8 +121,13 @@ public class MainActivity extends AppCompatActivity
         View headerView = navigationView.getHeaderView(0);
         TextView name = headerView.findViewById(R.id.tv_name);
         TextView email = headerView.findViewById(R.id.tv_email);
+        ImageView profileImage = headerView.findViewById(R.id.profile_image);
         name.setText(prefManager.getUserFullName());
         email.setText(prefManager.getUserEmail());
+        if (prefManager.getUserPhotoUrl() != null && !prefManager.getUserPhotoUrl().equals(""))
+            Glide.with(this)
+                    .load(prefManager.getUserPhotoUrl())
+                    .into(profileImage);
 
         navigationView.setNavigationItemSelectedListener(this);
 

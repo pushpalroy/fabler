@@ -6,11 +6,17 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
+
 @Entity(tableName = "story")
 public class Story {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    private int storyId;
+    private int id;
+    private String storyId;
     private String author;
     @ColumnInfo(name = "title")
     private String title;
@@ -26,15 +32,16 @@ public class Story {
     public Story() {
     }
 
-    public Story(@NonNull int storyId, String title, String story, String time) {
-        this.storyId = storyId;
+    public Story(@NonNull int id, String title, String story, String time) {
+        this.id = id;
         this.title = title;
         this.story = story;
         this.time = time;
     }
 
     @Ignore
-    public Story(@NonNull int storyId, String author, String title, String story, String time, String likes, String comments, String shares) {
+    public Story(@NonNull int id, String storyId, String author, String title, String story, String time, String likes, String comments, String shares) {
+        this.id = id;
         this.storyId = storyId;
         this.author = author;
         this.title = title;
@@ -45,11 +52,19 @@ public class Story {
         this.shares = shares;
     }
 
-    public int getStoryId() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getStoryId() {
         return storyId;
     }
 
-    public void setStoryId(@NonNull int storyId) {
+    public void setStoryId(String storyId) {
         this.storyId = storyId;
     }
 
@@ -107,5 +122,20 @@ public class Story {
 
     public void setShares(String shares) {
         this.shares = shares;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("storyId", storyId);
+        result.put("author", author);
+        result.put("title", title);
+        result.put("story", story);
+        result.put("time", time);
+        result.put("likes", likes);
+        result.put("comments", comments);
+        result.put("shares", shares);
+
+        return result;
     }
 }

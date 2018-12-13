@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.sackcentury.shinebuttonlib.ShineButton;
 import com.techradge.fabler.R;
+import com.techradge.fabler.database.firebase.Database;
+import com.techradge.fabler.database.operations.story.StoryDataOp;
 import com.techradge.fabler.model.Story;
 
 import java.util.List;
@@ -64,6 +66,14 @@ public class StoryRecyclerViewAdapter extends RecyclerView.Adapter<StoryRecycler
             @Override
             public void onClick(View v) {
                 storyClickListener.onStoryClick(position, story);
+            }
+        });
+
+        storyViewHolder.likeButton.setOnCheckStateChangeListener(new ShineButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(View view, boolean checked) {
+                StoryDataOp storyDataOp = new StoryDataOp(Database.getFirebaseDatabase());
+                storyDataOp.postLikeUpdateStory(story);
             }
         });
     }

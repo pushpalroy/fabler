@@ -93,8 +93,10 @@ public class ComposeActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.action_publish) {
             if (!(titleEditor.getText().toString().isEmpty() &&
-                    storyEditor.getText().toString().isEmpty()))
+                    storyEditor.getText().toString().isEmpty())) {
                 storyDataOp.insertStoryData(createStory(), getApplicationContext());
+                finish();
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);

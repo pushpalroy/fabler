@@ -16,6 +16,7 @@ public class PrefManager {
     private static final String IS_USER_LOGGED_IN = "IsUserLoggedIn";
     private static final String USER_FULL_NAME = "userFullName";
     private static final String USER_EMAIL = "userEmail";
+    private static final String USER_PHOTO_URL = "userPhotoUrl";
     private static final String WIDGET_STORY_TITLE = "widgetStoryTitle";
     private static final String WIDGET_STORY_AUTHOR = "widgetStoryAuthor";
     private static final String WIDGET_STORY_BODY = "widgetStoryBody";
@@ -88,5 +89,14 @@ public class PrefManager {
 
     public String getWidgetStoryAuthor() {
         return pref.getString(WIDGET_STORY_AUTHOR, "Author");
+    }
+
+    public void setUserPhotoUrl(String userPhotoUrl) {
+        editor.putString(USER_PHOTO_URL, userPhotoUrl);
+        editor.commit();
+    }
+
+    public String getUserPhotoUrl() {
+        return pref.getString(USER_PHOTO_URL, "");
     }
 }

@@ -10,5 +10,5 @@
     <dimen name="slide_desc">16sp</dimen>
     <dimen name="desc_padding">40dp</dimen>
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
-    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="nav_header_height">200dp</dimen>
 </resources>

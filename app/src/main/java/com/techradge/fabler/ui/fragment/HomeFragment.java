@@ -129,14 +129,16 @@ public class HomeFragment extends Fragment implements StoryClickListener {
 
     // Start loader
     private void startLoader() {
-        loader.setLoadingColor(R.color.colorAccent);
-        loaderContainer.setVisibility(View.VISIBLE);
-        loader.start();
+        if (loader != null) {
+            loader.setLoadingColor(R.color.colorAccent);
+            loaderContainer.setVisibility(View.VISIBLE);
+            loader.start();
+        }
     }
 
     // Dismiss loader
     private void dismissLoader() {
-        if (loader.isStart()) {
+        if (loader != null && loader.isStart()) {
             loaderContainer.setVisibility(View.INVISIBLE);
             loader.stop();
         }
