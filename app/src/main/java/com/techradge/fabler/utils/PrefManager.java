@@ -18,6 +18,9 @@ public class PrefManager {
     private static final String IS_USER_LOGGED_IN = "IsUserLoggedIn";
     private static final String USER_FULL_NAME = "userFullName";
     private static final String USER_EMAIL = "userEmail";
+    private static final String WIDGET_STORY_TITLE = "widgetStoryTitle";
+    private static final String WIDGET_STORY_AUTHOR = "widgetStoryAuthor";
+    private static final String WIDGET_STORY_BODY = "widgetStoryBody";
 
     @SuppressLint("CommitPrefEdits")
     public PrefManager(Context context) {
@@ -60,5 +63,32 @@ public class PrefManager {
 
     public String getUserEmail() {
         return pref.getString(USER_EMAIL, "Guest@fabler.com");
+    }
+
+    public void setWidgetStoryTitle(String widgetStoryTitle) {
+        editor.putString(WIDGET_STORY_TITLE, widgetStoryTitle);
+        editor.commit();
+    }
+
+    public String getWidgetStoryTitle() {
+        return pref.getString(WIDGET_STORY_TITLE, "Title");
+    }
+
+    public void setWidgetStoryBody(String widgetStoryBody) {
+        editor.putString(WIDGET_STORY_BODY, widgetStoryBody);
+        editor.commit();
+    }
+
+    public String getWidgetStoryBody() {
+        return pref.getString(WIDGET_STORY_BODY, "Story");
+    }
+
+    public void setWidgetStoryAuthor(String widgetStoryAuthor) {
+        editor.putString(WIDGET_STORY_AUTHOR, widgetStoryAuthor);
+        editor.commit();
+    }
+
+    public String getWidgetStoryAuthor() {
+        return pref.getString(WIDGET_STORY_AUTHOR, "Author");
     }
 }

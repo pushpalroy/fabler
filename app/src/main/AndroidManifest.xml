@@ -24,8 +24,21 @@
             android:name=".ui.activity.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ui.activity.ComposeActivity"/>
+        <activity android:name=".ui.activity.ComposeActivity" />
         <activity android:name=".ui.activity.ReadActivity" />
+
+        <receiver android:name=".widget.StoryWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/story_widget_info" />
+        </receiver>
+        <service
+            android:name=".widget.StoryWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>
