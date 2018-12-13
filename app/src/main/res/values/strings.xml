@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">Fabler</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="title">Title</string>
+    <string name="story">Your story</string>
+    <string name="add_to_widget">ADD TO WIDGET</string>
+    <string name="story_label">Story</string>
+    <string name="home">Home</string>
+    <string name="drafts">Drafts</string>
+    <string name="profile">Profile</string>
+    <string name="loader_message">Loading Stories</string>
+    <string name="write_your_comment">Write your comment</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="publish">Publish</string>
+    <string name="dialog_publish_title">Publish Story</string>
+    <string name="dialog_publish_message">Sure you want to publish this story?</string>
+    <string name="delete">Delete</string>
+    <string name="dialog_delete_title">Delete Draft</string>
+    <string name="dialog_delete_message">Sure you want to delete this draft?</string>
+
+    <!-- Welcome Screen -->
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+    <string name="slide_1_title">Write Your Words</string>
+    <string name="slide_1_desc">Fabler is a creative writing platform for passionate writers, poets, and readers!</string>
+    <string name="slide_2_title">Explore Writers</string>
+    <string name="slide_2_desc">Discover content created by writers around the world!</string>
+    <string name="slide_3_title">A Good Read</string>
+    <string name="slide_3_desc">For the readers who love reading stories, poems, quotes, and novels!</string>
+    <string name="slide_4_title">Express Yourself!</string>
+    <string name="slide_4_desc">Share your thoughts and emotions through your creative writings!</string>
+
+</resources>
