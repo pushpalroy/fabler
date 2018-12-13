@@ -19,6 +19,8 @@
             android:hint="@string/title"
             android:inputType="text"
             android:maxLines="3"
+            android:nextFocusDown="@+id/et_body"
+            android:nextFocusForward="@+id/et_body"
             android:padding="10dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold"
@@ -34,6 +36,8 @@
             android:fontFamily="@font/sans_pro"
             android:hint="@string/story"
             android:inputType="text"
+            android:nextFocusUp="@+id/et_title"
+            android:nextFocusForward="@+id/et_title"
             android:padding="10dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             tools:ignore="Autofill" />

@@ -40,6 +40,8 @@
             android:fontFamily="@font/sans_pro"
             android:hint="@string/write_your_comment"
             android:inputType="text"
+            android:nextFocusRight="@+id/icon_send"
+            android:nextFocusForward="@+id/icon_send"
             android:textAppearance="?android:attr/textAppearanceMedium"
             tools:ignore="Autofill" />
 
@@ -49,6 +51,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:contentDescription="@string/send"
+            android:nextFocusLeft="@+id/et_comment"
+            android:nextFocusForward="@+id/et_comment"
             android:src="@drawable/ic_send" />
     </RelativeLayout>
 </RelativeLayout>
