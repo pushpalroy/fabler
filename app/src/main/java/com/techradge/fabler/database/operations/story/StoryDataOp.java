@@ -33,7 +33,7 @@ public class StoryDataOp {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(context, "Story has been published", Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, "Story has been published!", Toast.LENGTH_LONG).show();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {

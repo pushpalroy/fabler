@@ -75,8 +75,10 @@ public class StoryRecyclerViewAdapter extends RecyclerView.Adapter<StoryRecycler
         storyViewHolder.likeButton.setOnCheckStateChangeListener(new ShineButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(View view, boolean checked) {
-                StoryDataOp storyDataOp = new StoryDataOp(Database.getFirebaseDatabase());
-                storyDataOp.postLikeUpdateStory(story);
+                if (checked) {
+                    StoryDataOp storyDataOp = new StoryDataOp(Database.getFirebaseDatabase());
+                    storyDataOp.postLikeUpdateStory(story);
+                }
             }
         });
 

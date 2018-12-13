@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.techradge.fabler.R;
 import com.techradge.fabler.database.firebase.Database;
@@ -118,8 +119,9 @@ public class ComposeActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         if (!(titleEditor.getText().toString().isEmpty() &&
-                storyEditor.getText().toString().isEmpty()))
+                storyEditor.getText().toString().isEmpty())) {
             saveStoryOffline(createStory());
+        }
     }
 
     private void saveStoryOffline(final Story story) {
@@ -130,11 +132,20 @@ public class ComposeActivity extends AppCompatActivity {
                     StoryDatabase.getInstance(ComposeActivity.this)
                             .storyDao()
                             .insertStory(story);
-
                 } catch (SQLiteConstraintException e) {
                     Log.e(TAG, e.getMessage());
                 }
             }
         });
+        Toast.makeText(getApplicationContext(), "Story saved in Drafts!", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (!(titleEditor.getText().toString().isEmpty() &&
+                storyEditor.getText().toString().isEmpty())) {
+            saveStoryOffline(createStory());
+        }
     }
 }
