@@ -1,0 +1,105 @@
+{
+  "project_info": {
+    "project_number": "883927299361",
+    "firebase_url": "https://friends-660bf.firebaseio.com",
+    "project_id": "friends-660bf",
+    "storage_bucket": "friends-660bf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:883927299361:android:64e58dacc0483faa",
+        "android_client_info": {
+          "package_name": "com.google.firebase.udacity.friendlychat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "883927299361-t4r3s698605grneq40pu4mqfvuslhni0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.google.firebase.udacity.friendlychat",
+            "certificate_hash": "507828ff77a51d5853aeeada19ba93e094181303"
+          }
+        },
+        {
+          "client_id": "883927299361-nnb4si021p2fg53r9l7ed8rv0bhufe03.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoc4YL2jJLdEsKZXFUylaZldJ5BxTa5uE"
+        },
+        {
+          "current_key": "AIzaSyBctNMFgAjQko3VIplIPzm8Yc8f-wqLaxE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "883927299361-nnb4si021p2fg53r9l7ed8rv0bhufe03.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:883927299361:android:a73c76e64537ad99",
+        "android_client_info": {
+          "package_name": "com.techradge.fabler"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "883927299361-25ika1r515nkubtcm04d1t5507ig1bc3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.techradge.fabler",
+            "certificate_hash": "507828ff77a51d5853aeeada19ba93e094181303"
+          }
+        },
+        {
+          "client_id": "883927299361-nnb4si021p2fg53r9l7ed8rv0bhufe03.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoc4YL2jJLdEsKZXFUylaZldJ5BxTa5uE"
+        },
+        {
+          "current_key": "AIzaSyBctNMFgAjQko3VIplIPzm8Yc8f-wqLaxE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "883927299361-nnb4si021p2fg53r9l7ed8rv0bhufe03.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
