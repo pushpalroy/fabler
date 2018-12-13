@@ -1,22 +1,22 @@
 package com.techradge.fabler.ui.fragment;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.techradge.fabler.R;
-import com.techradge.fabler.database.offline.AppExecutors;
-import com.techradge.fabler.database.offline.StoryDatabase;
+import com.techradge.fabler.database.offline.MainViewModel;
 import com.techradge.fabler.model.Story;
 import com.techradge.fabler.ui.activity.ComposeActivity;
 import com.techradge.fabler.ui.activity.ReadActivity;
@@ -40,6 +40,7 @@ public class DraftFragment extends Fragment implements StoryClickListener {
     private StoryRecyclerViewAdapter mAdapter;
     private List<Story> draftsList;
     private final String TAG = DraftFragment.class.getSimpleName();
+    private MainViewModel mMainViewModel;
 
     public DraftFragment() {
     }
@@ -80,18 +81,15 @@ public class DraftFragment extends Fragment implements StoryClickListener {
         draftsRecyclerView.setLayoutManager(linearLayoutManager);
         draftsRecyclerView.setAdapter(mAdapter);
 
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+        mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        mMainViewModel.getFavMovies().observe(getActivity(), new Observer<List<Story>>() {
             @Override
-            public void run() {
-                try {
-                    List<Story> drafts = StoryDatabase.getInstance(getActivity())
-                            .storyDao()
-                            .getStories();
-                    draftsList.addAll(drafts);
+            public void onChanged(@Nullable List<Story> stories) {
+                if (stories != null) {
+                    draftsList.clear();
+                    draftsList.addAll(stories);
                     mAdapter.notifyItemInserted(draftsList.size() - 1);
                     mAdapter.notifyDataSetChanged();
-                } catch (SQLiteConstraintException e) {
-                    Log.e(TAG, e.getMessage());
                 }
             }
         });

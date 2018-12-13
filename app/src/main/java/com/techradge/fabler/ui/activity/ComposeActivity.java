@@ -119,6 +119,7 @@ public class ComposeActivity extends AppCompatActivity {
                     StoryDatabase.getInstance(ComposeActivity.this)
                             .storyDao()
                             .insertStory(story);
+
                 } catch (SQLiteConstraintException e) {
                     Log.e(TAG, e.getMessage());
                 }

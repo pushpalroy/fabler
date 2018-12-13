@@ -1,5 +1,6 @@
 package com.techradge.fabler.database.offline;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -14,7 +15,7 @@ import java.util.List;
 public interface StoryDao {
 
     @Query("SELECT * FROM story")
-    List<Story> getStories();
+    LiveData<List<Story>> getStories();
 
     @Insert
     void insertStory(Story story);

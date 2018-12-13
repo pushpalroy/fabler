@@ -37,6 +37,7 @@ ext {
     supportLibVersion = '28.0.0'
     butterknifeVersion = '8.8.1'
     roomVersion = '1.1.1'
+    liveDataVer = '1.1.1'
     glideVersion = '4.7.1'
 }
 
@@ -54,6 +55,10 @@ dependencies {
     // Room - Database
     implementation "android.arch.persistence.room:runtime:${roomVersion}"
     annotationProcessor "android.arch.persistence.room:compiler:${roomVersion}"
+
+    // Live Data
+    implementation "android.arch.lifecycle:extensions:${liveDataVer}"
+    annotationProcessor "android.arch.lifecycle:compiler:${liveDataVer}"
 
     // ButterKnife
     implementation "com.jakewharton:butterknife:${butterknifeVersion}"
