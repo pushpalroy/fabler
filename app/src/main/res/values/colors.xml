@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryLight">#EDE7F6</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#03affe</color>
+    <color name="colorPrimary">#3f51b5</color>
+    <color name="colorPrimaryDark">#2c387e</color>
+    <color name="colorAccent">#ff9100</color>
     <color name="colorSecondary">#FFC107</color>
     <color name="colorTitle">#ffffff</color>
 
     <color name="colorBackground">#f2f2f2</color>
     <color name="colorLightGreyText">#9E9E9E</color>
+    <color name="colorVeryLightGrey">#cfcfcf</color>
 
     <!--Welcome Screen Colors-->
 

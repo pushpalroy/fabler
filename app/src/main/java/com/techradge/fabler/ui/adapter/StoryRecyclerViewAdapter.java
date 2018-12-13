@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.sackcentury.shinebuttonlib.ShineButton;
 import com.techradge.fabler.R;
 import com.techradge.fabler.model.Story;
 
@@ -86,6 +87,8 @@ public class StoryRecyclerViewAdapter extends RecyclerView.Adapter<StoryRecycler
         TextView likes;
         @BindView(R.id.tv_comments)
         TextView comments;
+        @BindView(R.id.btn_like)
+        ShineButton likeButton;
 
         StoryViewHolder(View itemView) {
             super(itemView);
