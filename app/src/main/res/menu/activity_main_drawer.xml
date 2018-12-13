@@ -18,11 +18,6 @@
             android:title="Drafts" />
 
         <item
-            android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_nav_profile"
-            android:title="My Profile" />
-
-        <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_nav_logout"
             android:title="Logout" />

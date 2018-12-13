@@ -78,8 +78,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_draft) {
             toolbar.setTitle(getResources().getString(R.string.drafts));
             fragment = new DraftFragment();
-        } else if (id == R.id.nav_profile) {
-
         } else if (id == R.id.nav_logout) {
             AuthUI.getInstance()
                     .signOut(this)

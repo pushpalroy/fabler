@@ -8,8 +8,6 @@ public class PrefManager {
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
     private Context _context;
-
-    // shared pref mode
     private int PRIVATE_MODE = 0;
 
     // Shared preferences file name
