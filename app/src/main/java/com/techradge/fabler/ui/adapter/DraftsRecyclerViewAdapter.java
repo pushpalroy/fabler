@@ -1,8 +1,10 @@
 package com.techradge.fabler.ui.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.sqlite.SQLiteConstraintException;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -65,19 +67,31 @@ public class DraftsRecyclerViewAdapter extends RecyclerView.Adapter<DraftsRecycl
         storyViewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            StoryDatabase.getInstance(context)
-                                    .storyDao()
-                                    .deleteStory(story);
+                new AlertDialog.Builder(context)
+                        .setMessage(R.string.dialog_delete_message)
+                        .setTitle(R.string.dialog_delete_title)
+                        .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            StoryDatabase.getInstance(context)
+                                                    .storyDao()
+                                                    .deleteStory(story);
 
-                        } catch (SQLiteConstraintException e) {
-                            Log.e(TAG, e.getMessage());
-                        }
-                    }
-                });
+                                        } catch (SQLiteConstraintException e) {
+                                            Log.e(TAG, e.getMessage());
+                                        }
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        }).create().show();
             }
         });
     }

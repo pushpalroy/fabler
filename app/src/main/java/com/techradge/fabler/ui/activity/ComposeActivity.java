@@ -1,8 +1,10 @@
 package com.techradge.fabler.ui.activity;
 
+import android.content.DialogInterface;
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -95,8 +97,21 @@ public class ComposeActivity extends AppCompatActivity {
         } else if (id == R.id.action_publish) {
             if (!(titleEditor.getText().toString().isEmpty() &&
                     storyEditor.getText().toString().isEmpty())) {
-                storyDataOp.insertStoryData(createStory(), getApplicationContext());
-                finish();
+                new AlertDialog.Builder(this)
+                        .setMessage(R.string.dialog_publish_message)
+                        .setTitle(R.string.dialog_publish_title)
+                        .setPositiveButton(R.string.publish, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                storyDataOp.insertStoryData(createStory(), getApplicationContext());
+                                dialog.dismiss();
+                                finish();
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        }).create().show();
             }
             return true;
         }
@@ -138,14 +153,5 @@ public class ComposeActivity extends AppCompatActivity {
             }
         });
         Toast.makeText(getApplicationContext(), "Story saved in Drafts!", Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (!(titleEditor.getText().toString().isEmpty() &&
-                storyEditor.getText().toString().isEmpty())) {
-            saveStoryOffline(createStory());
-        }
     }
 }
