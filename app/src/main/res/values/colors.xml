@@ -7,7 +7,11 @@
     <color name="colorSecondary">#FFC107</color>
     <color name="colorTitle">#ffffff</color>
 
+    <color name="colorBackground">#f2f2f2</color>
+    <color name="colorLightGreyText">#9E9E9E</color>
+
     <!--Welcome Screen Colors-->
+
     <!-- Screens background color-->
     <color name="bg_screen1">#f64c73</color>
     <color name="bg_screen2">#20d2bb</color>
@@ -39,6 +43,4 @@
         <item>@color/dot_dark_screen3</item>
         <item>@color/dot_dark_screen4</item>
     </array>
-
-    <color name="colorBackground">#f2f2f2</color>
 </resources>

@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,6 +24,7 @@ import com.techradge.fabler.ui.activity.ComposeActivity;
 import com.techradge.fabler.ui.activity.ReadActivity;
 import com.techradge.fabler.ui.adapter.StoryClickListener;
 import com.techradge.fabler.ui.adapter.StoryRecyclerViewAdapter;
+import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,10 @@ public class HomeFragment extends Fragment implements StoryClickListener {
     public FloatingActionButton fab;
     @BindView(R.id.story_recycler_view)
     public RecyclerView storyRecyclerView;
+    @BindView(R.id.loader)
+    NewtonCradleLoading loader;
+    @BindView(R.id.loader_container)
+    LinearLayout loaderContainer;
     private Unbinder unbinder;
     private DatabaseReference databaseReference;
     private StoryRecyclerViewAdapter mAdapter;
@@ -58,6 +64,7 @@ public class HomeFragment extends Fragment implements StoryClickListener {
             }
         });
 
+        startLoader();
         setRecyclerView();
 
         return rootView;
@@ -103,6 +110,7 @@ public class HomeFragment extends Fragment implements StoryClickListener {
             mStoryList.add(story);
             mAdapter.notifyItemInserted(mStoryList.size() - 1);
             mAdapter.notifyDataSetChanged();
+            dismissLoader();
         }
     }
 
@@ -114,5 +122,20 @@ public class HomeFragment extends Fragment implements StoryClickListener {
         readIntent.putExtra("author", story.getAuthor());
         readIntent.putExtra("time", story.getTime());
         startActivity(readIntent);
+    }
+
+    // Start loader
+    private void startLoader() {
+        loader.setLoadingColor(R.color.colorAccent);
+        loaderContainer.setVisibility(View.VISIBLE);
+        loader.start();
+    }
+
+    // Dismiss loader
+    private void dismissLoader() {
+        if (loader.isStart()) {
+            loaderContainer.setVisibility(View.INVISIBLE);
+            loader.stop();
+        }
     }
 }

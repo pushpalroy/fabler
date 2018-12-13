@@ -23,7 +23,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/story_recycler_view"
         android:layout_width="match_parent"
@@ -35,6 +34,8 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:spanCount="1"
         tools:listitem="@layout/item_story" />
+
+    <include layout="@layout/layout_loader" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
