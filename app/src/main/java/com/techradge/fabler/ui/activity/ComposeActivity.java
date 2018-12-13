@@ -1,7 +1,6 @@
 package com.techradge.fabler.ui.activity;
 
 import android.database.sqlite.SQLiteConstraintException;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -57,9 +56,8 @@ public class ComposeActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
-            toolbar.setTitleTextColor(Color.WHITE);
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
 

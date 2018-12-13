@@ -20,6 +20,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.techradge.fabler.R;
+import com.techradge.fabler.ui.fragment.DraftFragment;
 import com.techradge.fabler.ui.fragment.HomeFragment;
 import com.techradge.fabler.utils.PrefManager;
 
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity
             navigationView.getMenu().getItem(0).setChecked(true);
             startActivity(composeIntent);
         } else if (id == R.id.nav_draft) {
-
+            fragment = new DraftFragment();
         } else if (id == R.id.nav_profile) {
 
         } else if (id == R.id.nav_logout) {
