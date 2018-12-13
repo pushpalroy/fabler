@@ -44,26 +44,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        setSupportActionBar(toolbar);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        prefManager = new PrefManager(this);
-        View headerView = navigationView.getHeaderView(0);
-        TextView name = headerView.findViewById(R.id.tv_name);
-        TextView email = headerView.findViewById(R.id.tv_email);
-        name.setText(prefManager.getUserFullName());
-        email.setText(prefManager.getUserEmail());
-
-        navigationView.setNavigationItemSelectedListener(this);
-        navigationView.getMenu().getItem(0).setChecked(true);
-
-        Fragment fragment = new HomeFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        setUpToolbar();
     }
 
     @Override
@@ -71,7 +52,14 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (toolbar.getTitle().equals(getResources().getString(R.string.home)))
+                super.onBackPressed();
+            else {
+                toolbar.setTitle(getResources().getString(R.string.home));
+                Fragment fragment = new HomeFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+            }
         }
     }
 
@@ -81,12 +69,14 @@ public class MainActivity extends AppCompatActivity
 
         Fragment fragment = null;
         if (id == R.id.nav_home) {
+            toolbar.setTitle(getResources().getString(R.string.home));
             fragment = new HomeFragment();
         } else if (id == R.id.nav_compose) {
             Intent composeIntent = new Intent(MainActivity.this, ComposeActivity.class);
             navigationView.getMenu().getItem(0).setChecked(true);
             startActivity(composeIntent);
         } else if (id == R.id.nav_draft) {
+            toolbar.setTitle(getResources().getString(R.string.drafts));
             fragment = new DraftFragment();
         } else if (id == R.id.nav_profile) {
 
@@ -114,5 +104,29 @@ public class MainActivity extends AppCompatActivity
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void setUpToolbar() {
+        setSupportActionBar(toolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this,
+                drawer,
+                toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        prefManager = new PrefManager(this);
+        View headerView = navigationView.getHeaderView(0);
+        TextView name = headerView.findViewById(R.id.tv_name);
+        TextView email = headerView.findViewById(R.id.tv_email);
+        name.setText(prefManager.getUserFullName());
+        email.setText(prefManager.getUserEmail());
+
+        navigationView.setNavigationItemSelectedListener(this);
+
+        navigationView.getMenu().getItem(0).setChecked(true);
+        onNavigationItemSelected(navigationView.getMenu().getItem(0));
     }
 }

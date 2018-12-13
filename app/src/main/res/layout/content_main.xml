@@ -17,7 +17,8 @@
             android:layout_height="?attr/actionBarSize"
             android:fitsSystemWindows="true"
             android:minHeight="?attr/actionBarSize"
-            app:theme="@style/ToolBarStyle" />
+            app:theme="@style/ToolBarStyle"
+            app:title="Home" />
 
     </android.support.design.widget.AppBarLayout>
 
