@@ -27,6 +27,7 @@ import com.techradge.fabler.ui.adapter.StoryRecyclerViewAdapter;
 import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -108,10 +109,12 @@ public class HomeFragment extends Fragment implements StoryClickListener {
         for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
             Story story = singleSnapshot.getValue(Story.class);
             mStoryList.add(story);
-            mAdapter.notifyItemInserted(mStoryList.size() - 1);
-            mAdapter.notifyDataSetChanged();
-            dismissLoader();
         }
+
+        Collections.reverse(mStoryList);
+        mAdapter.notifyItemInserted(mStoryList.size() - 1);
+        mAdapter.notifyDataSetChanged();
+        dismissLoader();
     }
 
     @Override

@@ -49,6 +49,15 @@ public class ComposeActivity extends AppCompatActivity {
         setUpActionBar();
 
         prefManager = new PrefManager(this);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String title = extras.getString("title");
+            String story = extras.getString("story");
+
+            titleEditor.setText(title);
+            storyEditor.setText(story);
+        }
     }
 
     private void setUpActionBar() {

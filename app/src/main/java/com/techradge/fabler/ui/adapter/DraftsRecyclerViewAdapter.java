@@ -1,14 +1,19 @@
 package com.techradge.fabler.ui.adapter;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteConstraintException;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.techradge.fabler.R;
+import com.techradge.fabler.database.offline.AppExecutors;
+import com.techradge.fabler.database.offline.StoryDatabase;
 import com.techradge.fabler.model.Story;
 
 import java.util.List;
@@ -21,6 +26,7 @@ public class DraftsRecyclerViewAdapter extends RecyclerView.Adapter<DraftsRecycl
     protected Context context;
     private List<Story> draftsList;
     private StoryClickListener storyClickListener;
+    private final String TAG = DraftsRecyclerViewAdapter.class.getSimpleName();
 
     public DraftsRecyclerViewAdapter(List<Story> draftsList, Context context, StoryClickListener storyClickListener) {
         this.context = context;
@@ -46,23 +52,32 @@ public class DraftsRecyclerViewAdapter extends RecyclerView.Adapter<DraftsRecycl
             storyViewHolder.title.setText(story.getTitle());
         if (story.getTime() != null)
             storyViewHolder.timeStamp.setText(story.getTime());
-        if (story.getAuthor() != null)
-            storyViewHolder.author.setText(story.getAuthor());
         if (story.getStory() != null)
             storyViewHolder.story.setText(story.getStory());
-        if (story.getLikes() != null)
-            storyViewHolder.likes.setText(story.getLikes());
-        else
-            storyViewHolder.likes.setText("0");
-        if (story.getComments() != null)
-            storyViewHolder.comments.setText(story.getComments());
-        else
-            storyViewHolder.comments.setText("0");
 
         storyViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 storyClickListener.onStoryClick(position, story);
+            }
+        });
+
+        storyViewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            StoryDatabase.getInstance(context)
+                                    .storyDao()
+                                    .deleteStory(story);
+
+                        } catch (SQLiteConstraintException e) {
+                            Log.e(TAG, e.getMessage());
+                        }
+                    }
+                });
             }
         });
     }
@@ -78,14 +93,10 @@ public class DraftsRecyclerViewAdapter extends RecyclerView.Adapter<DraftsRecycl
         TextView timeStamp;
         @BindView(R.id.tv_title)
         TextView title;
-        @BindView(R.id.tv_author)
-        TextView author;
         @BindView(R.id.tv_story)
         TextView story;
-        @BindView(R.id.tv_likes)
-        TextView likes;
-        @BindView(R.id.tv_comments)
-        TextView comments;
+        @BindView(R.id.icon_delete)
+        ImageView deleteButton;
 
         DraftsViewHolder(View itemView) {
             super(itemView);
