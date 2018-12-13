@@ -25,6 +25,7 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".ui.activity.ComposeActivity" />
         <activity android:name=".ui.activity.ReadActivity" />
+        <activity android:name=".ui.activity.CommentActivity" />
 
         <receiver android:name=".widget.StoryWidgetProvider">
             <intent-filter>

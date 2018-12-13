@@ -1,11 +1,13 @@
 package com.techradge.fabler.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sackcentury.shinebuttonlib.ShineButton;
@@ -13,6 +15,7 @@ import com.techradge.fabler.R;
 import com.techradge.fabler.database.firebase.Database;
 import com.techradge.fabler.database.operations.story.StoryDataOp;
 import com.techradge.fabler.model.Story;
+import com.techradge.fabler.ui.activity.CommentActivity;
 
 import java.util.List;
 
@@ -76,6 +79,15 @@ public class StoryRecyclerViewAdapter extends RecyclerView.Adapter<StoryRecycler
                 storyDataOp.postLikeUpdateStory(story);
             }
         });
+
+        storyViewHolder.commentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent commentIntent = new Intent(context, CommentActivity.class);
+                commentIntent.putExtra("storyId", story.getStoryId());
+                context.startActivity(commentIntent);
+            }
+        });
     }
 
     @Override
@@ -99,6 +111,8 @@ public class StoryRecyclerViewAdapter extends RecyclerView.Adapter<StoryRecycler
         TextView comments;
         @BindView(R.id.btn_like)
         ShineButton likeButton;
+        @BindView(R.id.icon_comment)
+        ImageView commentButton;
 
         StoryViewHolder(View itemView) {
             super(itemView);
