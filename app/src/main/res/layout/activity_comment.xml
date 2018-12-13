@@ -19,7 +19,7 @@
             android:background="@color/colorPrimary"
             android:fitsSystemWindows="true"
             android:theme="@style/ToolBarStyle"
-            app:title="Compose" />
+            app:title="Comments" />
 
     </android.support.design.widget.AppBarLayout>
 

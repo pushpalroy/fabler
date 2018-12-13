@@ -10,14 +10,18 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.techradge.fabler.model.Comment;
+import com.techradge.fabler.model.Story;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CommentDataOp {
 
     private DatabaseReference commentDatabase;
     private final String TAG = CommentDataOp.class.getSimpleName();
 
-    public CommentDataOp(FirebaseDatabase firebaseDatabase) {
-        commentDatabase = firebaseDatabase.getReference().child("comment");
+    public CommentDataOp(FirebaseDatabase firebaseDatabase, String storyId) {
+        commentDatabase = firebaseDatabase.getReference().child("comment").child(storyId);
     }
 
     public void insertComment(final Comment comment, final Context context) {

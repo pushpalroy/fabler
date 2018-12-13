@@ -18,6 +18,12 @@
         app:spanCount="1"
         tools:listitem="@layout/item_comment" />
 
+    <include
+        layout="@layout/layout_loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
     <RelativeLayout
         android:id="@+id/rl_comment"
         android:layout_width="match_parent"

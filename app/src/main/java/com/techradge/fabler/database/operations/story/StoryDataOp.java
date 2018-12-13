@@ -69,4 +69,27 @@ public class StoryDataOp {
                     }
                 });
     }
+
+    public void postCommentUpdateStory(String storyId, String comments) {
+        DatabaseReference databaseReference = storyDatabase.child(storyId).child("comments");
+        int commentCount;
+        if (comments == null)
+            commentCount = 0;
+        else
+            commentCount = Integer.parseInt(comments);
+
+        commentCount++;
+
+        databaseReference.setValue(String.valueOf(commentCount))
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                    }
+                });
+    }
 }

@@ -47,9 +47,7 @@ public class ReadActivity extends AppCompatActivity {
         setUpActionBar();
 
         prefManager = new PrefManager(this);
-
         Bundle extras = getIntent().getExtras();
-
         if (extras != null) {
             String title = extras.getString("title");
             String story = extras.getString("story");
@@ -78,7 +76,6 @@ public class ReadActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.read, menu);
-        /* Return true so that the menu is displayed in the Toolbar */
         return true;
     }
 
@@ -108,6 +105,17 @@ public class ReadActivity extends AppCompatActivity {
             });
         }
         return true;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     private void sendUpdateWidgetBroadcast() {

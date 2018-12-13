@@ -85,6 +85,7 @@ public class StoryRecyclerViewAdapter extends RecyclerView.Adapter<StoryRecycler
             public void onClick(View v) {
                 Intent commentIntent = new Intent(context, CommentActivity.class);
                 commentIntent.putExtra("storyId", story.getStoryId());
+                commentIntent.putExtra("comments", story.getComments());
                 context.startActivity(commentIntent);
             }
         });
