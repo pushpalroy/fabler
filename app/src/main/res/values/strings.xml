@@ -23,6 +23,10 @@
     <string name="dialog_delete_title">Delete Draft</string>
     <string name="dialog_delete_message">Sure you want to delete this draft?</string>
 
+    <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
+    <string name="facebook_application_id" translatable="false">10xxxxxxxx39</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb10xxxxxxxx39</string>
+
     <!-- Welcome Screen -->
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
