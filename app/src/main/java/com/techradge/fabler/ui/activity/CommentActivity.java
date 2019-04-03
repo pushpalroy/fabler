@@ -66,11 +66,11 @@ public class CommentActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            storyId = extras.getString("storyId");
-            comments = extras.getString("comments");
+            storyId = extras.getString(getString(R.string.key_story_id));
+            comments = extras.getString(getString(R.string.key_comments));
         }
 
-        commentDataOp = new CommentDataOp(Database.getFirebaseDatabase(), storyId);
+        commentDataOp = new CommentDataOp(Database.getFirebaseDatabase(), storyId, this);
         setRecyclerView();
 
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +81,7 @@ public class CommentActivity extends AppCompatActivity {
                 Comment comment = new Comment(commentText, prefManager.getUserFullName(), storyId);
                 commentDataOp.insertComment(comment, CommentActivity.this);
 
-                StoryDataOp storyDataOp = new StoryDataOp(Database.getFirebaseDatabase());
+                StoryDataOp storyDataOp = new StoryDataOp(Database.getFirebaseDatabase(), CommentActivity.this);
                 storyDataOp.postCommentUpdateStory(storyId, comments);
 
                 commentEditor.setText("");
@@ -96,7 +96,7 @@ public class CommentActivity extends AppCompatActivity {
         commentRecyclerView.setLayoutManager(linearLayoutManager);
         commentRecyclerView.setAdapter(mAdapter);
 
-        commentDatabaseReference = Database.getFirebaseDatabase().getReference().child("comment").child(storyId);
+        commentDatabaseReference = Database.getFirebaseDatabase().getReference().child(getString(R.string.child_comment)).child(storyId);
 
         commentDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override

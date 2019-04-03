@@ -1,14 +1,14 @@
 package com.techradge.fabler.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
-import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.techradge.fabler.R;
-import com.techradge.fabler.database.offline.AppExecutors;
 import com.techradge.fabler.utils.PrefManager;
 import com.techradge.fabler.widget.StoryWidgetProvider;
 
@@ -49,10 +48,10 @@ public class ReadActivity extends AppCompatActivity {
         prefManager = new PrefManager(this);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            String title = extras.getString("title");
-            String story = extras.getString("story");
-            String author = extras.getString("author");
-            String time = extras.getString("time");
+            String title = extras.getString(getString(R.string.key_title));
+            String story = extras.getString(getString(R.string.key_story));
+            String author = extras.getString(getString(R.string.key_author));
+            String time = extras.getString(getString(R.string.key_time));
 
             titleTv.setText(title);
             bodyTv.setText(story);
@@ -82,27 +81,7 @@ public class ReadActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_add_to_widget) {
-            AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        prefManager.setWidgetStoryTitle(titleTv.getText().toString());
-                        prefManager.setWidgetStoryAuthor(authorTv.getText().toString());
-                        prefManager.setWidgetStoryBody(bodyTv.getText().toString());
-
-                        sendUpdateWidgetBroadcast();
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(ReadActivity.this, "Story added to widget!", Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    } catch (SQLiteConstraintException e) {
-                        Log.e(TAG, e.getMessage());
-                    }
-                }
-            });
+            new AddToWidget().execute();
         }
         return true;
     }
@@ -123,5 +102,27 @@ public class ReadActivity extends AppCompatActivity {
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, StoryWidgetProvider.class));
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.lv_widget_story);
         StoryWidgetProvider.updateWidget(ReadActivity.this, appWidgetManager, appWidgetIds);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private class AddToWidget extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            prefManager.setWidgetStoryTitle(titleTv.getText().toString());
+            prefManager.setWidgetStoryAuthor(authorTv.getText().toString());
+            prefManager.setWidgetStoryBody(bodyTv.getText().toString());
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            sendUpdateWidgetBroadcast();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void param) {
+            Toast.makeText(ReadActivity.this, getString(R.string.toast_message_widget), Toast.LENGTH_LONG).show();
+        }
     }
 }

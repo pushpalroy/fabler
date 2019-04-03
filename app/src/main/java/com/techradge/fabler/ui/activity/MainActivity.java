@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity
                         public void onComplete(@NonNull Task<Void> task) {
                             PrefManager prefManager = new PrefManager(MainActivity.this);
                             prefManager.setUserLoggedIn(false);
-                            prefManager.setUserFullName("Guest");
+                            prefManager.setUserFullName(getString(R.string.guest));
                             Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
                             startActivity(loginIntent);
                             finish();

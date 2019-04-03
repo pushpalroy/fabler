@@ -57,5 +57,26 @@
     <string name="list_of_stories">List of stories</string>
     <string name="logout">Logout</string>
     <string name="save">Save</string>
+    <string name="key_story_id">storyId</string>
+    <string name="key_comments">comments</string>
+    <string name="key_title">title</string>
+    <string name="key_story">story</string>
+    <string name="toast_message_draft">Story saved in Drafts!</string>
+    <string name="guest">Guest</string>
+    <string name="key_author">author</string>
+    <string name="key_time">time</string>
+    <string name="toast_message_widget">Story added to widget!</string>
+    <string name="dots_text"><![CDATA[&#8226;]]></string>
+    <string name="zero">0</string>
+    <string name="toast_message_comment">Comment has been posted!</string>
+    <string name="toast_message_story">Story has been published!</string>
+    <string name="child_users">users</string>
+    <string name="child_story">story</string>
+    <string name="child_comment">comment</string>
+    <string name="def_val_user_full_name">Guest</string>
+    <string name="def_val_user_email">Guest@fabler.com</string>
+    <string name="def_val_widget_story_title">Title</string>
+    <string name="def_val_widget_author">Story</string>
+    <string name="def_val_author">Author</string>
 
 </resources>

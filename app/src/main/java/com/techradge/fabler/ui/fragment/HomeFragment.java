@@ -89,7 +89,7 @@ public class HomeFragment extends Fragment implements StoryClickListener {
         storyRecyclerView.setLayoutManager(linearLayoutManager);
         storyRecyclerView.setAdapter(mAdapter);
 
-        databaseReference = Database.getFirebaseDatabase().getReference().child("story");
+        databaseReference = Database.getFirebaseDatabase().getReference().child(getActivity().getResources().getString(R.string.child_story));
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

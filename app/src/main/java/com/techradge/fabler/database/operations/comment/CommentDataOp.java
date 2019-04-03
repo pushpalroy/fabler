@@ -9,19 +9,16 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.techradge.fabler.R;
 import com.techradge.fabler.model.Comment;
-import com.techradge.fabler.model.Story;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class CommentDataOp {
 
     private DatabaseReference commentDatabase;
     private final String TAG = CommentDataOp.class.getSimpleName();
 
-    public CommentDataOp(FirebaseDatabase firebaseDatabase, String storyId) {
-        commentDatabase = firebaseDatabase.getReference().child("comment").child(storyId);
+    public CommentDataOp(FirebaseDatabase firebaseDatabase, String storyId, Context context) {
+        commentDatabase = firebaseDatabase.getReference().child(context.getString(R.string.child_comment)).child(storyId);
     }
 
     public void insertComment(final Comment comment, final Context context) {
@@ -34,7 +31,7 @@ public class CommentDataOp {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(context, "Comment has been posted!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, context.getString(R.string.toast_message_comment), Toast.LENGTH_LONG).show();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {

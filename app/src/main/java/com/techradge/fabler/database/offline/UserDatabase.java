@@ -24,7 +24,6 @@ public abstract class UserDatabase extends RoomDatabase {
     public static synchronized UserDatabase getInstance(Context context) {
         if (sInstance == null) {
             synchronized (LOCK) {
-                Log.d(TAG, "Creating new database instance");
                 sInstance = createDatabase(context);
             }
         }

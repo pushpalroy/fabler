@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.techradge.fabler.R;
 import com.techradge.fabler.database.offline.AppExecutors;
 import com.techradge.fabler.database.offline.UserDatabase;
 import com.techradge.fabler.model.User;
@@ -15,8 +16,8 @@ public class UserDataOp implements UserData {
     private DatabaseReference usersDatabase;
     private final String TAG = UserDataOp.class.getSimpleName();
 
-    public UserDataOp(FirebaseDatabase firebaseDatabase) {
-        usersDatabase = firebaseDatabase.getReference().child("users");
+    public UserDataOp(FirebaseDatabase firebaseDatabase, Context context) {
+        usersDatabase = firebaseDatabase.getReference().child(context.getString(R.string.child_users));
     }
 
     @Override

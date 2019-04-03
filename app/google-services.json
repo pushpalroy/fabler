@@ -70,6 +70,14 @@
           }
         },
         {
+          "client_id": "883927299361-qfv3rl0e9njrg5ffeuheb6ohjhe7ft4r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.techradge.fabler",
+            "certificate_hash": "4f16c48a6f92c51273555f07340ffec74b0b02de"
+          }
+        },
+        {
           "client_id": "883927299361-nnb4si021p2fg53r9l7ed8rv0bhufe03.apps.googleusercontent.com",
           "client_type": 3
         }

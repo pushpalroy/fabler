@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.techradge.fabler.R;
+
 public class PrefManager {
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
@@ -52,7 +54,7 @@ public class PrefManager {
     }
 
     public String getUserFullName() {
-        return pref.getString(USER_FULL_NAME, "Guest");
+        return pref.getString(USER_FULL_NAME, _context.getString(R.string.def_val_user_full_name));
     }
 
     public void setUserEmail(String userEmail) {
@@ -61,7 +63,7 @@ public class PrefManager {
     }
 
     public String getUserEmail() {
-        return pref.getString(USER_EMAIL, "Guest@fabler.com");
+        return pref.getString(USER_EMAIL, _context.getString(R.string.def_val_user_email));
     }
 
     public void setWidgetStoryTitle(String widgetStoryTitle) {
@@ -70,7 +72,7 @@ public class PrefManager {
     }
 
     public String getWidgetStoryTitle() {
-        return pref.getString(WIDGET_STORY_TITLE, "Title");
+        return pref.getString(WIDGET_STORY_TITLE, _context.getString(R.string.def_val_widget_story_title));
     }
 
     public void setWidgetStoryBody(String widgetStoryBody) {
@@ -79,7 +81,7 @@ public class PrefManager {
     }
 
     public String getWidgetStoryBody() {
-        return pref.getString(WIDGET_STORY_BODY, "Story");
+        return pref.getString(WIDGET_STORY_BODY, _context.getString(R.string.def_val_widget_author));
     }
 
     public void setWidgetStoryAuthor(String widgetStoryAuthor) {
@@ -88,7 +90,7 @@ public class PrefManager {
     }
 
     public String getWidgetStoryAuthor() {
-        return pref.getString(WIDGET_STORY_AUTHOR, "Author");
+        return pref.getString(WIDGET_STORY_AUTHOR, _context.getString(R.string.def_val_author));
     }
 
     public void setUserPhotoUrl(String userPhotoUrl) {

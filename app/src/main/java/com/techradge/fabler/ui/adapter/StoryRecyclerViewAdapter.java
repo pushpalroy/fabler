@@ -37,7 +37,7 @@ public class StoryRecyclerViewAdapter extends RecyclerView.Adapter<StoryRecycler
     @NonNull
     @Override
     public StoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        StoryViewHolder viewHolder = null;
+        StoryViewHolder viewHolder;
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_story, parent, false);
         viewHolder = new StoryViewHolder(layoutView);
         return viewHolder;
@@ -59,11 +59,11 @@ public class StoryRecyclerViewAdapter extends RecyclerView.Adapter<StoryRecycler
         if (story.getLikes() != null)
             storyViewHolder.likes.setText(story.getLikes());
         else
-            storyViewHolder.likes.setText("0");
+            storyViewHolder.likes.setText(context.getString(R.string.zero));
         if (story.getComments() != null)
             storyViewHolder.comments.setText(story.getComments());
         else
-            storyViewHolder.comments.setText("0");
+            storyViewHolder.comments.setText(context.getString(R.string.zero));
 
         storyViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +76,7 @@ public class StoryRecyclerViewAdapter extends RecyclerView.Adapter<StoryRecycler
             @Override
             public void onCheckedChanged(View view, boolean checked) {
                 if (checked) {
-                    StoryDataOp storyDataOp = new StoryDataOp(Database.getFirebaseDatabase());
+                    StoryDataOp storyDataOp = new StoryDataOp(Database.getFirebaseDatabase(), context);
                     storyDataOp.postLikeUpdateStory(story);
                 }
             }
@@ -86,8 +86,8 @@ public class StoryRecyclerViewAdapter extends RecyclerView.Adapter<StoryRecycler
             @Override
             public void onClick(View v) {
                 Intent commentIntent = new Intent(context, CommentActivity.class);
-                commentIntent.putExtra("storyId", story.getStoryId());
-                commentIntent.putExtra("comments", story.getComments());
+                commentIntent.putExtra(context.getString(R.string.key_story_id), story.getStoryId());
+                commentIntent.putExtra(context.getString(R.string.key_comments), story.getComments());
                 context.startActivity(commentIntent);
             }
         });

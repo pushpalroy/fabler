@@ -27,14 +27,11 @@ public class LoginActivity extends AppCompatActivity {
     private UserDataOp userDataOp;
     private PrefManager prefManager;
 
-    public LoginActivity() {
-        userDataOp = new UserDataOp(Database.getFirebaseDatabase());
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        userDataOp = new UserDataOp(Database.getFirebaseDatabase(), LoginActivity.this);
         prefManager = new PrefManager(this);
 
         if (prefManager.isUserLoggedIn()) {
@@ -96,13 +93,6 @@ public class LoginActivity extends AppCompatActivity {
 
         try {
             userDataOp.insertUserData(user, this);
-
-            Log.e(TAG, "Full Name: " + user.getFullName());
-            Log.e(TAG, "Email: " + user.getEmail());
-            Log.e(TAG, "UID: " + user.getUid());
-            Log.e(TAG, "Photo: " + String.valueOf(user.getPhotoURL()));
-            Log.e(TAG, "Is Email Verified: " + String.valueOf(user.isEmailVerified()));
-
             prefManager.setUserLoggedIn(true);
             prefManager.setUserFullName(user.getFullName());
             prefManager.setUserEmail(user.getEmail());
@@ -122,9 +112,6 @@ public class LoginActivity extends AppCompatActivity {
     public void starHomeActivity() {
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
         finish();
-    }
-
-    public void onLoggedOut() {
     }
 
     @Override

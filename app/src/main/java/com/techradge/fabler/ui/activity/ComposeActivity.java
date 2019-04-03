@@ -1,7 +1,9 @@
 package com.techradge.fabler.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteConstraintException;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -15,7 +17,6 @@ import android.widget.Toast;
 
 import com.techradge.fabler.R;
 import com.techradge.fabler.database.firebase.Database;
-import com.techradge.fabler.database.offline.AppExecutors;
 import com.techradge.fabler.database.offline.StoryDatabase;
 import com.techradge.fabler.database.operations.story.StoryDataOp;
 import com.techradge.fabler.model.Story;
@@ -39,10 +40,6 @@ public class ComposeActivity extends AppCompatActivity {
     private PrefManager prefManager;
     private final String TAG = ComposeActivity.class.getSimpleName();
 
-    public ComposeActivity() {
-        storyDataOp = new StoryDataOp(Database.getFirebaseDatabase());
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,12 +48,13 @@ public class ComposeActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setUpActionBar();
 
+        storyDataOp = new StoryDataOp(Database.getFirebaseDatabase(), ComposeActivity.this);
         prefManager = new PrefManager(this);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            String title = extras.getString("title");
-            String story = extras.getString("story");
+            String title = extras.getString(getString(R.string.key_title));
+            String story = extras.getString(getString(R.string.key_story));
 
             titleEditor.setText(title);
             storyEditor.setText(story);
@@ -140,18 +138,27 @@ public class ComposeActivity extends AppCompatActivity {
     }
 
     private void saveStoryOffline(final Story story) {
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    StoryDatabase.getInstance(ComposeActivity.this)
-                            .storyDao()
-                            .insertStory(story);
-                } catch (SQLiteConstraintException e) {
-                    Log.e(TAG, e.getMessage());
-                }
+        new SaveStory().execute(story);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private class SaveStory extends AsyncTask<Story, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Story... params) {
+            try {
+                StoryDatabase.getInstance(ComposeActivity.this)
+                        .storyDao()
+                        .insertStory(params[0]);
+            } catch (SQLiteConstraintException e) {
+                Log.e(TAG, e.getMessage());
             }
-        });
-        Toast.makeText(getApplicationContext(), "Story saved in Drafts!", Toast.LENGTH_LONG).show();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void param) {
+            Toast.makeText(getApplicationContext(), getString(R.string.toast_message_draft), Toast.LENGTH_LONG).show();
+        }
     }
 }

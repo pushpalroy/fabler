@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.techradge.fabler.R;
 import com.techradge.fabler.model.Story;
 
 import java.util.HashMap;
@@ -19,8 +20,8 @@ public class StoryDataOp {
     private DatabaseReference storyDatabase;
     private String TAG = "StoryDataOp";
 
-    public StoryDataOp(FirebaseDatabase firebaseDatabase) {
-        storyDatabase = firebaseDatabase.getReference().child("story");
+    public StoryDataOp(FirebaseDatabase firebaseDatabase, Context context) {
+        storyDatabase = firebaseDatabase.getReference().child(context.getString(R.string.child_story));
     }
 
     public void insertStoryData(Story story, final Context context) {
@@ -33,7 +34,7 @@ public class StoryDataOp {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(context, "Story has been published!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, context.getString(R.string.toast_message_story), Toast.LENGTH_LONG).show();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
