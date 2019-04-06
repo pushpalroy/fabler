@@ -14,9 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.techradge.fabler.R;
-import com.techradge.fabler.database.offline.AppExecutors;
-import com.techradge.fabler.database.offline.StoryDatabase;
-import com.techradge.fabler.model.Story;
+import com.techradge.fabler.data.network.AppExecutors;
+import com.techradge.fabler.data.offline.StoryDatabase;
+import com.techradge.fabler.data.model.Story;
 
 import java.util.List;
 

@@ -3,10 +3,10 @@ package com.techradge.fabler.ui.login;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.techradge.fabler.database.firebase.Database;
-import com.techradge.fabler.database.operations.user.UserDataOp;
-import com.techradge.fabler.model.User;
-import com.techradge.fabler.utils.PrefManager;
+import com.techradge.fabler.data.firebase.Database;
+import com.techradge.fabler.data.firebase.operations.user.UserDataOp;
+import com.techradge.fabler.data.model.User;
+import com.techradge.fabler.data.prefs.AppPrefsManager;
 
 import java.lang.ref.WeakReference;
 
@@ -18,18 +18,18 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
     // Weak Reference for View
     private final WeakReference<LoginContract.LoginView> mView;
     private UserDataOp userDataOp;
-    private PrefManager prefManager;
+    private AppPrefsManager appPrefsManager;
 
     LoginPresenter(@NonNull LoginContract.LoginView loginView) {
         mView = new WeakReference<>(checkNotNull(loginView, "LoginView cannot be null."));
         userDataOp = new UserDataOp(Database.getFirebaseDatabase(), mView.get().getContext());
-        prefManager = new PrefManager(mView.get().getContext());
+        appPrefsManager = new AppPrefsManager(mView.get().getContext());
 
         if (isUserLoggedIn()) {
             // Launch Home Activity
             mView.get().starHomeActivity();
         } else
-            mView.get().startUIAuth();
+            mView.get().startFirebaseUIAuth();
     }
 
     // User data insertion
@@ -37,10 +37,10 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
     public void insertUserData(User user) {
         try {
             userDataOp.insertUserData(user, mView.get().getContext());
-            prefManager.setUserLoggedIn(true);
-            prefManager.setUserFullName(user.getFullName());
-            prefManager.setUserEmail(user.getEmail());
-            prefManager.setUserPhotoUrl(user.getPhotoURL());
+            appPrefsManager.setUserLoggedIn(true);
+            appPrefsManager.setUserFullName(user.getFullName());
+            appPrefsManager.setUserEmail(user.getEmail());
+            appPrefsManager.setUserPhotoUrl(user.getPhotoURL());
 
             // Launch Welcome Activity
             mView.get().startWelcomeActivity(user);
@@ -51,7 +51,7 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
 
     @Override
     public boolean isUserLoggedIn() {
-        return prefManager.isUserLoggedIn();
+        return appPrefsManager.isUserLoggedIn();
     }
 
     @Override

@@ -12,10 +12,10 @@ import android.widget.TextView;
 
 import com.sackcentury.shinebuttonlib.ShineButton;
 import com.techradge.fabler.R;
-import com.techradge.fabler.database.firebase.Database;
-import com.techradge.fabler.database.operations.story.StoryDataOp;
-import com.techradge.fabler.model.Story;
-import com.techradge.fabler.ui.activity.CommentActivity;
+import com.techradge.fabler.data.firebase.Database;
+import com.techradge.fabler.data.firebase.operations.story.StoryDataOp;
+import com.techradge.fabler.data.model.Story;
+import com.techradge.fabler.ui.comment.CommentActivity;
 
 import java.util.List;
 

@@ -10,10 +10,10 @@ import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.techradge.fabler.R;
-import com.techradge.fabler.base.BaseActivity;
-import com.techradge.fabler.model.User;
-import com.techradge.fabler.ui.activity.MainActivity;
-import com.techradge.fabler.ui.activity.WelcomeActivity;
+import com.techradge.fabler.ui.base.BaseActivity;
+import com.techradge.fabler.data.model.User;
+import com.techradge.fabler.ui.main.MainActivity;
+import com.techradge.fabler.ui.welcome.WelcomeActivity;
 
 import java.util.Arrays;
 import java.util.List;
@@ -65,7 +65,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     }
 
     @Override
-    public void startUIAuth() {
+    public void startFirebaseUIAuth() {
         // Authentication providers
         List<AuthUI.IdpConfig> providers = Arrays.asList(
                 // Email

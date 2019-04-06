@@ -1,13 +1,13 @@
 package com.techradge.fabler.ui.login;
 
-import com.techradge.fabler.base.BasePresenter;
-import com.techradge.fabler.base.BaseView;
-import com.techradge.fabler.model.User;
+import com.techradge.fabler.ui.base.BasePresenter;
+import com.techradge.fabler.ui.base.BaseView;
+import com.techradge.fabler.data.model.User;
 
 public interface LoginContract {
 
     interface LoginView extends BaseView<LoginPresenter> {
-        void startUIAuth();
+        void startFirebaseUIAuth();
 
         void onAuthenticated(User user);
 

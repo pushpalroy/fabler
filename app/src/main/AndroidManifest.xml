@@ -19,13 +19,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.WelcomeActivity" />
+        <activity android:name=".ui.welcome.WelcomeActivity" />
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ui.activity.ComposeActivity" />
-        <activity android:name=".ui.activity.ReadActivity" />
-        <activity android:name=".ui.activity.CommentActivity" />
+        <activity android:name=".ui.compose.ComposeActivity" />
+        <activity android:name=".ui.read.ReadActivity" />
+        <activity android:name=".ui.comment.CommentActivity" />
 
         <receiver android:name=".widget.StoryWidgetProvider">
             <intent-filter>

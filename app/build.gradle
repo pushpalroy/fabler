@@ -22,6 +22,7 @@ android {
         applicationId "com.techradge.fabler"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -51,6 +52,9 @@ dependencies {
     implementation "com.android.support:cardview-v7:$supportLibVersion"
     implementation "com.android.support:support-v4:$supportLibVersion"
     implementation "com.android.support:design:$supportLibVersion"
+
+    // Multidexing
+    implementation 'com.android.support:multidex:1.0.3'
 
     // Guava
     implementation "com.google.guava:guava:$rootProject.guavaVersion"

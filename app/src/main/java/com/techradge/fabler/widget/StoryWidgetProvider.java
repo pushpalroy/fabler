@@ -9,8 +9,8 @@ import android.net.Uri;
 import android.widget.RemoteViews;
 
 import com.techradge.fabler.R;
-import com.techradge.fabler.ui.activity.MainActivity;
-import com.techradge.fabler.utils.PrefManager;
+import com.techradge.fabler.ui.main.MainActivity;
+import com.techradge.fabler.data.prefs.AppPrefsManager;
 
 public class StoryWidgetProvider extends AppWidgetProvider {
 
@@ -21,9 +21,9 @@ public class StoryWidgetProvider extends AppWidgetProvider {
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
             intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
 
-            PrefManager prefManager = new PrefManager(context);
-            remoteViews.setTextViewText(R.id.tv_widget_title, prefManager.getWidgetStoryTitle());
-            remoteViews.setTextViewText(R.id.tv_widget_author, "By " + prefManager.getWidgetStoryAuthor());
+            AppPrefsManager appPrefsManager = new AppPrefsManager(context);
+            remoteViews.setTextViewText(R.id.tv_widget_title, appPrefsManager.getWidgetStoryTitle());
+            remoteViews.setTextViewText(R.id.tv_widget_author, "By " + appPrefsManager.getWidgetStoryAuthor());
             remoteViews.setRemoteAdapter(R.id.lv_widget_story, intent);
             remoteViews.setEmptyView(R.id.lv_widget_story, R.id.tv_widget_story);
 

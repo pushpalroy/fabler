@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.techradge.fabler.R;
-import com.techradge.fabler.model.Comment;
+import com.techradge.fabler.data.model.Comment;
 
 import java.util.List;
 
