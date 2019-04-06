@@ -24,3 +24,18 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    // SDK and tools
+    minSdkVersion = 17
+    targetSdkVersion = 28
+    compileSdkVersion = 28
+
+    // App dependencies
+    supportLibVersion = '28.0.0'
+    butterknifeVersion = '8.8.1'
+    roomVersion = '1.1.1'
+    liveDataVer = '1.1.1'
+    glideVersion = '4.7.1'
+    guavaVersion = '27.0.1-android'
+}

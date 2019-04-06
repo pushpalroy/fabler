@@ -1,8 +1,8 @@
-package com.techradge.fabler.ui.activity;
+package com.techradge.fabler.ui.login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.firebase.ui.auth.AuthUI;
@@ -10,51 +10,26 @@ import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.techradge.fabler.R;
-import com.techradge.fabler.database.firebase.Database;
-import com.techradge.fabler.database.operations.user.UserDataOp;
+import com.techradge.fabler.base.BaseActivity;
 import com.techradge.fabler.model.User;
-import com.techradge.fabler.utils.PrefManager;
+import com.techradge.fabler.ui.activity.MainActivity;
+import com.techradge.fabler.ui.activity.WelcomeActivity;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity implements LoginContract.LoginView {
 
     private static final String TAG = "LoginActivity";
     private static final int RC_SIGN_IN = 1;
     private String uid;
-
-    private UserDataOp userDataOp;
-    private PrefManager prefManager;
+    private LoginContract.LoginPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        userDataOp = new UserDataOp(Database.getFirebaseDatabase(), LoginActivity.this);
-        prefManager = new PrefManager(this);
-
-        if (prefManager.isUserLoggedIn()) {
-            starHomeActivity();
-            return;
-        }
-
-        // Authentication providers
-        List<AuthUI.IdpConfig> providers = Arrays.asList(
-                new AuthUI.IdpConfig.EmailBuilder().build(),
-                new AuthUI.IdpConfig.GoogleBuilder().build(),
-                new AuthUI.IdpConfig.FacebookBuilder().build());
-
-        // Create and launch sign-in intent
-        startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setLogo(R.drawable.logo)
-                        .setTheme(R.style.LoginTheme)
-                        .setIsSmartLockEnabled(false)
-                        .setAvailableProviders(providers)
-                        .build(),
-                RC_SIGN_IN);
+        mPresenter = new LoginPresenter(this);
     }
 
     @Override
@@ -89,27 +64,42 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void onAuthenticated(User user) {
-        LoginActivity.this.uid = user.getUid();
+    @Override
+    public void startUIAuth() {
+        // Authentication providers
+        List<AuthUI.IdpConfig> providers = Arrays.asList(
+                // Email
+                new AuthUI.IdpConfig.EmailBuilder().build(),
+                // Google
+                new AuthUI.IdpConfig.GoogleBuilder().build(),
+                // Facebook
+                new AuthUI.IdpConfig.FacebookBuilder().build());
 
-        try {
-            userDataOp.insertUserData(user, this);
-            prefManager.setUserLoggedIn(true);
-            prefManager.setUserFullName(user.getFullName());
-            prefManager.setUserEmail(user.getEmail());
-            prefManager.setUserPhotoUrl(user.getPhotoURL());
-            startWelcomeActivity(user);
-
-        } catch (Exception e) {
-            Log.e(TAG, "Exception: " + e.toString());
-        }
+        // Create and launch sign-in intent
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setLogo(R.drawable.logo)
+                        .setTheme(R.style.LoginTheme)
+                        .setIsSmartLockEnabled(false)
+                        .setAvailableProviders(providers)
+                        .build(),
+                RC_SIGN_IN);
     }
 
+    @Override
+    public void onAuthenticated(User user) {
+        LoginActivity.this.uid = user.getUid();
+        mPresenter.insertUserData(user);
+    }
+
+    @Override
     public void startWelcomeActivity(User user) {
         startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
         finish();
     }
 
+    @Override
     public void starHomeActivity() {
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
         finish();
@@ -128,5 +118,15 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void setPresenter(LoginContract.LoginPresenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public Context getContext() {
+        return LoginActivity.this;
     }
 }

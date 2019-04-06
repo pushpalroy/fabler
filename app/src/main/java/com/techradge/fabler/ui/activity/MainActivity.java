@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.Task;
 import com.techradge.fabler.R;
 import com.techradge.fabler.ui.fragment.DraftFragment;
 import com.techradge.fabler.ui.fragment.HomeFragment;
+import com.techradge.fabler.ui.login.LoginActivity;
 import com.techradge.fabler.utils.PrefManager;
 
 import butterknife.BindView;
