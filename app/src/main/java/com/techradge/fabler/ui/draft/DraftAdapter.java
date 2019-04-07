@@ -1,4 +1,4 @@
-package com.techradge.fabler.ui.adapter;
+package com.techradge.fabler.ui.draft;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,20 +17,21 @@ import com.techradge.fabler.R;
 import com.techradge.fabler.data.network.AppExecutors;
 import com.techradge.fabler.data.offline.StoryDatabase;
 import com.techradge.fabler.data.model.Story;
+import com.techradge.fabler.ui.story.StoryClickListener;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DraftsRecyclerViewAdapter extends RecyclerView.Adapter<DraftsRecyclerViewAdapter.DraftsViewHolder> {
+public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.DraftsViewHolder> {
 
     protected Context context;
     private List<Story> draftsList;
     private StoryClickListener storyClickListener;
-    private final String TAG = DraftsRecyclerViewAdapter.class.getSimpleName();
+    private final String TAG = DraftAdapter.class.getSimpleName();
 
-    public DraftsRecyclerViewAdapter(List<Story> draftsList, Context context, StoryClickListener storyClickListener) {
+    public DraftAdapter(List<Story> draftsList, Context context, StoryClickListener storyClickListener) {
         this.context = context;
         this.draftsList = draftsList;
         this.storyClickListener = storyClickListener;

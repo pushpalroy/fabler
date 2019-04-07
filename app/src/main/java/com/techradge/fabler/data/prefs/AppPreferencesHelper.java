@@ -6,7 +6,10 @@ import android.content.SharedPreferences;
 
 import com.techradge.fabler.R;
 
-public class AppPrefsManager implements PrefsManager {
+import javax.inject.Singleton;
+
+@Singleton
+public class AppPreferencesHelper implements PreferencesHelper {
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
     private Context _context;
@@ -23,7 +26,7 @@ public class AppPrefsManager implements PrefsManager {
     private static final String WIDGET_STORY_BODY = "PREF_KEY_WIDGET_STORY_BODY";
 
     @SuppressLint("CommitPrefEdits")
-    public AppPrefsManager(Context context) {
+    public AppPreferencesHelper(Context context) {
         this._context = context;
         pref = _context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
         editor = pref.edit();

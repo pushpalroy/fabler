@@ -1,4 +1,4 @@
-package com.techradge.fabler.ui.adapter;
+package com.techradge.fabler.ui.story;
 
 import com.techradge.fabler.data.model.Story;
 

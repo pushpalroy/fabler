@@ -23,8 +23,7 @@ import com.techradge.fabler.data.offline.MainViewModel;
 import com.techradge.fabler.data.offline.StoryDatabase;
 import com.techradge.fabler.data.model.Story;
 import com.techradge.fabler.ui.compose.ComposeActivity;
-import com.techradge.fabler.ui.adapter.DraftsRecyclerViewAdapter;
-import com.techradge.fabler.ui.adapter.StoryClickListener;
+import com.techradge.fabler.ui.story.StoryClickListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,7 +39,7 @@ public class DraftFragment extends Fragment implements StoryClickListener {
     @BindView(R.id.drafts_recycler_view)
     public RecyclerView draftsRecyclerView;
     private Unbinder unbinder;
-    private DraftsRecyclerViewAdapter mAdapter;
+    private DraftAdapter mAdapter;
     private List<Story> draftsList;
     private final String TAG = DraftFragment.class.getSimpleName();
     private MainViewModel mMainViewModel;
@@ -79,7 +78,7 @@ public class DraftFragment extends Fragment implements StoryClickListener {
     private void setRecyclerView() {
         draftsList = new ArrayList<>();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        mAdapter = new DraftsRecyclerViewAdapter(draftsList, getActivity(), this);
+        mAdapter = new DraftAdapter(draftsList, getActivity(), this);
         draftsRecyclerView.setLayoutManager(linearLayoutManager);
         draftsRecyclerView.setAdapter(mAdapter);
 

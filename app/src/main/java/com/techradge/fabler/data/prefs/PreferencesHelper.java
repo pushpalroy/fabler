@@ -1,6 +1,9 @@
 package com.techradge.fabler.data.prefs;
 
-public interface PrefsManager {
+import javax.inject.Singleton;
+
+@Singleton
+public interface PreferencesHelper {
     void setFirstTimeLaunch(boolean isFirstTime);
 
     boolean isFirstTimeLaunch();

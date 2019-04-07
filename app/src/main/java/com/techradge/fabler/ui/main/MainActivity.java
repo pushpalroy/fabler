@@ -26,7 +26,7 @@ import com.techradge.fabler.ui.compose.ComposeActivity;
 import com.techradge.fabler.ui.draft.DraftFragment;
 import com.techradge.fabler.ui.home.HomeFragment;
 import com.techradge.fabler.ui.login.LoginActivity;
-import com.techradge.fabler.data.prefs.AppPrefsManager;
+import com.techradge.fabler.data.prefs.AppPreferencesHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity
     public DrawerLayout drawer;
     @BindView(R.id.nav_view)
     public NavigationView navigationView;
-    private AppPrefsManager appPrefsManager;
+    private AppPreferencesHelper appPrefsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity
                     .signOut(this)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         public void onComplete(@NonNull Task<Void> task) {
-                            AppPrefsManager appPrefsManager = new AppPrefsManager(MainActivity.this);
+                            AppPreferencesHelper appPrefsManager = new AppPreferencesHelper(MainActivity.this);
                             appPrefsManager.setUserLoggedIn(false);
                             appPrefsManager.setUserFullName(getString(R.string.guest));
                             Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        appPrefsManager = new AppPrefsManager(this);
+        appPrefsManager = new AppPreferencesHelper(this);
         View headerView = navigationView.getHeaderView(0);
         TextView name = headerView.findViewById(R.id.tv_name);
         TextView email = headerView.findViewById(R.id.tv_email);

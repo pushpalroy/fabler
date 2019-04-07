@@ -6,7 +6,7 @@ import android.util.Log;
 import com.techradge.fabler.data.firebase.Database;
 import com.techradge.fabler.data.firebase.operations.user.UserDataOp;
 import com.techradge.fabler.data.model.User;
-import com.techradge.fabler.data.prefs.AppPrefsManager;
+import com.techradge.fabler.data.prefs.AppPreferencesHelper;
 
 import java.lang.ref.WeakReference;
 
@@ -18,12 +18,12 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
     // Weak Reference for View
     private final WeakReference<LoginContract.LoginView> mView;
     private UserDataOp userDataOp;
-    private AppPrefsManager appPrefsManager;
+    private AppPreferencesHelper appPrefsManager;
 
     LoginPresenter(@NonNull LoginContract.LoginView loginView) {
         mView = new WeakReference<>(checkNotNull(loginView, "LoginView cannot be null."));
         userDataOp = new UserDataOp(Database.getFirebaseDatabase(), mView.get().getContext());
-        appPrefsManager = new AppPrefsManager(mView.get().getContext());
+        appPrefsManager = new AppPreferencesHelper(mView.get().getContext());
 
         if (isUserLoggedIn()) {
             // Launch Home Activity

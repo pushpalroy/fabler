@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.techradge.fabler.R;
-import com.techradge.fabler.data.prefs.AppPrefsManager;
+import com.techradge.fabler.data.prefs.AppPreferencesHelper;
 import com.techradge.fabler.widget.StoryWidgetProvider;
 
 import butterknife.BindView;
@@ -35,7 +35,7 @@ public class ReadActivity extends AppCompatActivity {
     @BindView(R.id.tv_author)
     TextView authorTv;
     public static final String TAG = ReadActivity.class.getSimpleName();
-    private AppPrefsManager appPrefsManager;
+    private AppPreferencesHelper appPrefsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class ReadActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setUpActionBar();
 
-        appPrefsManager = new AppPrefsManager(this);
+        appPrefsManager = new AppPreferencesHelper(this);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String title = extras.getString(getString(R.string.key_title));

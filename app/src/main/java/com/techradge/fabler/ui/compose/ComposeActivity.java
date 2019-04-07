@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.techradge.fabler.R;
 import com.techradge.fabler.data.model.Story;
-import com.techradge.fabler.data.prefs.AppPrefsManager;
+import com.techradge.fabler.data.prefs.AppPreferencesHelper;
 import com.techradge.fabler.ui.base.BaseActivity;
 
 import java.util.Calendar;
@@ -31,7 +31,7 @@ public class ComposeActivity extends BaseActivity implements ComposeContract.Com
 
     private final String TAG = ComposeActivity.class.getSimpleName();
     private ComposePresenter mPresenter;
-    private AppPrefsManager appPrefsManager;
+    private AppPreferencesHelper appPrefsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class ComposeActivity extends BaseActivity implements ComposeContract.Com
             storyEditor.setText(story);
         }
 
-        appPrefsManager = new AppPrefsManager(this);
+        appPrefsManager = new AppPreferencesHelper(this);
         mPresenter = new ComposePresenter(this);
     }
 
@@ -128,6 +128,7 @@ public class ComposeActivity extends BaseActivity implements ComposeContract.Com
 
     @Override
     public void setPresenter(ComposeContract.ComposePresenter presenter) {
+
     }
 
     @Override

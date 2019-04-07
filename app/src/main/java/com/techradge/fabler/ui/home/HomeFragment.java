@@ -20,10 +20,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.techradge.fabler.R;
 import com.techradge.fabler.data.firebase.Database;
 import com.techradge.fabler.data.model.Story;
+import com.techradge.fabler.ui.story.StoryAdapter;
 import com.techradge.fabler.ui.compose.ComposeActivity;
 import com.techradge.fabler.ui.read.ReadActivity;
-import com.techradge.fabler.ui.adapter.StoryClickListener;
-import com.techradge.fabler.ui.adapter.StoryRecyclerViewAdapter;
+import com.techradge.fabler.ui.story.StoryClickListener;
 import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ public class HomeFragment extends Fragment implements StoryClickListener {
     LinearLayout loaderContainer;
     private Unbinder unbinder;
     private DatabaseReference databaseReference;
-    private StoryRecyclerViewAdapter mAdapter;
+    private StoryAdapter mAdapter;
     private List<Story> mStoryList;
 
     public HomeFragment() {
@@ -85,7 +85,7 @@ public class HomeFragment extends Fragment implements StoryClickListener {
     private void setRecyclerView() {
         mStoryList = new ArrayList<>();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        mAdapter = new StoryRecyclerViewAdapter(mStoryList, getActivity(), this);
+        mAdapter = new StoryAdapter(mStoryList, getActivity(), this);
         storyRecyclerView.setLayoutManager(linearLayoutManager);
         storyRecyclerView.setAdapter(mAdapter);
 

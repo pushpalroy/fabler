@@ -1,8 +1,8 @@
 package com.techradge.fabler.ui.login;
 
+import com.techradge.fabler.data.model.User;
 import com.techradge.fabler.ui.base.BasePresenter;
 import com.techradge.fabler.ui.base.BaseView;
-import com.techradge.fabler.data.model.User;
 
 public interface LoginContract {
 

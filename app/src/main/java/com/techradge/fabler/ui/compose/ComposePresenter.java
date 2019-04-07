@@ -6,21 +6,21 @@ import com.techradge.fabler.data.firebase.Database;
 import com.techradge.fabler.data.firebase.operations.story.StoryDataOp;
 import com.techradge.fabler.data.model.Story;
 import com.techradge.fabler.data.offline.StoryDatabase;
-import com.techradge.fabler.data.prefs.AppPrefsManager;
+import com.techradge.fabler.data.prefs.AppPreferencesHelper;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ComposePresenter implements ComposeContract.ComposePresenter {
 
     private StoryDataOp storyDataOp;
-    private AppPrefsManager appPrefsManager;
+    private AppPreferencesHelper appPrefsManager;
     private ComposeContract.ComposeView mView;
     private ComposeContract.ComposeInteractor mInteractor;
 
     ComposePresenter(ComposeContract.ComposeView composeView) {
         mView = checkNotNull(composeView, "ComposeView cannot be null.");
         storyDataOp = new StoryDataOp(Database.getFirebaseDatabase(), mView.getContext());
-        appPrefsManager = new AppPrefsManager(mView.getContext());
+        appPrefsManager = new AppPreferencesHelper(mView.getContext());
         mInteractor = new ComposeInteractor(this, StoryDatabase.getInstance(mView.getContext()));
     }
 

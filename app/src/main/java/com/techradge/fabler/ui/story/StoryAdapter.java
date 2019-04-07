@@ -1,4 +1,4 @@
-package com.techradge.fabler.ui.adapter;
+package com.techradge.fabler.ui.story;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,13 +22,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class StoryRecyclerViewAdapter extends RecyclerView.Adapter<StoryRecyclerViewAdapter.StoryViewHolder> {
+public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHolder> {
 
     protected Context context;
     private List<Story> storyList;
     private StoryClickListener storyClickListener;
 
-    public StoryRecyclerViewAdapter(List<Story> storyList, Context context, StoryClickListener storyClickListener) {
+    public StoryAdapter(List<Story> storyList, Context context, StoryClickListener storyClickListener) {
         this.context = context;
         this.storyList = storyList;
         this.storyClickListener = storyClickListener;

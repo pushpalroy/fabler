@@ -1,4 +1,4 @@
-package com.techradge.fabler.ui.adapter;
+package com.techradge.fabler.ui.comment;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -16,12 +16,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecyclerViewAdapter.CommentViewHolder> {
+public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
 
     protected Context context;
     private List<Comment> commentList;
 
-    public CommentRecyclerViewAdapter(List<Comment> commentList, Context context) {
+    public CommentAdapter(List<Comment> commentList, Context context) {
         this.context = context;
         this.commentList = commentList;
     }

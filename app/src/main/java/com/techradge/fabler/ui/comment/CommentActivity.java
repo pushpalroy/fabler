@@ -21,8 +21,7 @@ import com.techradge.fabler.data.firebase.Database;
 import com.techradge.fabler.data.firebase.operations.comment.CommentDataOp;
 import com.techradge.fabler.data.firebase.operations.story.StoryDataOp;
 import com.techradge.fabler.data.model.Comment;
-import com.techradge.fabler.ui.adapter.CommentRecyclerViewAdapter;
-import com.techradge.fabler.data.prefs.AppPrefsManager;
+import com.techradge.fabler.data.prefs.AppPreferencesHelper;
 import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.util.ArrayList;
@@ -50,7 +49,7 @@ public class CommentActivity extends AppCompatActivity {
     private final String TAG = CommentActivity.class.getSimpleName();
     private String storyId, comments;
     private List<Comment> mCommentList;
-    private CommentRecyclerViewAdapter mAdapter;
+    private CommentAdapter mAdapter;
     private DatabaseReference commentDatabaseReference;
 
     public CommentActivity() {
@@ -76,7 +75,7 @@ public class CommentActivity extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppPrefsManager appPrefsManager = new AppPrefsManager(CommentActivity.this);
+                AppPreferencesHelper appPrefsManager = new AppPreferencesHelper(CommentActivity.this);
                 String commentText = commentEditor.getText().toString();
                 Comment comment = new Comment(commentText, appPrefsManager.getUserFullName(), storyId);
                 commentDataOp.insertComment(comment, CommentActivity.this);
@@ -92,7 +91,7 @@ public class CommentActivity extends AppCompatActivity {
     private void setRecyclerView() {
         mCommentList = new ArrayList<>();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new CommentRecyclerViewAdapter(mCommentList, this);
+        mAdapter = new CommentAdapter(mCommentList, this);
         commentRecyclerView.setLayoutManager(linearLayoutManager);
         commentRecyclerView.setAdapter(mAdapter);
 

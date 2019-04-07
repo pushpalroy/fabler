@@ -6,7 +6,7 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.techradge.fabler.R;
-import com.techradge.fabler.data.prefs.AppPrefsManager;
+import com.techradge.fabler.data.prefs.AppPreferencesHelper;
 
 import java.util.ArrayList;
 
@@ -34,7 +34,7 @@ class StoryRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     private void populateStory() {
         listItemList.clear();
-        AppPrefsManager appPrefsManager = new AppPrefsManager(context);
+        AppPreferencesHelper appPrefsManager = new AppPreferencesHelper(context);
         ListItem listItem = new ListItem();
         listItem.storyBody = appPrefsManager.getWidgetStoryBody();
         listItemList.add(listItem);
