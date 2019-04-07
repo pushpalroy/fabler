@@ -56,8 +56,20 @@ dependencies {
     // Multidexing
     implementation 'com.android.support:multidex:1.0.3'
 
+    // Dependency injection
+    implementation "com.google.dagger:dagger:$rootProject.dagger2Version"
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
+    compileOnly 'javax.annotation:jsr250-api:1.0'
+    implementation 'javax.inject:javax.inject:1'
+
+    // logging
+    implementation "com.jakewharton.timber:timber:$rootProject.timber"
+
     // Guava
     implementation "com.google.guava:guava:$rootProject.guavaVersion"
+
+    // network
+    implementation "com.amitshekhar.android:rx2-android-networking:$rootProject.rx2FastAndroidNetworking"
 
     // Room - Database
     implementation "android.arch.persistence.room:runtime:$roomVersion"
