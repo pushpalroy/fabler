@@ -1,60 +1,46 @@
 package com.techradge.fabler.ui.login;
 
-import android.support.annotation.NonNull;
-import android.util.Log;
-
-import com.techradge.fabler.data.firebase.Database;
-import com.techradge.fabler.data.firebase.operations.user.UserDataOp;
 import com.techradge.fabler.data.model.User;
-import com.techradge.fabler.data.prefs.AppPreferencesHelper;
+import com.techradge.fabler.ui.base.BasePresenter;
+import com.techradge.fabler.ui.login.LoginContract.LoginInteractor;
+import com.techradge.fabler.ui.login.LoginContract.LoginView;
+import com.techradge.fabler.utils.rx.SchedulerProvider;
 
-import java.lang.ref.WeakReference;
+import javax.inject.Inject;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import io.reactivex.disposables.CompositeDisposable;
 
-public class LoginPresenter implements LoginContract.LoginPresenter {
+public class LoginPresenter<V extends LoginView, I extends LoginInteractor>
+        extends BasePresenter<V, I>
+        implements LoginContract.LoginPresenter<V, I> {
 
     private static final String TAG = "LoginPresenter";
-    // Weak Reference for View
-    private final WeakReference<LoginContract.LoginView> mView;
-    private UserDataOp userDataOp;
-    private AppPreferencesHelper appPrefsManager;
 
-    LoginPresenter(@NonNull LoginContract.LoginView loginView) {
-        mView = new WeakReference<>(checkNotNull(loginView, "LoginView cannot be null."));
-        userDataOp = new UserDataOp(Database.getFirebaseDatabase(), mView.get().getContext());
-        appPrefsManager = new AppPreferencesHelper(mView.get().getContext());
 
-        if (isUserLoggedIn()) {
-            // Launch Home Activity
-            mView.get().starHomeActivity();
-        } else
-            mView.get().startFirebaseUIAuth();
-    }
-
-    // User data insertion
-    @Override
-    public void insertUserData(User user) {
-        try {
-            userDataOp.insertUserData(user, mView.get().getContext());
-            appPrefsManager.setUserLoggedIn(true);
-            appPrefsManager.setUserFullName(user.getFullName());
-            appPrefsManager.setUserEmail(user.getEmail());
-            appPrefsManager.setUserPhotoUrl(user.getPhotoURL());
-
-            // Launch Welcome Activity
-            mView.get().startWelcomeActivity(user);
-        } catch (Exception e) {
-            Log.e(TAG, "Exception: " + e.toString());
-        }
+    @Inject
+    LoginPresenter(I mvpInteractor,
+                   SchedulerProvider schedulerProvider,
+                   CompositeDisposable compositeDisposable) {
+        super(mvpInteractor, schedulerProvider, compositeDisposable);
     }
 
     @Override
-    public boolean isUserLoggedIn() {
-        return appPrefsManager.isUserLoggedIn();
+    public void launch() {
+        if (getInteractor().isUserLoggedIn())
+            getMvpView().openHomeActivity();
+        else
+            getMvpView().startFirebaseUIAuth();
     }
 
     @Override
-    public void start() {
+    public void onAuthenticated(User user) {
+        String uid = user.getUid();
+        getInteractor().insertUserDataLocal(user);
+        onUserDataInsertedLocal(user);
+    }
+
+    @Override
+    public void onUserDataInsertedLocal(User user) {
+        getMvpView().openWelcomeActivity(user);
     }
 }

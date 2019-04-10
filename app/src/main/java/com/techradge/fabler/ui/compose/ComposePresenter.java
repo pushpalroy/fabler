@@ -5,42 +5,53 @@ import android.content.Context;
 import com.techradge.fabler.data.firebase.Database;
 import com.techradge.fabler.data.firebase.operations.story.StoryDataOp;
 import com.techradge.fabler.data.model.Story;
-import com.techradge.fabler.data.offline.StoryDatabase;
-import com.techradge.fabler.data.prefs.AppPreferencesHelper;
+import com.techradge.fabler.di.ActivityContext;
+import com.techradge.fabler.ui.base.BasePresenter;
+import com.techradge.fabler.ui.compose.ComposeContract.ComposeInteractor;
+import com.techradge.fabler.ui.compose.ComposeContract.ComposeView;
+import com.techradge.fabler.utils.rx.SchedulerProvider;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import javax.inject.Inject;
 
-public class ComposePresenter implements ComposeContract.ComposePresenter {
+import io.reactivex.disposables.CompositeDisposable;
+
+public class ComposePresenter<V extends ComposeView, I extends ComposeInteractor>
+        extends BasePresenter<V, I>
+        implements ComposeContract.ComposePresenter<V, I> {
 
     private StoryDataOp storyDataOp;
-    private AppPreferencesHelper appPrefsManager;
-    private ComposeContract.ComposeView mView;
-    private ComposeContract.ComposeInteractor mInteractor;
 
-    ComposePresenter(ComposeContract.ComposeView composeView) {
-        mView = checkNotNull(composeView, "ComposeView cannot be null.");
-        storyDataOp = new StoryDataOp(Database.getFirebaseDatabase(), mView.getContext());
-        appPrefsManager = new AppPreferencesHelper(mView.getContext());
-        mInteractor = new ComposeInteractor(this, StoryDatabase.getInstance(mView.getContext()));
+    @Inject
+    ComposePresenter(@ActivityContext Context context, I mvpInteractor,
+                     SchedulerProvider schedulerProvider,
+                     CompositeDisposable compositeDisposable) {
+
+        super(mvpInteractor, schedulerProvider, compositeDisposable);
+
+        storyDataOp = new StoryDataOp(Database.getFirebaseDatabase(), context);
+
+        getInteractor().setPresenter(this);
     }
 
     @Override
     public void onSaveOptionSelected(Story story) {
-        mInteractor.insertStoryInLocalDb(story);
+        // Locally
+        getInteractor().insertStoryInLocalDb(story);
     }
 
     @Override
-    public void onPublishOptionSelected(Story story, Context context) {
-        storyDataOp.insertStoryData(story, context);
+    public void onPublishOptionSelected(Story story) {
+        // Firebase
+        storyDataOp.insertStoryData(story);
     }
 
     @Override
-    public void onStorySavedLocally() {
-        mView.showDraftSavedMessage();
+    public void onSavedLocally() {
+        getMvpView().showMessageDraftSaved();
     }
 
     @Override
-    public void start() {
+    public void onPublished() {
 
     }
 }

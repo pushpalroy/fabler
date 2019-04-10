@@ -20,9 +20,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.techradge.fabler.R;
 import com.techradge.fabler.data.firebase.Database;
 import com.techradge.fabler.data.model.Story;
-import com.techradge.fabler.ui.story.StoryAdapter;
 import com.techradge.fabler.ui.compose.ComposeActivity;
 import com.techradge.fabler.ui.read.ReadActivity;
+import com.techradge.fabler.ui.story.StoryAdapter;
 import com.techradge.fabler.ui.story.StoryClickListener;
 import com.victor.loading.newton.NewtonCradleLoading;
 
@@ -60,8 +60,7 @@ public class HomeFragment extends Fragment implements StoryClickListener {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent composeIntent = new Intent(getActivity(), ComposeActivity.class);
-                startActivity(composeIntent);
+                startActivity(ComposeActivity.getStartIntent(getActivity()));
             }
         });
 

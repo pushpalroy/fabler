@@ -2,7 +2,6 @@ package com.techradge.fabler.data.firebase.operations.story;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -11,20 +10,25 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.techradge.fabler.R;
 import com.techradge.fabler.data.model.Story;
+import com.techradge.fabler.di.ApplicationContext;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import timber.log.Timber;
 
 public class StoryDataOp {
 
     private DatabaseReference storyDatabase;
     private String TAG = "StoryDataOp";
+    private Context context;
 
-    public StoryDataOp(FirebaseDatabase firebaseDatabase, Context context) {
+    public StoryDataOp(FirebaseDatabase firebaseDatabase, @ApplicationContext Context context) {
         storyDatabase = firebaseDatabase.getReference().child(context.getString(R.string.child_story));
+        this.context = context;
     }
 
-    public void insertStoryData(Story story, final Context context) {
+    public void insertStoryData(Story story) {
         String key = storyDatabase.push().getKey();
         try {
             if (key != null) {
@@ -44,7 +48,7 @@ public class StoryDataOp {
                         });
             }
         } catch (Exception e) {
-            Log.e(TAG, e.toString());
+            Timber.e(e.toString());
         }
     }
 

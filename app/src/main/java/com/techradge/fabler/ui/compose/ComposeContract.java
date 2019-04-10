@@ -3,24 +3,34 @@ package com.techradge.fabler.ui.compose;
 import android.content.Context;
 
 import com.techradge.fabler.data.model.Story;
-import com.techradge.fabler.ui.base.BasePresenter;
-import com.techradge.fabler.ui.base.BaseView;
+import com.techradge.fabler.di.PerActivity;
+import com.techradge.fabler.ui.base.MvpInteractor;
+import com.techradge.fabler.ui.base.MvpPresenter;
+import com.techradge.fabler.ui.base.MvpView;
 
 public interface ComposeContract {
-    interface ComposeView extends BaseView<ComposePresenter> {
+    interface ComposeView extends MvpView {
 
-        void showDraftSavedMessage();
+        void showMessagePublished();
+
+        void showMessageDraftSaved();
     }
 
-    interface ComposePresenter extends BasePresenter {
+    @PerActivity
+    interface ComposePresenter<V extends MvpView, I extends MvpInteractor>
+            extends MvpPresenter<V, I> {
         void onSaveOptionSelected(Story story);
 
-        void onPublishOptionSelected(Story story, Context context);
+        void onPublishOptionSelected(Story story);
 
-        void onStorySavedLocally();
+        void onSavedLocally();
+
+        void onPublished();
     }
 
-    interface ComposeInteractor {
+    interface ComposeInteractor extends MvpInteractor {
         void insertStoryInLocalDb(Story story);
+
+        void setPresenter(ComposeContract.ComposePresenter composePresenter);
     }
 }

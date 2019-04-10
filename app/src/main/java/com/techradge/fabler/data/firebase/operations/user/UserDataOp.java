@@ -2,14 +2,15 @@ package com.techradge.fabler.data.firebase.operations.user;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
-import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.techradge.fabler.R;
+import com.techradge.fabler.data.model.User;
 import com.techradge.fabler.data.network.AppExecutors;
 import com.techradge.fabler.data.offline.UserDatabase;
-import com.techradge.fabler.data.model.User;
+
+import timber.log.Timber;
 
 public class UserDataOp implements UserData {
 
@@ -32,12 +33,12 @@ public class UserDataOp implements UserData {
                                 .userDao()
                                 .insertUser(user);
                     } catch (SQLiteConstraintException e) {
-                        Log.e(TAG, e.getMessage());
+                        Timber.e(e);
                     }
                 }
             });
         } catch (Exception e) {
-            Log.e(TAG, e.toString());
+            Timber.e(e.toString());
         }
     }
 }

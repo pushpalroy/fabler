@@ -1,5 +1,7 @@
 package com.techradge.fabler.data.prefs;
 
+import com.techradge.fabler.utils.AppConstants;
+
 import javax.inject.Singleton;
 
 @Singleton
@@ -11,6 +13,10 @@ public interface PreferencesHelper {
     void setUserLoggedIn(boolean isUserLoggedIn);
 
     boolean isUserLoggedIn();
+
+    int getCurrentUserLoggedInMode();
+
+    void setCurrentUserLoggedInMode(AppConstants.LoggedInMode mode);
 
     void setUserFullName(String userFullName);
 
@@ -35,4 +41,8 @@ public interface PreferencesHelper {
     void setUserPhotoUrl(String userPhotoUrl);
 
     String getUserPhotoUrl();
+
+    String getAccessToken();
+
+    void setAccessToken(String accessToken);
 }

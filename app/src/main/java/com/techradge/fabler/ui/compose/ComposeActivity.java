@@ -2,20 +2,22 @@ package com.techradge.fabler.ui.compose;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.techradge.fabler.R;
 import com.techradge.fabler.data.model.Story;
-import com.techradge.fabler.data.prefs.AppPreferencesHelper;
+import com.techradge.fabler.di.ApplicationContext;
 import com.techradge.fabler.ui.base.BaseActivity;
 
 import java.util.Calendar;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,23 +25,34 @@ import butterknife.ButterKnife;
 public class ComposeActivity extends BaseActivity implements ComposeContract.ComposeView {
 
     @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    Toolbar mToolbar;
     @BindView(R.id.et_title)
     EditText titleEditor;
     @BindView(R.id.et_body)
     EditText storyEditor;
 
+    @Inject
+    public ComposePresenter<ComposeContract.ComposeView, ComposeInteractor> mPresenter;
+
     private final String TAG = ComposeActivity.class.getSimpleName();
-    private ComposePresenter mPresenter;
-    private AppPreferencesHelper appPrefsManager;
+
+    public static Intent getStartIntent(Context context) {
+        Intent intent = new Intent(context, ComposeActivity.class);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_compose);
-        ButterKnife.bind(this);
-        setUpActionBar(toolbar);
+
+        getActivityComponent().inject(this);
+
+        setUnBinder(ButterKnife.bind(this));
+
+        mPresenter.onAttach(ComposeActivity.this);
+
+        setUp();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -49,9 +62,16 @@ public class ComposeActivity extends BaseActivity implements ComposeContract.Com
             titleEditor.setText(title);
             storyEditor.setText(story);
         }
+    }
 
-        appPrefsManager = new AppPreferencesHelper(this);
-        mPresenter = new ComposePresenter(this);
+    @Override
+    protected void setUp() {
+        setSupportActionBar(mToolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
     }
 
 
@@ -84,7 +104,7 @@ public class ComposeActivity extends BaseActivity implements ComposeContract.Com
                         .setTitle(R.string.dialog_publish_title)
                         .setPositiveButton(R.string.publish, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                mPresenter.onPublishOptionSelected(createStory(), getApplicationContext());
+                                mPresenter.onPublishOptionSelected(createStory());
                                 dialog.dismiss();
                                 finish();
                             }
@@ -107,7 +127,7 @@ public class ComposeActivity extends BaseActivity implements ComposeContract.Com
         Story story = new Story();
         story.setTitle(title);
         story.setStory(body);
-        story.setAuthor(appPrefsManager.getUserFullName());
+        story.setAuthor(mPresenter.getInteractor().getPreferencesHelper().getUserFullName());
         story.setTime(Calendar.getInstance().getTime().toString());
         return story;
     }
@@ -122,17 +142,12 @@ public class ComposeActivity extends BaseActivity implements ComposeContract.Com
     }
 
     @Override
-    public void showDraftSavedMessage() {
-        showToastMessage(getString(R.string.toast_message_draft), Toast.LENGTH_LONG);
-    }
-
-    @Override
-    public void setPresenter(ComposeContract.ComposePresenter presenter) {
+    public void showMessagePublished() {
 
     }
 
     @Override
-    public Context getContext() {
-        return ComposeActivity.this;
+    public void showMessageDraftSaved() {
+        showMessage(getString(R.string.toast_message_draft));
     }
 }

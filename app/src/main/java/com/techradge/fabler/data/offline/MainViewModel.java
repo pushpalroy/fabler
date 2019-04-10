@@ -4,11 +4,12 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.techradge.fabler.data.model.Story;
 
 import java.util.List;
+
+import timber.log.Timber;
 
 public class MainViewModel extends AndroidViewModel {
 
@@ -19,7 +20,7 @@ public class MainViewModel extends AndroidViewModel {
         super(application);
 
         StoryDatabase storyDatabase = StoryDatabase.getInstance(this.getApplication());
-        Log.e(TAG, "Actively retrieving the drafts from the database");
+        Timber.e("Actively retrieving the drafts from the database");
         drafts = storyDatabase.storyDao().getStories();
     }
 

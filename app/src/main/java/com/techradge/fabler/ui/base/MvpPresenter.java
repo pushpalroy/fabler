@@ -16,7 +16,7 @@ public interface MvpPresenter<V extends MvpView, I extends MvpInteractor> {
 
     boolean isViewAttached();
 
-    //void checkViewAttached() throws BasePresenter.MvpViewNotAttachedException;
+    void checkViewAttached() throws BasePresenter.MvpViewNotAttachedException;
 
     //void handleApiError(ANError error);
 

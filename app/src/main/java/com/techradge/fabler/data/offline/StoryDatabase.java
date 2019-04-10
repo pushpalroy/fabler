@@ -17,9 +17,10 @@ public abstract class StoryDatabase extends RoomDatabase {
     private static final String TAG = StoryDatabase.class.getSimpleName();
     private static final Object LOCK = new Object();
     private static final String DB_NAME = "storyDatabase";
+
     private static volatile StoryDatabase sInstance;
 
-    // Returning database instance using Singleton pattern
+    // Singleton
     public static synchronized StoryDatabase getInstance(Context context) {
         if (sInstance == null) {
             synchronized (LOCK) {

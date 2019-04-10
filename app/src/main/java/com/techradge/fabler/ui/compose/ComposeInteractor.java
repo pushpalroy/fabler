@@ -1,22 +1,31 @@
 package com.techradge.fabler.ui.compose;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.techradge.fabler.data.model.Story;
 import com.techradge.fabler.data.offline.StoryDatabase;
+import com.techradge.fabler.data.prefs.PreferencesHelper;
+import com.techradge.fabler.di.ApplicationContext;
+import com.techradge.fabler.ui.base.BaseInteractor;
 
-public class ComposeInteractor implements ComposeContract.ComposeInteractor {
+import javax.inject.Inject;
+
+import timber.log.Timber;
+
+public class ComposeInteractor extends BaseInteractor implements ComposeContract.ComposeInteractor {
 
     private final String TAG = ComposeInteractor.class.getSimpleName();
-    private ComposePresenter mPresenter;
-    private StoryDatabase mDatabase;
 
-    ComposeInteractor(ComposePresenter composePresenter, StoryDatabase storyDatabase) {
-        mPresenter = composePresenter;
-        mDatabase = storyDatabase;
+    private Context context;
+    private ComposeContract.ComposePresenter mPresenter;
+
+    @Inject
+    ComposeInteractor(PreferencesHelper preferencesHelper, @ApplicationContext Context context) {
+        super(preferencesHelper);
+        this.context = context;
     }
 
     @Override
@@ -30,18 +39,23 @@ public class ComposeInteractor implements ComposeContract.ComposeInteractor {
         @Override
         protected Void doInBackground(Story... params) {
             try {
-                mDatabase
+                StoryDatabase.getInstance(context)
                         .storyDao()
                         .insertStory(params[0]);
             } catch (SQLiteConstraintException e) {
-                Log.e(TAG, e.getMessage());
+                Timber.e(e);
             }
             return null;
         }
 
         @Override
         protected void onPostExecute(Void param) {
-            mPresenter.onStorySavedLocally();
+            mPresenter.onSavedLocally();
         }
+    }
+
+    @Override
+    public void setPresenter(ComposeContract.ComposePresenter composePresenter) {
+        mPresenter = composePresenter;
     }
 }

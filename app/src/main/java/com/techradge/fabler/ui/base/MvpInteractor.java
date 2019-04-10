@@ -14,11 +14,9 @@ public interface MvpInteractor {
     void setAccessToken(String accessToken);
 
     void updateUserInfo(String accessToken,
-                        Long userId,
+                        boolean isUserLoggedIn,
                         AppConstants.LoggedInMode loggedInMode,
                         String userName,
                         String email,
                         String profilePicPath);
-
-    void updateApiHeader(Long userId, String accessToken);
 }
