@@ -7,6 +7,7 @@ import com.androidnetworking.interceptors.HttpLoggingInterceptor.Level;
 import com.techradge.fabler.di.component.ApplicationComponent;
 import com.techradge.fabler.di.component.DaggerApplicationComponent;
 import com.techradge.fabler.di.module.ApplicationModule;
+import com.techradge.fabler.di.module.DbModule;
 import com.techradge.fabler.utils.AppLogger;
 
 import javax.inject.Inject;
@@ -25,8 +26,11 @@ public class MvpApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        mApplicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this)).build();
+        mApplicationComponent =
+                DaggerApplicationComponent
+                        .builder()
+                        .applicationModule(new ApplicationModule(this))
+                        .build();
 
         mApplicationComponent.inject(this);
 

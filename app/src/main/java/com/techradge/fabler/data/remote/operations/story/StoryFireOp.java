@@ -1,4 +1,4 @@
-package com.techradge.fabler.data.firebase.operations.story;
+package com.techradge.fabler.data.remote.operations.story;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -17,13 +17,13 @@ import java.util.Map;
 
 import timber.log.Timber;
 
-public class StoryDataOp {
+public class StoryFireOp {
 
     private DatabaseReference storyDatabase;
-    private String TAG = "StoryDataOp";
+    private String TAG = "StoryFireOp";
     private Context context;
 
-    public StoryDataOp(FirebaseDatabase firebaseDatabase, @ApplicationContext Context context) {
+    public StoryFireOp(FirebaseDatabase firebaseDatabase, @ApplicationContext Context context) {
         storyDatabase = firebaseDatabase.getReference().child(context.getString(R.string.child_story));
         this.context = context;
     }

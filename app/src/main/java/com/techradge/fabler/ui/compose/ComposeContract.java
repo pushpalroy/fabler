@@ -2,6 +2,7 @@ package com.techradge.fabler.ui.compose;
 
 import android.content.Context;
 
+import com.techradge.fabler.data.local.viewmodel.MainViewModel;
 import com.techradge.fabler.data.model.Story;
 import com.techradge.fabler.di.PerActivity;
 import com.techradge.fabler.ui.base.MvpInteractor;
@@ -23,13 +24,12 @@ public interface ComposeContract {
 
         void onPublishOptionSelected(Story story);
 
-        void onSavedLocally();
-
         void onPublished();
+
+        void setViewModel(MainViewModel mainViewModel);
     }
 
     interface ComposeInteractor extends MvpInteractor {
-        void insertStoryInLocalDb(Story story);
 
         void setPresenter(ComposeContract.ComposePresenter composePresenter);
     }

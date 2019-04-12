@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,15 +11,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.techradge.fabler.R;
-import com.techradge.fabler.data.network.AppExecutors;
-import com.techradge.fabler.data.offline.MainViewModel;
-import com.techradge.fabler.data.offline.StoryDatabase;
+import com.techradge.fabler.data.local.viewmodel.MainViewModel;
 import com.techradge.fabler.data.model.Story;
 import com.techradge.fabler.ui.compose.ComposeActivity;
 import com.techradge.fabler.ui.story.StoryClickListener;
@@ -50,17 +46,14 @@ public class DraftFragment extends Fragment implements StoryClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_draft, container, false);
+
         unbinder = ButterKnife.bind(this, rootView);
+        mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent composeIntent = new Intent(getActivity(), ComposeActivity.class);
-                startActivity(composeIntent);
-            }
-        });
+        listenerSetup();
+        observerSetup();
+        recyclerViewSetup();
 
-        setRecyclerView();
         return rootView;
     }
 
@@ -75,28 +68,6 @@ public class DraftFragment extends Fragment implements StoryClickListener {
         unbinder.unbind();
     }
 
-    private void setRecyclerView() {
-        draftsList = new ArrayList<>();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        mAdapter = new DraftAdapter(draftsList, getActivity(), this);
-        draftsRecyclerView.setLayoutManager(linearLayoutManager);
-        draftsRecyclerView.setAdapter(mAdapter);
-
-        mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        mMainViewModel.getFavMovies().observe(getActivity(), new Observer<List<Story>>() {
-            @Override
-            public void onChanged(@Nullable List<Story> stories) {
-                if (stories != null) {
-                    draftsList.clear();
-                    draftsList.addAll(stories);
-                    Collections.reverse(draftsList);
-                    mAdapter.notifyItemInserted(draftsList.size() - 1);
-                    mAdapter.notifyDataSetChanged();
-                }
-            }
-        });
-    }
-
     @Override
     public void onStoryClick(int position, final Story story) {
         Intent readIntent = new Intent(getActivity(), ComposeActivity.class);
@@ -104,17 +75,41 @@ public class DraftFragment extends Fragment implements StoryClickListener {
         readIntent.putExtra("story", story.getStory());
         startActivity(readIntent);
 
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    StoryDatabase.getInstance(getActivity())
-                            .storyDao()
-                            .deleteStory(story);
+        mMainViewModel.deleteStory(story);
+    }
 
-                } catch (SQLiteConstraintException e) {
-                    Log.e(TAG, e.getMessage());
-                }
+    private void recyclerViewSetup() {
+        draftsList = new ArrayList<>();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        mAdapter = new DraftAdapter(draftsList, getActivity(), mMainViewModel, this);
+        draftsRecyclerView.setLayoutManager(linearLayoutManager);
+        draftsRecyclerView.setAdapter(mAdapter);
+    }
+
+    public void observerSetup() {
+        mMainViewModel
+                .getAllStories()
+                .observe(getActivity(),
+                        new Observer<List<Story>>() {
+                            @Override
+                            public void onChanged(@Nullable List<Story> stories) {
+                                if (stories != null) {
+                                    draftsList.clear();
+                                    draftsList.addAll(stories);
+                                    Collections.reverse(draftsList);
+                                    mAdapter.notifyItemInserted(draftsList.size() - 1);
+                                    mAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        });
+    }
+
+    public void listenerSetup() {
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent composeIntent = new Intent(getActivity(), ComposeActivity.class);
+                startActivity(composeIntent);
             }
         });
     }

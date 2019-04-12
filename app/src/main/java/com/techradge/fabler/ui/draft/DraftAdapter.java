@@ -1,12 +1,13 @@
 package com.techradge.fabler.ui.draft;
 
+import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.database.sqlite.SQLiteConstraintException;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.techradge.fabler.R;
-import com.techradge.fabler.data.network.AppExecutors;
-import com.techradge.fabler.data.offline.StoryDatabase;
+import com.techradge.fabler.data.local.viewmodel.MainViewModel;
 import com.techradge.fabler.data.model.Story;
 import com.techradge.fabler.ui.story.StoryClickListener;
 
@@ -23,6 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.DraftsViewHolder> {
 
@@ -30,11 +31,13 @@ public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.DraftsViewHo
     private List<Story> draftsList;
     private StoryClickListener storyClickListener;
     private final String TAG = DraftAdapter.class.getSimpleName();
+    private MainViewModel mainViewModel;
 
-    public DraftAdapter(List<Story> draftsList, Context context, StoryClickListener storyClickListener) {
+    DraftAdapter(List<Story> draftsList, Context context, MainViewModel mainViewModel, StoryClickListener storyClickListener) {
         this.context = context;
         this.draftsList = draftsList;
         this.storyClickListener = storyClickListener;
+        this.mainViewModel = mainViewModel;
     }
 
     @NonNull
@@ -73,17 +76,12 @@ public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.DraftsViewHo
                         .setTitle(R.string.dialog_delete_title)
                         .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                                mainViewModel.deleteStory(story);
+                                mainViewModel.getDeletionStatus().observe((LifecycleOwner) context, new Observer<Integer>() {
                                     @Override
-                                    public void run() {
-                                        try {
-                                            StoryDatabase.getInstance(context)
-                                                    .storyDao()
-                                                    .deleteStory(story);
-
-                                        } catch (SQLiteConstraintException e) {
-                                            Log.e(TAG, e.getMessage());
-                                        }
+                                    public void onChanged(@Nullable Integer integer) {
+                                        if (integer != null)
+                                            Timber.e("InsertionStatus: %s", integer);
                                     }
                                 });
                             }

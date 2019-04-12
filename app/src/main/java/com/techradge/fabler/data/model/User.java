@@ -40,7 +40,7 @@ public class User {
     }
 
     @Ignore
-    public User(String fullName, String email, boolean emailVerified, String photoURL, String uid) {
+    public User(String fullName, String email, boolean emailVerified, String photoURL, @NonNull String uid) {
         this.fullName = fullName;
         this.email = email;
         this.emailVerified = emailVerified;
@@ -50,7 +50,7 @@ public class User {
 
     public User(String userName, String fullName, String email, boolean emailVerified, String photoURL,
                 String gender, String location, String about, String level, String profileCreationTimeStamp,
-                String lastOnlineTimeStamp, String uid) {
+                String lastOnlineTimeStamp, @NonNull String uid) {
         this.userName = userName;
         this.fullName = fullName;
         this.email = email;
@@ -153,6 +153,7 @@ public class User {
         this.lastOnlineTimeStamp = lastOnlineTimeStamp;
     }
 
+    @NonNull
     public String getUid() {
         return uid;
     }

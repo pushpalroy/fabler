@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 
 import com.techradge.fabler.MvpApp;
-import com.techradge.fabler.data.offline.StoryDatabase;
 import com.techradge.fabler.data.prefs.PreferencesHelper;
 import com.techradge.fabler.di.ApplicationContext;
 import com.techradge.fabler.di.module.ApplicationModule;
@@ -15,7 +14,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = ApplicationModule.class)
+@Component(modules = {ApplicationModule.class})
 public interface ApplicationComponent {
 
     void inject(MvpApp app);
@@ -28,10 +27,4 @@ public interface ApplicationComponent {
     Application application();
 
     PreferencesHelper preferencesHelper();
-
-    //StoryDatabase storyDatabase();
-
-    //ApiHelper apiHelper();
-
-    //DaoSession daoSession();
 }

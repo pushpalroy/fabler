@@ -1,8 +1,8 @@
-package com.techradge.fabler.data.firebase;
+package com.techradge.fabler.data.remote;
 
 import com.google.firebase.database.FirebaseDatabase;
 
-public class Database {
+public class RemoteFireDatabase {
     private static FirebaseDatabase firebaseDatabase = null;
 
     public static FirebaseDatabase getFirebaseDatabase() {

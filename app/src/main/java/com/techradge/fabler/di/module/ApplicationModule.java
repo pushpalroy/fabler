@@ -1,11 +1,14 @@
 package com.techradge.fabler.di.module;
 
 import android.app.Application;
+import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.techradge.fabler.BuildConfig;
 import com.techradge.fabler.R;
-import com.techradge.fabler.data.offline.StoryDatabase;
+import com.techradge.fabler.data.local.appDatabase.StoryDatabase;
+import com.techradge.fabler.data.local.appDatabase.UserDatabase;
 import com.techradge.fabler.data.prefs.AppPreferencesHelper;
 import com.techradge.fabler.data.prefs.PreferencesHelper;
 import com.techradge.fabler.di.ApiInfo;
@@ -19,6 +22,9 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+
+import static com.techradge.fabler.utils.AppConstants.DB_NAME_STORY;
+import static com.techradge.fabler.utils.AppConstants.DB_NAME_USER;
 
 @Module
 public class ApplicationModule {
@@ -41,15 +47,15 @@ public class ApplicationModule {
     }
 
     @Provides
-    @DatabaseInfo
-    String provideDatabaseName() {
-        return AppConstants.DB_NAME;
-    }
-
-    @Provides
     @ApiInfo
     String provideApiKey() {
         return BuildConfig.API_KEY;
+    }
+
+    @Provides
+    @Singleton
+    PreferencesHelper providePreferencesHelper(AppPreferencesHelper appPreferencesHelper) {
+        return appPreferencesHelper;
     }
 
     @Provides
@@ -60,32 +66,33 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    PreferencesHelper providePreferencesHelper(AppPreferencesHelper appPreferencesHelper) {
-        return appPreferencesHelper;
+    StoryDatabase provideStoryDatabase(@NonNull Application application) {
+        return Room.databaseBuilder(
+                application,
+                StoryDatabase.class,
+                DB_NAME_STORY).build();
+    }
+
+    @Provides
+    @DatabaseInfo
+    String provideStoryDatabaseName() {
+        return AppConstants.DB_NAME_STORY;
     }
 
     @Provides
     @Singleton
-    StoryDatabase provideStoryDatabase(StoryDatabase storyDatabase) {
-        return storyDatabase;
+    UserDatabase provideUserDatabase(@NonNull Application application) {
+        return Room.databaseBuilder(
+                application,
+                UserDatabase.class,
+                DB_NAME_USER).build();
     }
 
-//    @Provides
-//    @Singleton
-//    ApiHelper provideApiHelper(AppApiHelper appApiHelper) {
-//        return appApiHelper;
-//    }
-//
-//    @Provides
-//    @Singleton
-//    ApiHeader.ProtectedApiHeader provideProtectedApiHeader(
-//            @ApiInfo String apiKey,
-//            PreferencesHelper preferencesHelper) {
-//        return new ApiHeader.ProtectedApiHeader(
-//                apiKey,
-//                preferencesHelper.getCurrentUserId(),
-//                preferencesHelper.getAccessToken());
-//    }
+    @Provides
+    @DatabaseInfo
+    String provideUserDatabaseName() {
+        return AppConstants.DB_NAME_USER;
+    }
 
     @Provides
     @Singleton

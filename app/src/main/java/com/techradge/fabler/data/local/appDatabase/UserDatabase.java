@@ -1,4 +1,4 @@
-package com.techradge.fabler.data.offline;
+package com.techradge.fabler.data.local.appDatabase;
 
 import android.arch.persistence.db.SupportSQLiteOpenHelper;
 import android.arch.persistence.room.Database;
@@ -9,14 +9,16 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.techradge.fabler.data.local.dao.UserDao;
 import com.techradge.fabler.data.model.User;
+
+import static com.techradge.fabler.utils.AppConstants.DB_NAME_USER;
 
 @Database(entities = {User.class}, version = 1, exportSchema = false)
 public abstract class UserDatabase extends RoomDatabase {
 
     private static final String TAG = UserDatabase.class.getSimpleName();
     private static final Object LOCK = new Object();
-    private static final String DB_NAME = "userDatabase";
     private static volatile UserDatabase sInstance;
 
     // Returning database instance using Singleton pattern
@@ -33,7 +35,7 @@ public abstract class UserDatabase extends RoomDatabase {
         return Room.databaseBuilder(
                 context,
                 UserDatabase.class,
-                DB_NAME).build();
+                DB_NAME_USER).build();
     }
 
     public abstract UserDao userDao();

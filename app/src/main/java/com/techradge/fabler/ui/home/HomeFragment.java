@@ -18,7 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.techradge.fabler.R;
-import com.techradge.fabler.data.firebase.Database;
+import com.techradge.fabler.data.remote.RemoteFireDatabase;
 import com.techradge.fabler.data.model.Story;
 import com.techradge.fabler.ui.compose.ComposeActivity;
 import com.techradge.fabler.ui.read.ReadActivity;
@@ -88,7 +88,7 @@ public class HomeFragment extends Fragment implements StoryClickListener {
         storyRecyclerView.setLayoutManager(linearLayoutManager);
         storyRecyclerView.setAdapter(mAdapter);
 
-        databaseReference = Database.getFirebaseDatabase().getReference().child(getActivity().getResources().getString(R.string.child_story));
+        databaseReference = RemoteFireDatabase.getFirebaseDatabase().getReference().child(getActivity().getResources().getString(R.string.child_story));
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

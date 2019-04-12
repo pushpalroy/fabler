@@ -1,5 +1,6 @@
 package com.techradge.fabler.ui.login;
 
+import com.techradge.fabler.data.local.viewmodel.MainViewModel;
 import com.techradge.fabler.data.model.User;
 import com.techradge.fabler.ui.base.BasePresenter;
 import com.techradge.fabler.ui.login.LoginContract.LoginInteractor;
@@ -16,6 +17,7 @@ public class LoginPresenter<V extends LoginView, I extends LoginInteractor>
 
     private static final String TAG = "LoginPresenter";
 
+    private MainViewModel mMainViewModel;
 
     @Inject
     LoginPresenter(I mvpInteractor,
@@ -35,12 +37,18 @@ public class LoginPresenter<V extends LoginView, I extends LoginInteractor>
     @Override
     public void onAuthenticated(User user) {
         String uid = user.getUid();
-        getInteractor().insertUserDataLocal(user);
-        onUserDataInsertedLocal(user);
+        getInteractor().insertUserDataLocal(user, mMainViewModel);
+        getInteractor().insertUserDataRemote(user);
+        onUserDataInserted(user);
     }
 
     @Override
-    public void onUserDataInsertedLocal(User user) {
+    public void onUserDataInserted(User user) {
         getMvpView().openWelcomeActivity(user);
+    }
+
+    @Override
+    public void setViewModel(MainViewModel mainViewModel) {
+        mMainViewModel = mainViewModel;
     }
 }

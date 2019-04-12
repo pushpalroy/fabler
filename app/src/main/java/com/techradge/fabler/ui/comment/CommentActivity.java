@@ -17,9 +17,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.techradge.fabler.R;
-import com.techradge.fabler.data.firebase.Database;
-import com.techradge.fabler.data.firebase.operations.comment.CommentDataOp;
-import com.techradge.fabler.data.firebase.operations.story.StoryDataOp;
+import com.techradge.fabler.data.remote.RemoteFireDatabase;
+import com.techradge.fabler.data.remote.operations.comment.CommentFireOp;
+import com.techradge.fabler.data.remote.operations.story.StoryFireOp;
 import com.techradge.fabler.data.model.Comment;
 import com.techradge.fabler.data.prefs.AppPreferencesHelper;
 import com.victor.loading.newton.NewtonCradleLoading;
@@ -45,7 +45,7 @@ public class CommentActivity extends AppCompatActivity {
     NewtonCradleLoading loader;
     @BindView(R.id.loader_container)
     LinearLayout loaderContainer;
-    private CommentDataOp commentDataOp;
+    private CommentFireOp commentFireOp;
     private final String TAG = CommentActivity.class.getSimpleName();
     private String storyId, comments;
     private List<Comment> mCommentList;
@@ -69,7 +69,7 @@ public class CommentActivity extends AppCompatActivity {
             comments = extras.getString(getString(R.string.key_comments));
         }
 
-        commentDataOp = new CommentDataOp(Database.getFirebaseDatabase(), storyId, this);
+        commentFireOp = new CommentFireOp(RemoteFireDatabase.getFirebaseDatabase(), storyId, this);
         setRecyclerView();
 
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -78,10 +78,10 @@ public class CommentActivity extends AppCompatActivity {
                 AppPreferencesHelper appPrefsManager = new AppPreferencesHelper(CommentActivity.this);
                 String commentText = commentEditor.getText().toString();
                 Comment comment = new Comment(commentText, appPrefsManager.getUserFullName(), storyId);
-                commentDataOp.insertComment(comment, CommentActivity.this);
+                commentFireOp.insertComment(comment, CommentActivity.this);
 
-                StoryDataOp storyDataOp = new StoryDataOp(Database.getFirebaseDatabase(), CommentActivity.this);
-                storyDataOp.postCommentUpdateStory(storyId, comments);
+                StoryFireOp storyFireOp = new StoryFireOp(RemoteFireDatabase.getFirebaseDatabase(), CommentActivity.this);
+                storyFireOp.postCommentUpdateStory(storyId, comments);
 
                 commentEditor.setText("");
             }
@@ -95,7 +95,7 @@ public class CommentActivity extends AppCompatActivity {
         commentRecyclerView.setLayoutManager(linearLayoutManager);
         commentRecyclerView.setAdapter(mAdapter);
 
-        commentDatabaseReference = Database.getFirebaseDatabase().getReference().child(getString(R.string.child_comment)).child(storyId);
+        commentDatabaseReference = RemoteFireDatabase.getFirebaseDatabase().getReference().child(getString(R.string.child_comment)).child(storyId);
 
         commentDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override

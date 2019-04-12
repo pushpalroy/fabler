@@ -13,19 +13,28 @@ import java.util.Map;
 
 @Entity(tableName = "story")
 public class Story {
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int id;
+
     private String storyId;
+
     private String author;
+
     @ColumnInfo(name = "title")
     private String title;
+
     @ColumnInfo(name = "story")
     private String story;
+
     @ColumnInfo(name = "time")
     private String time;
+
     private String likes;
+
     private String comments;
+
     private String shares;
 
     @Ignore

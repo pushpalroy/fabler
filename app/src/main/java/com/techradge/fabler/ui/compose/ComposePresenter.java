@@ -2,9 +2,10 @@ package com.techradge.fabler.ui.compose;
 
 import android.content.Context;
 
-import com.techradge.fabler.data.firebase.Database;
-import com.techradge.fabler.data.firebase.operations.story.StoryDataOp;
+import com.techradge.fabler.data.local.viewmodel.MainViewModel;
 import com.techradge.fabler.data.model.Story;
+import com.techradge.fabler.data.remote.RemoteFireDatabase;
+import com.techradge.fabler.data.remote.operations.story.StoryFireOp;
 import com.techradge.fabler.di.ActivityContext;
 import com.techradge.fabler.ui.base.BasePresenter;
 import com.techradge.fabler.ui.compose.ComposeContract.ComposeInteractor;
@@ -19,7 +20,9 @@ public class ComposePresenter<V extends ComposeView, I extends ComposeInteractor
         extends BasePresenter<V, I>
         implements ComposeContract.ComposePresenter<V, I> {
 
-    private StoryDataOp storyDataOp;
+    private StoryFireOp storyFireOp;
+    private MainViewModel mMainViewModel;
+
 
     @Inject
     ComposePresenter(@ActivityContext Context context, I mvpInteractor,
@@ -28,7 +31,7 @@ public class ComposePresenter<V extends ComposeView, I extends ComposeInteractor
 
         super(mvpInteractor, schedulerProvider, compositeDisposable);
 
-        storyDataOp = new StoryDataOp(Database.getFirebaseDatabase(), context);
+        storyFireOp = new StoryFireOp(RemoteFireDatabase.getFirebaseDatabase(), context);
 
         getInteractor().setPresenter(this);
     }
@@ -36,22 +39,23 @@ public class ComposePresenter<V extends ComposeView, I extends ComposeInteractor
     @Override
     public void onSaveOptionSelected(Story story) {
         // Locally
-        getInteractor().insertStoryInLocalDb(story);
+        mMainViewModel.insertStory(story);
+        getMvpView().showMessageDraftSaved();
     }
 
     @Override
     public void onPublishOptionSelected(Story story) {
         // Firebase
-        storyDataOp.insertStoryData(story);
+        storyFireOp.insertStoryData(story);
     }
 
-    @Override
-    public void onSavedLocally() {
-        getMvpView().showMessageDraftSaved();
-    }
 
     @Override
     public void onPublished() {
+    }
 
+    @Override
+    public void setViewModel(MainViewModel mainViewModel) {
+        mMainViewModel = mainViewModel;
     }
 }

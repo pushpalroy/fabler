@@ -1,8 +1,7 @@
-package com.techradge.fabler.data.firebase.operations.comment;
+package com.techradge.fabler.data.remote.operations.comment;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -12,12 +11,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.techradge.fabler.R;
 import com.techradge.fabler.data.model.Comment;
 
-public class CommentDataOp {
+import timber.log.Timber;
+
+public class CommentFireOp {
 
     private DatabaseReference commentDatabase;
-    private final String TAG = CommentDataOp.class.getSimpleName();
+    private final String TAG = CommentFireOp.class.getSimpleName();
 
-    public CommentDataOp(FirebaseDatabase firebaseDatabase, String storyId, Context context) {
+    public CommentFireOp(FirebaseDatabase firebaseDatabase, String storyId, Context context) {
         commentDatabase = firebaseDatabase.getReference().child(context.getString(R.string.child_comment)).child(storyId);
     }
 
@@ -41,7 +42,7 @@ public class CommentDataOp {
                         });
             }
         } catch (Exception e) {
-            Log.e(TAG, e.toString());
+            Timber.e(e.toString());
         }
     }
 }

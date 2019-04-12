@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.sackcentury.shinebuttonlib.ShineButton;
 import com.techradge.fabler.R;
-import com.techradge.fabler.data.firebase.Database;
-import com.techradge.fabler.data.firebase.operations.story.StoryDataOp;
+import com.techradge.fabler.data.remote.RemoteFireDatabase;
+import com.techradge.fabler.data.remote.operations.story.StoryFireOp;
 import com.techradge.fabler.data.model.Story;
 import com.techradge.fabler.ui.comment.CommentActivity;
 
@@ -76,8 +76,8 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
             @Override
             public void onCheckedChanged(View view, boolean checked) {
                 if (checked) {
-                    StoryDataOp storyDataOp = new StoryDataOp(Database.getFirebaseDatabase(), context);
-                    storyDataOp.postLikeUpdateStory(story);
+                    StoryFireOp storyFireOp = new StoryFireOp(RemoteFireDatabase.getFirebaseDatabase(), context);
+                    storyFireOp.postLikeUpdateStory(story);
                 }
             }
         });

@@ -2,10 +2,11 @@ package com.techradge.fabler.ui.login;
 
 import android.content.Context;
 
-import com.techradge.fabler.data.firebase.Database;
-import com.techradge.fabler.data.firebase.operations.user.UserDataOp;
+import com.techradge.fabler.data.local.viewmodel.MainViewModel;
 import com.techradge.fabler.data.model.User;
 import com.techradge.fabler.data.prefs.PreferencesHelper;
+import com.techradge.fabler.data.remote.RemoteFireDatabase;
+import com.techradge.fabler.data.remote.operations.user.UserFireOp;
 import com.techradge.fabler.di.ActivityContext;
 import com.techradge.fabler.ui.base.BaseInteractor;
 
@@ -16,7 +17,7 @@ import timber.log.Timber;
 public class LoginInteractor extends BaseInteractor implements LoginContract.LoginInteractor {
 
     private PreferencesHelper mPreferencesHelper;
-    private UserDataOp userDataOp;
+    private UserFireOp userFireOp;
     private Context mContext;
 
     @Inject
@@ -24,7 +25,7 @@ public class LoginInteractor extends BaseInteractor implements LoginContract.Log
                            PreferencesHelper preferencesHelper) {
         super(preferencesHelper);
 
-        userDataOp = new UserDataOp(Database.getFirebaseDatabase(), context);
+        userFireOp = new UserFireOp(RemoteFireDatabase.getFirebaseDatabase(), context);
         mPreferencesHelper = preferencesHelper;
         mContext = context;
     }
@@ -36,14 +37,22 @@ public class LoginInteractor extends BaseInteractor implements LoginContract.Log
 
     // User data insertion
     @Override
-    public void insertUserDataLocal(User user) {
+    public void insertUserDataLocal(User user, MainViewModel mainViewModel) {
         try {
-            userDataOp.insertUserData(user, mContext);
+            mainViewModel.insertUser(user);
             mPreferencesHelper.setUserLoggedIn(true);
             mPreferencesHelper.setUserFullName(user.getFullName());
             mPreferencesHelper.setUserEmail(user.getEmail());
             mPreferencesHelper.setUserPhotoUrl(user.getPhotoURL());
+        } catch (Exception e) {
+            Timber.e("Exception: %s", e.toString());
+        }
+    }
 
+    @Override
+    public void insertUserDataRemote(User user) {
+        try {
+            userFireOp.insertUserData(user, mContext);
         } catch (Exception e) {
             Timber.e("Exception: %s", e.toString());
         }

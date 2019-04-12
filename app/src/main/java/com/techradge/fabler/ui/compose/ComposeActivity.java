@@ -1,5 +1,6 @@
 package com.techradge.fabler.ui.compose;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,8 +12,8 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.techradge.fabler.R;
+import com.techradge.fabler.data.local.viewmodel.MainViewModel;
 import com.techradge.fabler.data.model.Story;
-import com.techradge.fabler.di.ApplicationContext;
 import com.techradge.fabler.ui.base.BaseActivity;
 
 import java.util.Calendar;
@@ -67,11 +68,11 @@ public class ComposeActivity extends BaseActivity implements ComposeContract.Com
     @Override
     protected void setUp() {
         setSupportActionBar(mToolbar);
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+        mPresenter.setViewModel(ViewModelProviders.of(this).get(MainViewModel.class));
     }
 
 

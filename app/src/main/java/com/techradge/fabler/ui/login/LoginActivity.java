@@ -1,5 +1,6 @@
 package com.techradge.fabler.ui.login;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.techradge.fabler.R;
+import com.techradge.fabler.data.local.viewmodel.MainViewModel;
 import com.techradge.fabler.data.model.User;
 import com.techradge.fabler.ui.base.BaseActivity;
 import com.techradge.fabler.ui.login.LoginContract.LoginPresenter;
@@ -32,8 +34,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     public LoginPresenter<LoginView, LoginContract.LoginInteractor> mPresenter;
 
     public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, LoginActivity.class);
-        return intent;
+        return new Intent(context, LoginActivity.class);
     }
 
     @Override
@@ -43,6 +44,8 @@ public class LoginActivity extends BaseActivity implements LoginView {
         getActivityComponent().inject(this);
 
         mPresenter.onAttach(LoginActivity.this);
+
+        setUp();
 
         mPresenter.launch();
     }
@@ -64,8 +67,13 @@ public class LoginActivity extends BaseActivity implements LoginView {
                     String photoURL = String.valueOf(firebaseUser.getPhotoUrl());
                     String uid = firebaseUser.getUid();
 
-                    User newUser = new User(fullName, email, emailVerified, photoURL, uid);
-                    mPresenter.onAuthenticated(newUser);
+                    onAuthenticated(
+                            new User(
+                                    fullName,
+                                    email,
+                                    emailVerified,
+                                    photoURL,
+                                    uid));
                 }
 
                 String idpToken = "";
@@ -77,6 +85,11 @@ public class LoginActivity extends BaseActivity implements LoginView {
                 finish();
             }
         }
+    }
+
+    @Override
+    public void onAuthenticated(User newUser) {
+        mPresenter.onAuthenticated(newUser);
     }
 
     @Override
@@ -132,5 +145,6 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @Override
     protected void setUp() {
+        mPresenter.setViewModel(ViewModelProviders.of(this).get(MainViewModel.class));
     }
 }
