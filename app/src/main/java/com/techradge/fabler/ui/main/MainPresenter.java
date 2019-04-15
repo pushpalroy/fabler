@@ -19,7 +19,7 @@ public class MainPresenter<V extends MainContract.MainView, I extends MainContra
     }
 
     @Override
-    public void loadUserData() {
+    public void loadUserDetails() {
         getInteractor().fetchUserDetails();
     }
 

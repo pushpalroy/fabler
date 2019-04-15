@@ -27,7 +27,7 @@ public interface MainContract {
 
     interface MainPresenter<V extends MainView, I extends MainInteractor>
             extends MvpPresenter<V, I> {
-        void loadUserData();
+        void loadUserDetails();
 
         void onUserDataLoaded(String userFullName, String userEmail, String userPhotoUrl);
 

@@ -55,7 +55,7 @@ public class MainActivity extends BaseActivity
     @Override
     public void setUp() {
         mPresenter.onAttach(MainActivity.this);
-        mPresenter.loadUserData();
+        mPresenter.loadUserDetails();
         setUpActionBar(mToolbar);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -68,8 +68,9 @@ public class MainActivity extends BaseActivity
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+
         navigationView.getMenu().getItem(0).setChecked(true);
-        onNavigationItemSelected(navigationView.getMenu().getItem(0));
+        onHomeSelected();
     }
 
     @Override
