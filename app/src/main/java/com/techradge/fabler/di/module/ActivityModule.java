@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.techradge.fabler.di.ActivityContext;
 import com.techradge.fabler.di.PerActivity;
+import com.techradge.fabler.ui.comment.CommentContract;
+import com.techradge.fabler.ui.comment.CommentInteractor;
+import com.techradge.fabler.ui.comment.CommentPresenter;
 import com.techradge.fabler.ui.compose.ComposeContract;
 import com.techradge.fabler.ui.compose.ComposeContract.ComposeView;
 import com.techradge.fabler.ui.compose.ComposeInteractor;
@@ -77,6 +80,21 @@ public class ActivityModule {
     @Provides
     @PerActivity
     ComposeContract.ComposeInteractor provideComposeInteractor(ComposeInteractor interactor) {
+        return interactor;
+    }
+
+    //  COMMENT //
+
+    @Provides
+    @PerActivity
+    CommentContract.CommentPresenter<CommentContract.CommentView, CommentContract.CommentInteractor> provideCommentPresenter(
+            CommentPresenter<CommentContract.CommentView, CommentContract.CommentInteractor> presenter) {
+        return presenter;
+    }
+
+    @Provides
+    @PerActivity
+    CommentContract.CommentInteractor provideCommentInteractor(CommentInteractor interactor) {
         return interactor;
     }
 }
