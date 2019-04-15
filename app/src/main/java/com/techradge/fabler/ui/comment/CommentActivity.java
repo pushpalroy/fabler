@@ -51,8 +51,6 @@ public class CommentActivity extends BaseActivity implements CommentContract.Com
         getActivityComponent().inject(this);
         setUnBinder(ButterKnife.bind(this));
 
-        mPresenter.onAttach(CommentActivity.this);
-
         if (getIntent().getExtras() != null) {
             storyId = getIntent().getExtras().getString(getString(R.string.key_story_id));
             comments = getIntent().getExtras().getString(getString(R.string.key_comments));
@@ -69,6 +67,7 @@ public class CommentActivity extends BaseActivity implements CommentContract.Com
 
     @Override
     public void setUp() {
+        mPresenter.onAttach(CommentActivity.this);
         setUpActionBar(mToolbar);
         setUpRecyclerView();
         mPresenter.setUpRemoteDatabase(storyId);

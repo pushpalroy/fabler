@@ -16,11 +16,6 @@ public class BaseInteractor implements MvpInteractor {
         //mApiHelper = apiHelper;
     }
 
-//    @Override
-//    public ApiHelper getApiHelper() {
-//        return mApiHelper;
-//    }
-
     @Override
     public PreferencesHelper getPreferencesHelper() {
         return mPreferencesHelper;
@@ -33,31 +28,28 @@ public class BaseInteractor implements MvpInteractor {
 
     @Override
     public void updateUserInfo(
-            String accessToken,
             boolean isUserLoggedIn,
+            String userFullName,
+            String userEmail,
+            String userPhotoUrl,
             AppConstants.LoggedInMode loggedInMode,
-            String userName,
-            String email,
-            String profilePicPath) {
+            String accessToken) {
 
-        getPreferencesHelper().setAccessToken(accessToken);
         getPreferencesHelper().setUserLoggedIn(isUserLoggedIn);
+        getPreferencesHelper().setUserFullName(userFullName);
+        getPreferencesHelper().setUserEmail(userEmail);
+        getPreferencesHelper().setUserPhotoUrl(userPhotoUrl);
         getPreferencesHelper().setCurrentUserLoggedInMode(loggedInMode);
-        getPreferencesHelper().setUserFullName(userName);
-        getPreferencesHelper().setUserEmail(email);
-        getPreferencesHelper().setUserPhotoUrl(profilePicPath);
-
-        //updateApiHeader(userId, accessToken);
+        getPreferencesHelper().setAccessToken(accessToken);
     }
 
     @Override
     public void setUserAsLoggedOut() {
-        updateUserInfo(
+        updateUserInfo(false,
                 null,
-                false,
+                null,
+                null,
                 AppConstants.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT,
-                null,
-                null,
                 null);
     }
 }

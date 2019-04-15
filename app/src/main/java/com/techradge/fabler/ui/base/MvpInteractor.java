@@ -5,18 +5,16 @@ import com.techradge.fabler.utils.AppConstants;
 
 public interface MvpInteractor {
 
-    //ApiHelper getApiHelper();
-
     PreferencesHelper getPreferencesHelper();
 
     void setUserAsLoggedOut();
 
     void setAccessToken(String accessToken);
 
-    void updateUserInfo(String accessToken,
-                        boolean isUserLoggedIn,
+    void updateUserInfo(boolean isUserLoggedIn,
+                        String userFullName,
+                        String userEmail,
+                        String userPhotoUrl,
                         AppConstants.LoggedInMode loggedInMode,
-                        String userName,
-                        String email,
-                        String profilePicPath);
+                        String accessToken);
 }

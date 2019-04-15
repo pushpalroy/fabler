@@ -9,13 +9,14 @@ import com.techradge.fabler.ui.comment.CommentContract;
 import com.techradge.fabler.ui.comment.CommentInteractor;
 import com.techradge.fabler.ui.comment.CommentPresenter;
 import com.techradge.fabler.ui.compose.ComposeContract;
-import com.techradge.fabler.ui.compose.ComposeContract.ComposeView;
 import com.techradge.fabler.ui.compose.ComposeInteractor;
 import com.techradge.fabler.ui.compose.ComposePresenter;
 import com.techradge.fabler.ui.login.LoginContract;
-import com.techradge.fabler.ui.login.LoginContract.LoginView;
 import com.techradge.fabler.ui.login.LoginInteractor;
 import com.techradge.fabler.ui.login.LoginPresenter;
+import com.techradge.fabler.ui.main.MainContract;
+import com.techradge.fabler.ui.main.MainInteractor;
+import com.techradge.fabler.ui.main.MainPresenter;
 import com.techradge.fabler.utils.rx.AppSchedulerProvider;
 import com.techradge.fabler.utils.rx.SchedulerProvider;
 
@@ -57,8 +58,8 @@ public class ActivityModule {
 
     @Provides
     @PerActivity
-    LoginContract.LoginPresenter<LoginView, LoginContract.LoginInteractor> provideLoginPresenter(
-            LoginPresenter<LoginView, LoginContract.LoginInteractor> presenter) {
+    LoginContract.LoginPresenter<LoginContract.LoginView, LoginContract.LoginInteractor> provideLoginPresenter(
+            LoginPresenter<LoginContract.LoginView, LoginContract.LoginInteractor> presenter) {
         return presenter;
     }
 
@@ -68,12 +69,27 @@ public class ActivityModule {
         return interactor;
     }
 
+    //  MAIN //
+
+    @Provides
+    @PerActivity
+    MainContract.MainPresenter<MainContract.MainView, MainContract.MainInteractor> provideMainPresenter(
+            MainPresenter<MainContract.MainView, MainContract.MainInteractor> presenter) {
+        return presenter;
+    }
+
+    @Provides
+    @PerActivity
+    MainContract.MainInteractor provideMainInteractor(MainInteractor interactor) {
+        return interactor;
+    }
+
     //  COMPOSE //
 
     @Provides
     @PerActivity
-    ComposeContract.ComposePresenter<ComposeView, ComposeContract.ComposeInteractor> provideComposePresenter(
-            ComposePresenter<ComposeView, ComposeContract.ComposeInteractor> presenter) {
+    ComposeContract.ComposePresenter<ComposeContract.ComposeView, ComposeContract.ComposeInteractor> provideComposePresenter(
+            ComposePresenter<ComposeContract.ComposeView, ComposeContract.ComposeInteractor> presenter) {
         return presenter;
     }
 

@@ -42,11 +42,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
         super.onCreate(savedInstanceState);
 
         getActivityComponent().inject(this);
-
-        mPresenter.onAttach(LoginActivity.this);
-
         setUp();
-
         mPresenter.launch();
     }
 
@@ -145,6 +141,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @Override
     protected void setUp() {
+        mPresenter.onAttach(LoginActivity.this);
         mPresenter.setViewModel(ViewModelProviders.of(this).get(MainViewModel.class));
     }
 }
