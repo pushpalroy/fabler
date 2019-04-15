@@ -67,12 +67,8 @@ public class ComposeActivity extends BaseActivity implements ComposeContract.Com
 
     @Override
     protected void setUp() {
-        setSupportActionBar(mToolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
         mPresenter.setViewModel(ViewModelProviders.of(this).get(MainViewModel.class));
+        setUpActionBar(mToolbar);
     }
 
 

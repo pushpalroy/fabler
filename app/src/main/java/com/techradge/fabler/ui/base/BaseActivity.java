@@ -10,9 +10,12 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +26,7 @@ import com.techradge.fabler.di.component.DaggerActivityComponent;
 import com.techradge.fabler.di.module.ActivityModule;
 import com.techradge.fabler.utils.CommonUtils;
 import com.techradge.fabler.utils.NetworkUtils;
+import com.victor.loading.newton.NewtonCradleLoading;
 
 import butterknife.Unbinder;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -32,6 +36,8 @@ public abstract class BaseActivity extends AppCompatActivity
         implements MvpView, BaseFragment.Callback {
 
     private ProgressDialog mProgressDialog;
+    private NewtonCradleLoading customLoader;
+    private LinearLayout loaderContainer;
 
     private ActivityComponent mActivityComponent;
 
@@ -78,6 +84,25 @@ public abstract class BaseActivity extends AppCompatActivity
     public void hideLoading() {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.cancel();
+        }
+    }
+
+    @Override
+    // Show custom loader
+    public void showCustomLoader() {
+        if (customLoader != null) {
+            customLoader.setLoadingColor(R.color.colorAccent);
+            loaderContainer.setVisibility(View.VISIBLE);
+            customLoader.start();
+        }
+    }
+
+    @Override
+    // Hide custom loader
+    public void hideCustomLoader() {
+        if (customLoader != null && customLoader.isStart()) {
+            loaderContainer.setVisibility(View.INVISIBLE);
+            customLoader.stop();
         }
     }
 
@@ -163,4 +188,15 @@ public abstract class BaseActivity extends AppCompatActivity
     }
 
     protected abstract void setUp();
+
+    @Override
+    public void setUpActionBar(Toolbar toolbar) {
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
 }

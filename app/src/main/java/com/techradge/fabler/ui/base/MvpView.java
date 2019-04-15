@@ -1,6 +1,7 @@
 package com.techradge.fabler.ui.base;
 
 import android.support.annotation.StringRes;
+import android.support.v7.widget.Toolbar;
 
 /**
  * Base interface that any class that wants to act as a View in the MVP (Model View Presenter)
@@ -12,6 +13,10 @@ public interface MvpView {
     void showLoading();
 
     void hideLoading();
+
+    void showCustomLoader();
+
+    void hideCustomLoader();
 
     void openActivityOnTokenExpire();
 
@@ -27,4 +32,5 @@ public interface MvpView {
 
     void hideKeyboard();
 
+    void setUpActionBar(Toolbar toolbar);
 }
