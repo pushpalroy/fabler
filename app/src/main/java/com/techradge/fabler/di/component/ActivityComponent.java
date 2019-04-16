@@ -6,6 +6,7 @@ import com.techradge.fabler.ui.comment.CommentActivity;
 import com.techradge.fabler.ui.compose.ComposeActivity;
 import com.techradge.fabler.ui.login.LoginActivity;
 import com.techradge.fabler.ui.main.MainActivity;
+import com.techradge.fabler.ui.read.ReadActivity;
 
 import dagger.Component;
 
@@ -20,4 +21,6 @@ public interface ActivityComponent {
     void inject(ComposeActivity activity);
 
     void inject(CommentActivity activity);
+
+    void inject(ReadActivity activity);
 }

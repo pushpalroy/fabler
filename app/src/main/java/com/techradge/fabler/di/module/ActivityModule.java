@@ -17,6 +17,9 @@ import com.techradge.fabler.ui.login.LoginPresenter;
 import com.techradge.fabler.ui.main.MainContract;
 import com.techradge.fabler.ui.main.MainInteractor;
 import com.techradge.fabler.ui.main.MainPresenter;
+import com.techradge.fabler.ui.read.ReadContract;
+import com.techradge.fabler.ui.read.ReadInteractor;
+import com.techradge.fabler.ui.read.ReadPresenter;
 import com.techradge.fabler.utils.rx.AppSchedulerProvider;
 import com.techradge.fabler.utils.rx.SchedulerProvider;
 
@@ -111,6 +114,21 @@ public class ActivityModule {
     @Provides
     @PerActivity
     CommentContract.CommentInteractor provideCommentInteractor(CommentInteractor interactor) {
+        return interactor;
+    }
+
+    //  READ //
+
+    @Provides
+    @PerActivity
+    ReadContract.ReadPresenter<ReadContract.ReadView, ReadContract.ReadInteractor> provideReadPresenter(
+            ReadPresenter<ReadContract.ReadView, ReadContract.ReadInteractor> presenter) {
+        return presenter;
+    }
+
+    @Provides
+    @PerActivity
+    ReadContract.ReadInteractor provideReadInteractor(ReadInteractor interactor) {
         return interactor;
     }
 }
