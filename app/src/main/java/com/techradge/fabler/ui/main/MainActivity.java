@@ -124,7 +124,7 @@ public class MainActivity extends BaseActivity
         mToolbar.setTitle(getResources().getString(R.string.drafts));
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content_frame, new DraftFragment())
+                .replace(R.id.content_frame, DraftFragment.newInstance())
                 .commit();
     }
 

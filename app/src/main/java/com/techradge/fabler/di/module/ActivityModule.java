@@ -15,6 +15,10 @@ import com.techradge.fabler.ui.comment.CommentPresenter;
 import com.techradge.fabler.ui.compose.ComposeContract;
 import com.techradge.fabler.ui.compose.ComposeInteractor;
 import com.techradge.fabler.ui.compose.ComposePresenter;
+import com.techradge.fabler.ui.draft.DraftAdapter;
+import com.techradge.fabler.ui.draft.DraftContract;
+import com.techradge.fabler.ui.draft.DraftInteractor;
+import com.techradge.fabler.ui.draft.DraftPresenter;
 import com.techradge.fabler.ui.home.HomeContract;
 import com.techradge.fabler.ui.home.HomeInteractor;
 import com.techradge.fabler.ui.home.HomePresenter;
@@ -157,6 +161,21 @@ public class ActivityModule {
         return interactor;
     }
 
+    //  DRAFT //
+
+    @Provides
+    @PerActivity
+    DraftContract.DraftPresenter<DraftContract.DraftView, DraftContract.DraftInteractor> provideDraftPresenter(
+            DraftPresenter<DraftContract.DraftView, DraftContract.DraftInteractor> presenter) {
+        return presenter;
+    }
+
+    @Provides
+    @PerActivity
+    DraftContract.DraftInteractor provideDraftInteractor(DraftInteractor interactor) {
+        return interactor;
+    }
+
     // ADAPTERS
 
     @Provides
@@ -169,6 +188,10 @@ public class ActivityModule {
         return new CommentAdapter(new ArrayList<Comment>());
     }
 
+    @Provides
+    DraftAdapter provideDraftAdapter() {
+        return new DraftAdapter(new ArrayList<Story>(), mActivity);
+    }
 
     // Linear Layout Manager
 
