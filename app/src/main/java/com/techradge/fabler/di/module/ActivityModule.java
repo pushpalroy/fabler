@@ -2,7 +2,9 @@ package com.techradge.fabler.di.module;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 
+import com.techradge.fabler.data.model.Story;
 import com.techradge.fabler.di.ActivityContext;
 import com.techradge.fabler.di.PerActivity;
 import com.techradge.fabler.ui.comment.CommentContract;
@@ -11,6 +13,9 @@ import com.techradge.fabler.ui.comment.CommentPresenter;
 import com.techradge.fabler.ui.compose.ComposeContract;
 import com.techradge.fabler.ui.compose.ComposeInteractor;
 import com.techradge.fabler.ui.compose.ComposePresenter;
+import com.techradge.fabler.ui.home.HomeContract;
+import com.techradge.fabler.ui.home.HomeInteractor;
+import com.techradge.fabler.ui.home.HomePresenter;
 import com.techradge.fabler.ui.login.LoginContract;
 import com.techradge.fabler.ui.login.LoginInteractor;
 import com.techradge.fabler.ui.login.LoginPresenter;
@@ -20,8 +25,11 @@ import com.techradge.fabler.ui.main.MainPresenter;
 import com.techradge.fabler.ui.read.ReadContract;
 import com.techradge.fabler.ui.read.ReadInteractor;
 import com.techradge.fabler.ui.read.ReadPresenter;
+import com.techradge.fabler.ui.story.StoryAdapter;
 import com.techradge.fabler.utils.rx.AppSchedulerProvider;
 import com.techradge.fabler.utils.rx.SchedulerProvider;
+
+import java.util.ArrayList;
 
 import dagger.Module;
 import dagger.Provides;
@@ -129,6 +137,33 @@ public class ActivityModule {
     @Provides
     @PerActivity
     ReadContract.ReadInteractor provideReadInteractor(ReadInteractor interactor) {
+        return interactor;
+    }
+
+    // ADAPTER
+
+    @Provides
+    StoryAdapter provideStoryAdapter() {
+        return new StoryAdapter(new ArrayList<Story>());
+    }
+
+    @Provides
+    LinearLayoutManager provideLinearLayoutManager(AppCompatActivity activity) {
+        return new LinearLayoutManager(activity);
+    }
+
+    //  HOME //
+
+    @Provides
+    @PerActivity
+    HomeContract.HomePresenter<HomeContract.HomeView, HomeContract.HomeInteractor> provideHomePresenter(
+            HomePresenter<HomeContract.HomeView, HomeContract.HomeInteractor> presenter) {
+        return presenter;
+    }
+
+    @Provides
+    @PerActivity
+    HomeContract.HomeInteractor provideHomeInteractor(HomeInteractor interactor) {
         return interactor;
     }
 }

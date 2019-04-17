@@ -4,8 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,61 +12,80 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 import com.techradge.fabler.R;
-import com.techradge.fabler.data.remote.RemoteFireDatabase;
 import com.techradge.fabler.data.model.Story;
+import com.techradge.fabler.ui.base.BaseFragment;
 import com.techradge.fabler.ui.compose.ComposeActivity;
 import com.techradge.fabler.ui.read.ReadActivity;
 import com.techradge.fabler.ui.story.StoryAdapter;
 import com.techradge.fabler.ui.story.StoryClickListener;
 import com.victor.loading.newton.NewtonCradleLoading;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import butterknife.OnClick;
 
-public class HomeFragment extends Fragment implements StoryClickListener {
+public class HomeFragment extends BaseFragment implements HomeContract.HomeView, StoryClickListener {
 
-    @BindView(R.id.fab)
-    public FloatingActionButton fab;
     @BindView(R.id.story_recycler_view)
-    public RecyclerView storyRecyclerView;
+    public RecyclerView mRecyclerView;
     @BindView(R.id.loader)
-    NewtonCradleLoading loader;
+    NewtonCradleLoading customLoader;
     @BindView(R.id.loader_container)
     LinearLayout loaderContainer;
-    private Unbinder unbinder;
-    private DatabaseReference databaseReference;
-    private StoryAdapter mAdapter;
-    private List<Story> mStoryList;
 
-    public HomeFragment() {
+    @Inject
+    HomePresenter<HomeContract.HomeView, HomeContract.HomeInteractor> mPresenter;
+
+    @Inject
+    StoryAdapter mStoryAdapter;
+
+    @Inject
+    LinearLayoutManager mLayoutManager;
+
+    public static HomeFragment newInstance() {
+        Bundle args = new Bundle();
+        HomeFragment fragment = new HomeFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-        unbinder = ButterKnife.bind(this, rootView);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(ComposeActivity.getStartIntent(getActivity()));
-            }
-        });
+        if (getActivityComponent() != null) {
+            getActivityComponent().inject(this);
+            setUnBinder(ButterKnife.bind(this, view));
+            mPresenter.onAttach(this);
+            mStoryAdapter.setCallback(this);
+        }
+        return view;
+    }
 
-        startLoader();
+    @Override
+    protected void setUp(View view) {
         setRecyclerView();
+        mPresenter.setUpRemoteDatabase(getResources().getString(R.string.child_story));
+        mPresenter.onViewPrepared();
+    }
 
-        return rootView;
+    private void setRecyclerView() {
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mStoryAdapter);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+    }
+
+    @Override
+    public void showAllStories(List<Story> storyList) {
+        mStoryAdapter.flushAndAddItems(storyList);
     }
 
     @Override
@@ -77,47 +95,17 @@ public class HomeFragment extends Fragment implements StoryClickListener {
 
     @Override
     public void onDestroyView() {
+        mPresenter.onDetach();
         super.onDestroyView();
-        unbinder.unbind();
-    }
-
-    private void setRecyclerView() {
-        mStoryList = new ArrayList<>();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        mAdapter = new StoryAdapter(mStoryList, getActivity(), this);
-        storyRecyclerView.setLayoutManager(linearLayoutManager);
-        storyRecyclerView.setAdapter(mAdapter);
-
-        databaseReference = RemoteFireDatabase.getFirebaseDatabase().getReference().child(getActivity().getResources().getString(R.string.child_story));
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                getAllStories(dataSnapshot);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void getAllStories(DataSnapshot dataSnapshot) {
-        mStoryList.clear();
-        for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
-            Story story = singleSnapshot.getValue(Story.class);
-            mStoryList.add(story);
-        }
-
-        Collections.reverse(mStoryList);
-        mAdapter.notifyItemInserted(mStoryList.size() - 1);
-        mAdapter.notifyDataSetChanged();
-        dismissLoader();
     }
 
     @Override
     public void onStoryClick(int position, Story story) {
+        openReadActivity(story);
+    }
+
+    @Override
+    public void openReadActivity(Story story) {
         Intent readIntent = new Intent(getActivity(), ReadActivity.class);
         readIntent.putExtra("title", story.getTitle());
         readIntent.putExtra("story", story.getStory());
@@ -126,20 +114,27 @@ public class HomeFragment extends Fragment implements StoryClickListener {
         startActivity(readIntent);
     }
 
-    // Start loader
-    private void startLoader() {
-        if (loader != null) {
-            loader.setLoadingColor(R.color.colorAccent);
+    @OnClick(R.id.fab)
+    public void openComposeActivity() {
+        startActivity(ComposeActivity.getStartIntent(getActivity()));
+    }
+
+    @Override
+    // Show custom loader
+    public void showCustomLoader() {
+        if (customLoader != null) {
+            customLoader.setLoadingColor(R.color.colorAccent);
             loaderContainer.setVisibility(View.VISIBLE);
-            loader.start();
+            customLoader.start();
         }
     }
 
-    // Dismiss loader
-    private void dismissLoader() {
-        if (loader != null && loader.isStart()) {
+    @Override
+    // Hide custom loader
+    public void hideCustomLoader() {
+        if (customLoader != null && customLoader.isStart()) {
             loaderContainer.setVisibility(View.INVISIBLE);
-            loader.stop();
+            customLoader.stop();
         }
     }
 }

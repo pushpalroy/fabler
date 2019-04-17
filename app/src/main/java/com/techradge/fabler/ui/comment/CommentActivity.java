@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -104,5 +105,24 @@ public class CommentActivity extends BaseActivity implements CommentContract.Com
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    @Override
+    // Show custom loader
+    public void showCustomLoader() {
+        if (customLoader != null) {
+            customLoader.setLoadingColor(R.color.colorAccent);
+            loaderContainer.setVisibility(View.VISIBLE);
+            customLoader.start();
+        }
+    }
+
+    @Override
+    // Hide custom loader
+    public void hideCustomLoader() {
+        if (customLoader != null && customLoader.isStart()) {
+            loaderContainer.setVisibility(View.INVISIBLE);
+            customLoader.stop();
+        }
     }
 }

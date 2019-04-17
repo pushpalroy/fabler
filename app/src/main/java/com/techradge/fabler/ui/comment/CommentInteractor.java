@@ -58,7 +58,8 @@ public class CommentInteractor extends BaseInteractor implements CommentContract
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mPresenter.onNewCommentPrepare();
-                List<Comment> commentList = fetchCommentsFromDataSnapshot(dataSnapshot);
+                List<Comment> commentList =
+                        fetchCommentsFromDataSnapshot(dataSnapshot);
                 mPresenter.onNewCommentListFetched(commentList);
             }
 

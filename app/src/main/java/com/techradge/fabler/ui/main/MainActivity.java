@@ -108,7 +108,7 @@ public class MainActivity extends BaseActivity
         mToolbar.setTitle(getResources().getString(R.string.home));
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content_frame, new HomeFragment())
+                .replace(R.id.content_frame, HomeFragment.newInstance())
                 .commit();
     }
 

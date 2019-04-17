@@ -15,6 +15,10 @@ public interface CommentContract {
         void showAllComments(List<Comment> commentList);
 
         void resetCommentEditor();
+
+        void showCustomLoader();
+
+        void hideCustomLoader();
     }
 
     interface CommentPresenter<V extends MvpView, I extends MvpInteractor>

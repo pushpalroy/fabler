@@ -17,6 +17,7 @@ import com.techradge.fabler.data.remote.operations.story.StoryFireOp;
 import com.techradge.fabler.ui.base.BaseViewHolder;
 import com.techradge.fabler.ui.comment.CommentActivity;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -25,11 +26,10 @@ import butterknife.ButterKnife;
 public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     private List<Story> mStoryList;
-    private StoryClickListener storyClickListener;
+    private StoryClickListener mStoryClickListener;
 
-    public StoryAdapter(List<Story> storyList, StoryClickListener storyClickListener) {
+    public StoryAdapter(List<Story> storyList) {
         this.mStoryList = storyList;
-        this.storyClickListener = storyClickListener;
     }
 
     @NonNull
@@ -38,6 +38,10 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         View layoutView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_story, parent, false);
         return new StoryViewHolder(layoutView);
+    }
+
+    public void setCallback(StoryClickListener storyClickListener) {
+        mStoryClickListener = storyClickListener;
     }
 
     @Override
@@ -53,6 +57,18 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     @Override
     public int getItemCount() {
         return mStoryList.size();
+    }
+
+    public void addItems(List<Story> stories) {
+        mStoryList.addAll(stories);
+        notifyDataSetChanged();
+    }
+
+    public void flushAndAddItems(List<Story> stories) {
+        mStoryList.clear();
+        Collections.reverse(stories);
+        mStoryList.addAll(stories);
+        notifyDataSetChanged();
     }
 
     class StoryViewHolder extends BaseViewHolder {
@@ -105,7 +121,7 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    storyClickListener.onStoryClick(position, story);
+                    mStoryClickListener.onStoryClick(position, story);
                 }
             });
 
