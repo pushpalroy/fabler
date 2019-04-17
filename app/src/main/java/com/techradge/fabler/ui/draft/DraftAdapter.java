@@ -1,11 +1,8 @@
 package com.techradge.fabler.ui.draft;
 
 import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.Observer;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,19 +10,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.techradge.fabler.R;
 import com.techradge.fabler.data.local.viewmodel.MainViewModel;
 import com.techradge.fabler.data.model.Story;
 import com.techradge.fabler.ui.base.BaseViewHolder;
 import com.techradge.fabler.ui.story.StoryClickListener;
+import com.techradge.fabler.utils.AppConstants;
 
 import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class DraftAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
@@ -107,38 +105,24 @@ public class DraftAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             if (story.getStory() != null)
                 storyTv.setText(story.getStory());
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mStoryClickListener.onStoryClick(position, story);
-                }
-            });
+            itemView.setOnClickListener(v -> mStoryClickListener.onStoryClick(position, story));
 
-            deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    new AlertDialog.Builder(mContext)
-                            .setMessage(R.string.dialog_delete_message)
-                            .setTitle(R.string.dialog_delete_title)
-                            .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    mMainViewModel.deleteStory(story);
-                                    mMainViewModel.getDeletionStatus().observe((LifecycleOwner) mContext, new Observer<Integer>() {
-                                        @Override
-                                        public void onChanged(@Nullable Integer integer) {
-                                            if (integer != null)
-                                                Timber.e("InsertionStatus: %s", integer);
-                                        }
-                                    });
-                                }
-                            })
-                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.dismiss();
-                                }
-                            }).create().show();
-                }
-            });
+            deleteButton.setOnClickListener(v -> new AlertDialog.Builder(mContext)
+                    .setMessage(R.string.dialog_delete_message)
+                    .setTitle(R.string.dialog_delete_title)
+                    .setPositiveButton(R.string.delete, (dialog, id) -> {
+                        mMainViewModel.deleteStory(story);
+                        mMainViewModel.getDeletionStatus()
+                                .observe((LifecycleOwner) mContext, integer -> {
+                                    if (integer != null &&
+                                            integer == AppConstants.RoomDeletion
+                                                    .DELETION_STATUS_DELETED.getType())
+                                        Toast.makeText(mContext, "Draft Deleted!",
+                                                Toast.LENGTH_SHORT)
+                                                .show();
+                                });
+                    })
+                    .setNegativeButton(R.string.cancel, (dialog, id) -> dialog.dismiss()).create().show());
         }
 
         @Override

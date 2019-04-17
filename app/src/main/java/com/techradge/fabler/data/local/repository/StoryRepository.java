@@ -1,10 +1,10 @@
 package com.techradge.fabler.data.local.repository;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
-import android.os.AsyncTask;
 
 import com.techradge.fabler.data.local.appDatabase.StoryDatabase;
 import com.techradge.fabler.data.local.dao.StoryDao;
@@ -18,6 +18,9 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 @Singleton
@@ -41,44 +44,78 @@ public class StoryRepository {
         return storyDao.getStories();
     }
 
+    @SuppressLint("CheckResult")
     public void insertStory(Story story) {
-        InsertStoryAsyncTask insertStoryAsyncTask = new InsertStoryAsyncTask(storyDao);
-        insertStoryAsyncTask.delegate = this;
-        insertStoryAsyncTask.execute(story);
-    }
-
-    public void updateStory(Story story) {
-        UpdateStoryAsyncTask updateStoryAsyncTask = new UpdateStoryAsyncTask(storyDao);
-        updateStoryAsyncTask.delegate = this;
-        updateStoryAsyncTask.execute(story);
-    }
-
-    public void deleteStory(final Story story) {
-        DeleteStoryAsyncTask deleteStoryAsyncTask = new DeleteStoryAsyncTask(storyDao);
-        deleteStoryAsyncTask.delegate = this;
-        deleteStoryAsyncTask.execute(story);
-    }
-
-    public void getStoriesByTitle(String title) {
-        QueryStoryByTitleAsyncTask queryStoryByTitleAsyncTask = new QueryStoryByTitleAsyncTask(storyDao);
-        queryStoryByTitleAsyncTask.delegate = this;
-        queryStoryByTitleAsyncTask.execute(title);
-    }
-
-    public void deleteStory2(final Story story) {
-        // Using Executors instead of AsyncTask
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    storyDao.deleteStory(story);
-                } catch (SQLiteConstraintException e) {
-                    Timber.e(e);
-                } catch (Exception e) {
-                    Timber.e(e);
-                }
+        Observable.fromCallable(() -> {
+            try {
+                storyDao.insertStory(story);
+            } catch (SQLiteConstraintException e) {
+                Timber.e(e);
+                return AppConstants.RoomInsertion.INSERTION_STATUS_ERROR.getType();
+            } catch (Exception e) {
+                Timber.e(e);
+                return AppConstants.RoomInsertion.INSERTION_STATUS_ERROR.getType();
             }
-        });
+
+            return AppConstants.RoomInsertion.INSERTION_STATUS_INSERTED.getType();
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((result) -> {
+                    insertionStatus.setValue(result);
+                });
+    }
+
+    @SuppressLint("CheckResult")
+    public void updateStory(Story story) {
+        Observable.fromCallable(() -> {
+            try {
+                storyDao.updateStory(story);
+            } catch (SQLiteConstraintException e) {
+                Timber.e(e);
+                return AppConstants.RoomUpdating.UPDATING_STATUS_ERROR.getType();
+            } catch (Exception e) {
+                Timber.e(e);
+                return AppConstants.RoomUpdating.UPDATING_STATUS_ERROR.getType();
+            }
+
+            return AppConstants.RoomUpdating.UPDATING_STATUS_UPDATED.getType();
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((result) -> updatingStatus.setValue(result));
+    }
+
+    @SuppressLint("CheckResult")
+    public void deleteStory(final Story story) {
+        Observable.fromCallable(() -> {
+            try {
+                storyDao.deleteStory(story);
+            } catch (SQLiteConstraintException e) {
+                Timber.e(e);
+                return AppConstants.RoomDeletion.DELETION_STATUS_ERROR.getType();
+            } catch (Exception e) {
+                Timber.e(e);
+                return AppConstants.RoomDeletion.DELETION_STATUS_ERROR.getType();
+            }
+
+            return AppConstants.RoomDeletion.DELETION_STATUS_DELETED.getType();
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((result) -> {
+                    deletionStatus.setValue(result);
+                });
+    }
+
+    @SuppressLint("CheckResult")
+    public void getStoriesByTitle(String title) {
+        Observable.fromCallable(() -> {
+            return storyDao.getStoryByTitle(title);
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::storyByTitleAsyncFinished);
     }
 
     private void storyByTitleAsyncFinished(List<Story> results) {
@@ -100,116 +137,19 @@ public class StoryRepository {
         return deletionStatus;
     }
 
-
-    // AsyncTasks
-    private static class QueryStoryByTitleAsyncTask extends
-            AsyncTask<String, Void, List<Story>> {
-
-        private StoryDao asyncTaskDao;
-        private StoryRepository delegate = null;
-
-        QueryStoryByTitleAsyncTask(StoryDao dao) {
-            asyncTaskDao = dao;
-        }
-
-        @Override
-        protected List<Story> doInBackground(final String... params) {
-            return asyncTaskDao.getStoryByTitle(params[0]);
-        }
-
-        @Override
-        protected void onPostExecute(List<Story> result) {
-            delegate.storyByTitleAsyncFinished(result);
-        }
-    }
-
-    private static class InsertStoryAsyncTask extends AsyncTask<Story, Void, Integer> {
-
-        private StoryDao asyncTaskDao;
-        private StoryRepository delegate = null;
-
-        InsertStoryAsyncTask(StoryDao dao) {
-            asyncTaskDao = dao;
-        }
-
-        @Override
-        protected Integer doInBackground(final Story... params) {
-            try {
-                asyncTaskDao.insertStory(params[0]);
-            } catch (SQLiteConstraintException e) {
-                Timber.e(e);
-                return AppConstants.RoomInsertion.INSERTION_STATUS_ERROR.getType();
-            } catch (Exception e) {
-                Timber.e(e);
-                return AppConstants.RoomInsertion.INSERTION_STATUS_ERROR.getType();
+    public void deleteStory2(final Story story) {
+        // Using Executors instead of AsyncTask
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    storyDao.deleteStory(story);
+                } catch (SQLiteConstraintException e) {
+                    Timber.e(e);
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
             }
-            return AppConstants.RoomInsertion.INSERTION_STATUS_INSERTED.getType();
-        }
-
-        @Override
-        protected void onPostExecute(Integer insertionStatus) {
-            super.onPostExecute(insertionStatus);
-            delegate.insertionStatus.setValue(insertionStatus);
-        }
-    }
-
-    private static class UpdateStoryAsyncTask extends AsyncTask<Story, Void, Integer> {
-
-        private StoryDao asyncTaskDao;
-        private StoryRepository delegate = null;
-
-        UpdateStoryAsyncTask(StoryDao dao) {
-            asyncTaskDao = dao;
-        }
-
-        @Override
-        protected Integer doInBackground(final Story... params) {
-            try {
-                asyncTaskDao.updateStory(params[0]);
-            } catch (SQLiteConstraintException e) {
-                Timber.e(e);
-                return AppConstants.RoomUpdating.UPDATING_STATUS_ERROR.getType();
-            } catch (Exception e) {
-                Timber.e(e);
-                return AppConstants.RoomUpdating.UPDATING_STATUS_ERROR.getType();
-            }
-            return AppConstants.RoomUpdating.UPDATING_STATUS_UPDATED.getType();
-        }
-
-        @Override
-        protected void onPostExecute(Integer updatingStatus) {
-            super.onPostExecute(updatingStatus);
-            delegate.updatingStatus.setValue(updatingStatus);
-        }
-    }
-
-    private static class DeleteStoryAsyncTask extends AsyncTask<Story, Void, Integer> {
-
-        private StoryDao asyncTaskDao;
-        private StoryRepository delegate = null;
-
-        DeleteStoryAsyncTask(StoryDao dao) {
-            asyncTaskDao = dao;
-        }
-
-        @Override
-        protected Integer doInBackground(final Story... params) {
-            try {
-                asyncTaskDao.deleteStory(params[0]);
-            } catch (SQLiteConstraintException e) {
-                Timber.e(e);
-                return AppConstants.RoomDeletion.DELETION_STATUS_ERROR.getType();
-            } catch (Exception e) {
-                Timber.e(e);
-                return AppConstants.RoomDeletion.DELETION_STATUS_ERROR.getType();
-            }
-            return AppConstants.RoomDeletion.DELETION_STATUS_DELETED.getType();
-        }
-
-        @Override
-        protected void onPostExecute(Integer deletionStatus) {
-            super.onPostExecute(deletionStatus);
-            delegate.deletionStatus.setValue(deletionStatus);
-        }
+        });
     }
 }
