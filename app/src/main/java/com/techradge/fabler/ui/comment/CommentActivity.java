@@ -1,6 +1,7 @@
 package com.techradge.fabler.ui.comment;
 
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -13,8 +14,6 @@ import com.techradge.fabler.data.model.Comment;
 import com.techradge.fabler.ui.base.BaseActivity;
 import com.victor.loading.newton.NewtonCradleLoading;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -30,19 +29,23 @@ public class CommentActivity extends BaseActivity implements CommentContract.Com
     @BindView(R.id.et_comment)
     EditText commentEditor;
     @BindView(R.id.comment_recycler_view)
-    RecyclerView commentRecyclerView;
+    RecyclerView mRecyclerView;
     @BindView(R.id.loader)
     NewtonCradleLoading customLoader;
     @BindView(R.id.loader_container)
     LinearLayout loaderContainer;
 
     @Inject
+    public CommentAdapter mAdapter;
+
+    @Inject
+    LinearLayoutManager mLayoutManager;
+
+    @Inject
     public CommentPresenter<CommentContract.CommentView, CommentContract.CommentInteractor> mPresenter;
 
     private final String TAG = CommentActivity.class.getSimpleName();
     private String storyId, comments;
-    private List<Comment> mCommentList;
-    private CommentAdapter mAdapter;
 
 
     @Override
@@ -76,19 +79,15 @@ public class CommentActivity extends BaseActivity implements CommentContract.Com
 
     @Override
     public void setUpRecyclerView() {
-        mCommentList = new ArrayList<>();
-        mAdapter = new CommentAdapter(mCommentList, this);
-        commentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        commentRecyclerView.setAdapter(mAdapter);
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
     @Override
     public void showAllComments(List<Comment> commentList) {
-        mCommentList.clear();
-        mCommentList.addAll(commentList);
-        Collections.reverse(mCommentList);
-        mAdapter.notifyItemInserted(mCommentList.size() - 1);
-        mAdapter.notifyDataSetChanged();
+        mAdapter.flushAndAddItems(commentList);
     }
 
     @Override

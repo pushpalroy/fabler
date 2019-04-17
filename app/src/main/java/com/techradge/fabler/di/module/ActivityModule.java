@@ -4,9 +4,11 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 
+import com.techradge.fabler.data.model.Comment;
 import com.techradge.fabler.data.model.Story;
 import com.techradge.fabler.di.ActivityContext;
 import com.techradge.fabler.di.PerActivity;
+import com.techradge.fabler.ui.comment.CommentAdapter;
 import com.techradge.fabler.ui.comment.CommentContract;
 import com.techradge.fabler.ui.comment.CommentInteractor;
 import com.techradge.fabler.ui.comment.CommentPresenter;
@@ -140,18 +142,6 @@ public class ActivityModule {
         return interactor;
     }
 
-    // ADAPTER
-
-    @Provides
-    StoryAdapter provideStoryAdapter() {
-        return new StoryAdapter(new ArrayList<Story>());
-    }
-
-    @Provides
-    LinearLayoutManager provideLinearLayoutManager(AppCompatActivity activity) {
-        return new LinearLayoutManager(activity);
-    }
-
     //  HOME //
 
     @Provides
@@ -165,5 +155,25 @@ public class ActivityModule {
     @PerActivity
     HomeContract.HomeInteractor provideHomeInteractor(HomeInteractor interactor) {
         return interactor;
+    }
+
+    // ADAPTERS
+
+    @Provides
+    StoryAdapter provideStoryAdapter() {
+        return new StoryAdapter(new ArrayList<Story>());
+    }
+
+    @Provides
+    CommentAdapter provideCommentAdapter() {
+        return new CommentAdapter(new ArrayList<Comment>());
+    }
+
+
+    // Linear Layout Manager
+
+    @Provides
+    LinearLayoutManager provideLinearLayoutManager(AppCompatActivity activity) {
+        return new LinearLayoutManager(activity);
     }
 }
