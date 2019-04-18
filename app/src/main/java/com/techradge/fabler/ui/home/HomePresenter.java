@@ -40,4 +40,10 @@ public class HomePresenter<V extends HomeContract.HomeView, I extends HomeContra
         getMvpView().showAllStories(storyList);
         getMvpView().hideCustomLoader();
     }
+
+    @Override
+    public void onDetach() {
+        getInteractor().removeListeners();
+        super.onDetach();
+    }
 }

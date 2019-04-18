@@ -19,6 +19,8 @@ import javax.inject.Inject;
 public class HomeInteractor extends BaseInteractor implements HomeContract.HomeInteractor {
 
     private HomeContract.HomePresenter mPresenter;
+    private DatabaseReference mStoriesDatabaseReference;
+    private ValueEventListener mValueEventListener;
 
     @Inject
     public HomeInteractor(PreferencesHelper preferencesHelper) {
@@ -27,24 +29,25 @@ public class HomeInteractor extends BaseInteractor implements HomeContract.HomeI
 
     @Override
     public void setUpFirebaseDatabase(String story) {
-        DatabaseReference storiesDatabaseReference = RemoteFireDatabase
+        mStoriesDatabaseReference = RemoteFireDatabase
                 .getFirebaseDatabase()
                 .getReference()
                 .child(story);
 
-        storiesDatabaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mPresenter.onStoriesPrepare();
-                List<Story> storyList = fetchStoriesFromDataSnapshot(dataSnapshot);
-                mPresenter.onStoriesFetched(storyList);
-            }
+        mValueEventListener = mStoriesDatabaseReference
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        mPresenter.onStoriesPrepare();
+                        List<Story> storyList = fetchStoriesFromDataSnapshot(dataSnapshot);
+                        mPresenter.onStoriesFetched(storyList);
+                    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                    }
+                });
     }
 
     private List<Story> fetchStoriesFromDataSnapshot(DataSnapshot dataSnapshot) {
@@ -59,5 +62,10 @@ public class HomeInteractor extends BaseInteractor implements HomeContract.HomeI
     @Override
     public void setPresenter(HomeContract.HomePresenter presenter) {
         mPresenter = presenter;
+    }
+
+    @Override
+    public void removeListeners() {
+        mStoriesDatabaseReference.removeEventListener(mValueEventListener);
     }
 }

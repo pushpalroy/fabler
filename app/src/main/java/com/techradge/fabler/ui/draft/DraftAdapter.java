@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.techradge.fabler.R;
 import com.techradge.fabler.data.local.viewmodel.MainViewModel;
@@ -30,6 +29,7 @@ public class DraftAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private Context mContext;
     private List<Story> mDraftList;
     private StoryClickListener mStoryClickListener;
+    private DraftModificationListener mDraftModificationListener;
     private final String TAG = DraftAdapter.class.getSimpleName();
     private MainViewModel mMainViewModel;
 
@@ -46,8 +46,9 @@ public class DraftAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         return new DraftsViewHolder(layoutView);
     }
 
-    void setCallback(StoryClickListener storyClickListener) {
+    void setCallback(StoryClickListener storyClickListener, DraftModificationListener draftModificationListener) {
         mStoryClickListener = storyClickListener;
+        mDraftModificationListener = draftModificationListener;
     }
 
     void setMainViewModel(MainViewModel mainViewModel) {
@@ -117,9 +118,7 @@ public class DraftAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                                     if (integer != null &&
                                             integer == AppConstants.RoomDeletion
                                                     .DELETION_STATUS_DELETED.getType())
-                                        Toast.makeText(mContext, "Draft Deleted!",
-                                                Toast.LENGTH_SHORT)
-                                                .show();
+                                        mDraftModificationListener.onStoryDeleted(position, story);
                                 });
                     })
                     .setNegativeButton(R.string.cancel, (dialog, id) -> dialog.dismiss()).create().show());

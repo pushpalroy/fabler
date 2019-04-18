@@ -1,5 +1,6 @@
 package com.techradge.fabler.ui.draft;
 
+import android.arch.lifecycle.LifecycleOwner;
 import android.support.v4.app.FragmentActivity;
 
 import com.techradge.fabler.data.local.viewmodel.MainViewModel;
@@ -21,6 +22,8 @@ public interface DraftContract {
     interface DraftPresenter<V extends MvpView, I extends MvpInteractor>
             extends MvpPresenter<V, I> {
         void onViewPrepared(MainViewModel mainViewModel, FragmentActivity fragmentActivity);
+
+        void removeListeners(LifecycleOwner lifecycleOwner);
     }
 
     interface DraftInteractor extends MvpInteractor {

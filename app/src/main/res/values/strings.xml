@@ -71,6 +71,7 @@
     <string name="key_comments">comments</string>
     <string name="key_title">title</string>
     <string name="key_story">story</string>
+    <string name="key_isEdited">edited</string>
     <string name="toast_message_draft">Story saved in Drafts!</string>
     <string name="guest">Guest</string>
     <string name="key_author">author</string>

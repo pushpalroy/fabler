@@ -23,7 +23,6 @@ public class ComposePresenter<V extends ComposeView, I extends ComposeInteractor
     private StoryFireOp storyFireOp;
     private MainViewModel mMainViewModel;
 
-
     @Inject
     ComposePresenter(@ActivityContext Context context, I mvpInteractor,
                      SchedulerProvider schedulerProvider,
@@ -40,6 +39,13 @@ public class ComposePresenter<V extends ComposeView, I extends ComposeInteractor
     public void onSaveOptionSelected(Story story) {
         // Locally
         mMainViewModel.insertStory(story);
+        getMvpView().showMessageDraftSaved();
+    }
+
+    @Override
+    public void onModifyOptionSelected(Story story) {
+        // Locally
+        mMainViewModel.updateStory(story);
         getMvpView().showMessageDraftSaved();
     }
 

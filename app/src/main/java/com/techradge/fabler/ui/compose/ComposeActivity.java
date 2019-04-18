@@ -31,6 +31,8 @@ public class ComposeActivity extends BaseActivity implements ComposeContract.Com
     EditText titleEditor;
     @BindView(R.id.et_body)
     EditText storyEditor;
+    boolean mIsEdited;
+    private int storyId;
 
     @Inject
     public ComposePresenter<ComposeContract.ComposeView, ComposeInteractor> mPresenter;
@@ -38,8 +40,7 @@ public class ComposeActivity extends BaseActivity implements ComposeContract.Com
     private final String TAG = ComposeActivity.class.getSimpleName();
 
     public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, ComposeActivity.class);
-        return intent;
+        return new Intent(context, ComposeActivity.class);
     }
 
     @Override
@@ -59,9 +60,12 @@ public class ComposeActivity extends BaseActivity implements ComposeContract.Com
         if (extras != null) {
             String title = extras.getString(getString(R.string.key_title));
             String story = extras.getString(getString(R.string.key_story));
+            boolean isEdited = extras.getBoolean(getString(R.string.key_isEdited), false);
+            storyId = extras.getInt(getString(R.string.key_story_id));
 
             titleEditor.setText(title);
             storyEditor.setText(story);
+            mIsEdited = isEdited;
         }
     }
 
@@ -90,8 +94,12 @@ public class ComposeActivity extends BaseActivity implements ComposeContract.Com
 
         if (id == R.id.action_save) {
             if (!(titleEditor.getText().toString().isEmpty() &&
-                    storyEditor.getText().toString().isEmpty()))
-                mPresenter.onSaveOptionSelected(createStory());
+                    storyEditor.getText().toString().isEmpty())) {
+                if (mIsEdited)
+                    mPresenter.onModifyOptionSelected(createStory());
+                else
+                    mPresenter.onSaveOptionSelected(createStory());
+            }
             return true;
         } else if (id == R.id.action_publish) {
             if (!(titleEditor.getText().toString().isEmpty() &&
@@ -122,6 +130,7 @@ public class ComposeActivity extends BaseActivity implements ComposeContract.Com
         String body = storyEditor.getText().toString();
 
         Story story = new Story();
+        story.setId(storyId);
         story.setTitle(title);
         story.setStory(body);
         story.setAuthor(mPresenter.getInteractor().getPreferencesHelper().getUserFullName());
@@ -134,7 +143,11 @@ public class ComposeActivity extends BaseActivity implements ComposeContract.Com
         super.onBackPressed();
         if (!(titleEditor.getText().toString().isEmpty() &&
                 storyEditor.getText().toString().isEmpty())) {
-            mPresenter.onSaveOptionSelected(createStory());
+
+            if (mIsEdited)
+                mPresenter.onModifyOptionSelected(createStory());
+            else
+                mPresenter.onSaveOptionSelected(createStory());
         }
     }
 

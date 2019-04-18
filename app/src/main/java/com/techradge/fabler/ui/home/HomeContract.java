@@ -34,5 +34,7 @@ public interface HomeContract {
         void setUpFirebaseDatabase(String story);
 
         void setPresenter(HomePresenter homePresenter);
+
+        void removeListeners();
     }
 }

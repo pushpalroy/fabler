@@ -1,7 +1,7 @@
 package com.techradge.fabler.ui.draft;
 
+import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.Observer;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 
 import com.techradge.fabler.data.local.viewmodel.MainViewModel;
@@ -19,9 +19,12 @@ public class DraftPresenter<V extends DraftContract.DraftView, I extends DraftCo
         extends BasePresenter<V, I>
         implements DraftContract.DraftPresenter<V, I> {
 
+    private MainViewModel mMainViewModel;
+    private Observer<List<Story>> observer;
+
     @Inject
-    public DraftPresenter(I mvpInteractor, SchedulerProvider schedulerProvider,
-                          CompositeDisposable compositeDisposable) {
+    DraftPresenter(I mvpInteractor, SchedulerProvider schedulerProvider,
+                   CompositeDisposable compositeDisposable) {
         super(mvpInteractor, schedulerProvider, compositeDisposable);
         getInteractor().setPresenter(this);
     }
@@ -32,16 +35,19 @@ public class DraftPresenter<V extends DraftContract.DraftView, I extends DraftCo
     }
 
     private void fetchDrafts(MainViewModel mainViewModel, FragmentActivity fragmentActivity) {
-        mainViewModel
-                .getAllStories()
-                .observe(fragmentActivity,
-                        new Observer<List<Story>>() {
-                            @Override
-                            public void onChanged(@Nullable List<Story> drafts) {
-                                if (drafts != null) {
-                                    getMvpView().showAllDrafts(drafts);
-                                }
-                            }
-                        });
+        mMainViewModel = mainViewModel;
+
+        observer = drafts -> {
+            if (drafts != null) {
+                getMvpView().showAllDrafts(drafts);
+            }
+        };
+
+        mMainViewModel.getAllStories().observe(fragmentActivity, observer);
+    }
+
+    @Override
+    public void removeListeners(LifecycleOwner lifecycleOwner) {
+        mMainViewModel.getAllStories().removeObservers(lifecycleOwner);
     }
 }

@@ -24,6 +24,8 @@ public interface ComposeContract {
 
         void onPublishOptionSelected(Story story);
 
+        void onModifyOptionSelected(Story story);
+
         void onPublished();
 
         void setViewModel(MainViewModel mainViewModel);

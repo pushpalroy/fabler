@@ -28,7 +28,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DraftFragment extends BaseFragment implements DraftContract.DraftView, StoryClickListener {
+public class DraftFragment extends BaseFragment
+        implements DraftContract.DraftView, StoryClickListener, DraftModificationListener {
     @BindView(R.id.fab)
     public FloatingActionButton fab;
     @BindView(R.id.drafts_recycler_view)
@@ -62,7 +63,7 @@ public class DraftFragment extends BaseFragment implements DraftContract.DraftVi
             getActivityComponent().inject(this);
             setUnBinder(ButterKnife.bind(this, view));
             mPresenter.onAttach(this);
-            mDraftAdapter.setCallback(this);
+            mDraftAdapter.setCallback(this, this);
             mDraftAdapter.setMainViewModel(mMainViewModel);
         }
         return view;
@@ -93,6 +94,7 @@ public class DraftFragment extends BaseFragment implements DraftContract.DraftVi
 
     @Override
     public void onDestroyView() {
+        mPresenter.removeListeners(getActivity());
         mPresenter.onDetach();
         super.onDestroyView();
     }
@@ -100,15 +102,21 @@ public class DraftFragment extends BaseFragment implements DraftContract.DraftVi
     @Override
     public void onStoryClick(int position, final Story story) {
         openComposeActivity(story);
-        mMainViewModel.deleteStory(story);
+    }
+
+    @Override
+    public void onStoryDeleted(int position, Story story) {
+        showMessage("Draft Deleted!");
     }
 
     @Override
     public void openComposeActivity(Story story) {
-        Intent readIntent = new Intent(getActivity(), ComposeActivity.class);
+        Intent readIntent = ComposeActivity.getStartIntent(getActivity());
         if (story != null) {
-            readIntent.putExtra("title", story.getTitle());
-            readIntent.putExtra("story", story.getStory());
+            readIntent.putExtra(getString(R.string.key_story_id), story.getId());
+            readIntent.putExtra(getString(R.string.key_title), story.getTitle());
+            readIntent.putExtra(getString(R.string.key_story), story.getStory());
+            readIntent.putExtra(getString(R.string.key_isEdited), true);
         }
 
         startActivity(readIntent);
