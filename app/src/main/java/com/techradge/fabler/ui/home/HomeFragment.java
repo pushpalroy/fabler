@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import com.techradge.fabler.R;
 import com.techradge.fabler.data.model.Story;
 import com.techradge.fabler.ui.base.BaseFragment;
-import com.techradge.fabler.ui.compose.ComposeActivity;
 import com.techradge.fabler.ui.read.ReadActivity;
 import com.techradge.fabler.ui.story.StoryAdapter;
 import com.techradge.fabler.ui.story.StoryClickListener;
@@ -27,7 +26,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class HomeFragment extends BaseFragment implements HomeContract.HomeView, StoryClickListener {
 
@@ -117,11 +115,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
         readIntent.putExtra("author", story.getAuthorName());
         readIntent.putExtra("time", story.getPublishedOn());
         startActivity(readIntent);
-    }
-
-    @OnClick(R.id.fab)
-    public void openComposeActivity() {
-        startActivity(ComposeActivity.getStartIntent(getActivity()));
     }
 
     @Override
