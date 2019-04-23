@@ -64,12 +64,11 @@ public class LoginActivity extends BaseActivity implements LoginView {
                     String uid = firebaseUser.getUid();
 
                     onAuthenticated(
-                            new User(
+                            new User(uid,
                                     fullName,
                                     email,
                                     emailVerified,
-                                    photoURL,
-                                    uid));
+                                    photoURL));
                 }
 
                 String idpToken = "";

@@ -89,6 +89,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
     }
 
     @Override
+    public void showSingleStory(Story story) {
+        mStoryAdapter.addItem(story);
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
     }
@@ -107,10 +112,10 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
     @Override
     public void openReadActivity(Story story) {
         Intent readIntent = new Intent(getActivity(), ReadActivity.class);
-        readIntent.putExtra("title", story.getTitle());
-        readIntent.putExtra("story", story.getStory());
-        readIntent.putExtra("author", story.getAuthor());
-        readIntent.putExtra("time", story.getTime());
+        readIntent.putExtra("title", story.getStoryTitle());
+        readIntent.putExtra("story", story.getStoryBody());
+        readIntent.putExtra("author", story.getAuthorName());
+        readIntent.putExtra("time", story.getPublishedOn());
         startActivity(readIntent);
     }
 

@@ -4,14 +4,8 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 
-import com.techradge.fabler.data.model.Comment;
-import com.techradge.fabler.data.model.Story;
 import com.techradge.fabler.di.ActivityContext;
 import com.techradge.fabler.di.PerActivity;
-import com.techradge.fabler.ui.comment.CommentAdapter;
-import com.techradge.fabler.ui.comment.CommentContract;
-import com.techradge.fabler.ui.comment.CommentInteractor;
-import com.techradge.fabler.ui.comment.CommentPresenter;
 import com.techradge.fabler.ui.compose.ComposeContract;
 import com.techradge.fabler.ui.compose.ComposeInteractor;
 import com.techradge.fabler.ui.compose.ComposePresenter;
@@ -19,6 +13,8 @@ import com.techradge.fabler.ui.draft.DraftAdapter;
 import com.techradge.fabler.ui.draft.DraftContract;
 import com.techradge.fabler.ui.draft.DraftInteractor;
 import com.techradge.fabler.ui.draft.DraftPresenter;
+import com.techradge.fabler.ui.feedback.FeedbackAdapter;
+import com.techradge.fabler.ui.feedback.FeedbackContract;
 import com.techradge.fabler.ui.home.HomeContract;
 import com.techradge.fabler.ui.home.HomeInteractor;
 import com.techradge.fabler.ui.home.HomePresenter;
@@ -120,14 +116,14 @@ public class ActivityModule {
 
     @Provides
     @PerActivity
-    CommentContract.CommentPresenter<CommentContract.CommentView, CommentContract.CommentInteractor> provideCommentPresenter(
-            CommentPresenter<CommentContract.CommentView, CommentContract.CommentInteractor> presenter) {
+    FeedbackContract.FeedbackPresenter<FeedbackContract.FeedbackView, FeedbackContract.FeedbackInteractor> provideCommentPresenter(
+            com.techradge.fabler.ui.feedback.FeedbackPresenter presenter) {
         return presenter;
     }
 
     @Provides
     @PerActivity
-    CommentContract.CommentInteractor provideCommentInteractor(CommentInteractor interactor) {
+    FeedbackContract.FeedbackInteractor provideCommentInteractor(com.techradge.fabler.ui.feedback.FeedbackInteractor interactor) {
         return interactor;
     }
 
@@ -180,17 +176,17 @@ public class ActivityModule {
 
     @Provides
     StoryAdapter provideStoryAdapter() {
-        return new StoryAdapter(new ArrayList<Story>());
+        return new StoryAdapter(new ArrayList<>());
     }
 
     @Provides
-    CommentAdapter provideCommentAdapter() {
-        return new CommentAdapter(new ArrayList<Comment>());
+    FeedbackAdapter provideCommentAdapter() {
+        return new FeedbackAdapter(new ArrayList<>());
     }
 
     @Provides
     DraftAdapter provideDraftAdapter() {
-        return new DraftAdapter(new ArrayList<Story>(), mActivity);
+        return new DraftAdapter(new ArrayList<>(), mActivity);
     }
 
     // Linear Layout Manager

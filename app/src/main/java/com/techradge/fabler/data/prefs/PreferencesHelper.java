@@ -45,4 +45,8 @@ public interface PreferencesHelper {
     String getAccessToken();
 
     void setAccessToken(String accessToken);
+
+    String getFirebaseUid();
+
+    void setFirebaseUid(String uid);
 }

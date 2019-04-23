@@ -1,76 +1,87 @@
 package com.techradge.fabler.data.model;
 
-import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.util.Map;
+
 @Entity(tableName = "user")
 public class User {
     @NonNull
     @PrimaryKey
-    @ColumnInfo(name = "id")
     private String uid;
-    @ColumnInfo(name = "userName")
-    private String userName;
-    @ColumnInfo(name = "fullName")
+
     private String fullName;
-    @ColumnInfo(name = "email")
+
     private String email;
-    @ColumnInfo(name = "photoURL")
+
     private String photoURL;
-    @ColumnInfo(name = "gender")
-    private String gender;
-    @ColumnInfo(name = "location")
-    private String location;
-    @ColumnInfo(name = "about")
-    private String about;
-    @ColumnInfo(name = "level")
-    private String level;
-    @ColumnInfo(name = "profileCreationTimeStamp")
-    private String profileCreationTimeStamp;
-    @ColumnInfo(name = "lastOnlineTimeStamp")
-    private String lastOnlineTimeStamp;
-    @ColumnInfo(name = "emailVerified")
+
     private boolean emailVerified;
 
     @Ignore
+    private String gender;
+
+    @Ignore
+    private String location;
+
+    @Ignore
+    private String language;
+
+    @Ignore
+    private String about;
+
+    @Ignore
+    private long profileCreatedOn;
+
+    @Ignore
+    private int totalStories;
+
+    @Ignore
+    private int totalFollowers;
+
+    @Ignore
+    private int totalFollowing;
+
+    @Ignore
+    private int totalBookmarks;
+
+    @Ignore
+    private Map<String, String> followers;
+
+    @Ignore
+    private Map<String, String> following;
+
+    @Ignore
+    private Map<String, String> myStories;
+
+    @Ignore
+    private Map<String, String> myBookmarks;
+
+
+    @Ignore
+    // For Firebase Realtime DB
     public User() {
     }
 
-    @Ignore
-    public User(String fullName, String email, boolean emailVerified, String photoURL, @NonNull String uid) {
+    // For Room
+    public User(@NonNull String uid, String fullName, String email, boolean emailVerified, String photoURL) {
+        this.uid = uid;
         this.fullName = fullName;
         this.email = email;
-        this.emailVerified = emailVerified;
         this.photoURL = photoURL;
-        this.uid = uid;
-    }
-
-    public User(String userName, String fullName, String email, boolean emailVerified, String photoURL,
-                String gender, String location, String about, String level, String profileCreationTimeStamp,
-                String lastOnlineTimeStamp, @NonNull String uid) {
-        this.userName = userName;
-        this.fullName = fullName;
-        this.email = email;
         this.emailVerified = emailVerified;
-        this.photoURL = photoURL;
-        this.gender = gender;
-        this.location = location;
-        this.about = about;
-        this.level = level;
-        this.profileCreationTimeStamp = profileCreationTimeStamp;
-        this.lastOnlineTimeStamp = lastOnlineTimeStamp;
+    }
+
+    @NonNull
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(@NonNull String uid) {
         this.uid = uid;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getFullName() {
@@ -87,14 +98,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public boolean isEmailVerified() {
-        return emailVerified;
-    }
-
-    public void setEmailVerified(boolean emailVerified) {
-        this.emailVerified = emailVerified;
     }
 
     public String getPhotoURL() {
@@ -121,6 +124,14 @@ public class User {
         this.location = location;
     }
 
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
     public String getAbout() {
         return about;
     }
@@ -129,36 +140,83 @@ public class User {
         this.about = about;
     }
 
-    public String getLevel() {
-        return level;
+    public long getProfileCreatedOn() {
+        return profileCreatedOn;
     }
 
-    public void setLevel(String level) {
-        this.level = level;
+    public void setProfileCreatedOn(long profileCreatedOn) {
+        this.profileCreatedOn = profileCreatedOn;
     }
 
-    public String getProfileCreationTimeStamp() {
-        return profileCreationTimeStamp;
+    public boolean isEmailVerified() {
+        return emailVerified;
     }
 
-    public void setProfileCreationTimeStamp(String profileCreationTimeStamp) {
-        this.profileCreationTimeStamp = profileCreationTimeStamp;
+    public void setEmailVerified(boolean emailVerified) {
+        this.emailVerified = emailVerified;
     }
 
-    public String getLastOnlineTimeStamp() {
-        return lastOnlineTimeStamp;
+    public int getTotalStories() {
+        return totalStories;
     }
 
-    public void setLastOnlineTimeStamp(String lastOnlineTimeStamp) {
-        this.lastOnlineTimeStamp = lastOnlineTimeStamp;
+    public void setTotalStories(int totalStories) {
+        this.totalStories = totalStories;
     }
 
-    @NonNull
-    public String getUid() {
-        return uid;
+    public int getTotalFollowers() {
+        return totalFollowers;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setTotalFollowers(int totalFollowers) {
+        this.totalFollowers = totalFollowers;
+    }
+
+    public int getTotalFollowing() {
+        return totalFollowing;
+    }
+
+    public void setTotalFollowing(int totalFollowing) {
+        this.totalFollowing = totalFollowing;
+    }
+
+    public int getTotalBookmarks() {
+        return totalBookmarks;
+    }
+
+    public void setTotalBookmarks(int totalBookmarks) {
+        this.totalBookmarks = totalBookmarks;
+    }
+
+    public Map<String, String> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Map<String, String> followers) {
+        this.followers = followers;
+    }
+
+    public Map<String, String> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(Map<String, String> following) {
+        this.following = following;
+    }
+
+    public Map<String, String> getMyStories() {
+        return myStories;
+    }
+
+    public void setMyStories(Map<String, String> myStories) {
+        this.myStories = myStories;
+    }
+
+    public Map<String, String> getMyBookmarks() {
+        return myBookmarks;
+    }
+
+    public void setMyBookmarks(Map<String, String> myBookmarks) {
+        this.myBookmarks = myBookmarks;
     }
 }

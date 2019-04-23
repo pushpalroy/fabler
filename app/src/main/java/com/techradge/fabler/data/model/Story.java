@@ -1,10 +1,8 @@
 package com.techradge.fabler.data.model;
 
-import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
-import android.support.annotation.NonNull;
 
 import com.google.firebase.database.Exclude;
 
@@ -14,137 +12,256 @@ import java.util.Map;
 @Entity(tableName = "story")
 public class Story {
 
+    @Exclude
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
     private int id;
 
     private String storyId;
 
-    private String author;
+    private String authorId;
 
-    @ColumnInfo(name = "title")
-    private String title;
+    private String authorName;
 
-    @ColumnInfo(name = "story")
-    private String story;
+    private long createdOn;
 
-    @ColumnInfo(name = "time")
-    private String time;
+    private String storyTitle;
 
-    private String likes;
+    private String storyBrief;
 
-    private String comments;
+    @Exclude
+    private String storyBody;
 
-    private String shares;
+    private String photoUrl;
 
     @Ignore
+    private int totalParts;
+
+    @Ignore
+    private int partNum;
+
+    private String category;
+
+    @Ignore
+    private int readTime;
+
+    @Ignore
+    private boolean isEdited;
+
+    @Ignore
+    private long editedOn;
+
+    @Ignore
+    private int totalLikes;
+
+    @Ignore
+    private int totalFeedbacks;
+
+    @Ignore
+    private boolean isCollaborative;
+
+    @Ignore
+    private int totalContributors;
+
+    @Ignore
+    private Map<String, String> contributors;
+
+    @Ignore
+    private long publishedOn;
+
+    @Ignore
+    // For Firebase Realtime DB
     public Story() {
     }
 
-    public Story(@NonNull int id, String title, String story, String time) {
-        this.id = id;
-        this.title = title;
-        this.story = story;
-        this.time = time;
-    }
-
-    @Ignore
-    public Story(@NonNull int id, String storyId, String author, String title, String story, String time, String likes, String comments, String shares) {
-        this.id = id;
+    // For Room
+    public Story(String storyId, String authorId, String authorName, long createdOn,
+                 String storyTitle, String storyBrief, String photoUrl, String category) {
         this.storyId = storyId;
-        this.author = author;
-        this.title = title;
-        this.story = story;
-        this.time = time;
-        this.likes = likes;
-        this.comments = comments;
-        this.shares = shares;
+        this.authorId = authorId;
+        this.authorName = authorName;
+        this.createdOn = createdOn;
+        this.storyTitle = storyTitle;
+        this.storyBrief = storyBrief;
+        this.photoUrl = photoUrl;
+        this.category = category;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getStoryId() {
         return storyId;
+    }
+
+    public String getAuthorId() {
+        return authorId;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public long getCreatedOn() {
+        return createdOn;
+    }
+
+    public String getStoryTitle() {
+        return storyTitle;
+    }
+
+    public String getStoryBrief() {
+        return storyBrief;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public int getTotalParts() {
+        return totalParts;
+    }
+
+    public int getPartNum() {
+        return partNum;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public int getReadTime() {
+        return readTime;
+    }
+
+    public boolean isEdited() {
+        return isEdited;
+    }
+
+    public long getEditedOn() {
+        return editedOn;
+    }
+
+    public int getTotalLikes() {
+        return totalLikes;
+    }
+
+    public int getTotalFeedbacks() {
+        return totalFeedbacks;
+    }
+
+    public boolean isCollaborative() {
+        return isCollaborative;
+    }
+
+    public int getTotalContributors() {
+        return totalContributors;
+    }
+
+    public Map<String, String> getContributors() {
+        return contributors;
+    }
+
+    public long getPublishedOn() {
+        return publishedOn;
+    }
+
+    public String getStoryBody() {
+        return storyBody;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setStoryId(String storyId) {
         this.storyId = storyId;
     }
 
-    public String getAuthor() {
-        return author;
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 
-    public String getTitle() {
-        return title;
+    public void setCreatedOn(long createdOn) {
+        this.createdOn = createdOn;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setStoryTitle(String storyTitle) {
+        this.storyTitle = storyTitle;
     }
 
-    public String getStory() {
-        return story;
+    public void setStoryBrief(String storyBrief) {
+        this.storyBrief = storyBrief;
     }
 
-    public void setStory(String story) {
-        this.story = story;
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 
-    public String getTime() {
-        return time;
+    public void setTotalParts(int totalParts) {
+        this.totalParts = totalParts;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setPartNum(int partNum) {
+        this.partNum = partNum;
     }
 
-    public String getLikes() {
-        return likes;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public void setLikes(String likes) {
-        this.likes = likes;
+    public void setReadTime(int readTime) {
+        this.readTime = readTime;
     }
 
-    public String getComments() {
-        return comments;
+    public void setEdited(boolean edited) {
+        isEdited = edited;
     }
 
-    public void setComments(String comments) {
-        this.comments = comments;
+    public void setEditedOn(long editedOn) {
+        this.editedOn = editedOn;
     }
 
-    public String getShares() {
-        return shares;
+    public void setTotalLikes(int totalLikes) {
+        this.totalLikes = totalLikes;
     }
 
-    public void setShares(String shares) {
-        this.shares = shares;
+    public void setTotalFeedbacks(int totalFeedbacks) {
+        this.totalFeedbacks = totalFeedbacks;
+    }
+
+    public void setCollaborative(boolean collaborative) {
+        isCollaborative = collaborative;
+    }
+
+    public void setTotalContributors(int totalContributors) {
+        this.totalContributors = totalContributors;
+    }
+
+    public void setContributors(Map<String, String> contributors) {
+        this.contributors = contributors;
+    }
+
+    public void setPublishedOn(long publishedOn) {
+        this.publishedOn = publishedOn;
+    }
+
+    public void setStoryBody(String storyBody) {
+        this.storyBody = storyBody;
     }
 
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("storyId", storyId);
-        result.put("author", author);
-        result.put("title", title);
-        result.put("story", story);
-        result.put("time", time);
-        result.put("likes", likes);
-        result.put("comments", comments);
-        result.put("shares", shares);
-
+        result.put("authorName", authorName);
+        result.put("storyTitle", storyTitle);
+        result.put("storyBrief", storyBrief);
         return result;
     }
+
 }

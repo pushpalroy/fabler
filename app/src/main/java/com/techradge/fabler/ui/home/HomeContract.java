@@ -12,6 +12,8 @@ public interface HomeContract {
     interface HomeView extends MvpView {
         void showAllStories(List<Story> storyList);
 
+        void showSingleStory(Story story);
+
         void openReadActivity(Story story);
 
         void showCustomLoader();
@@ -28,6 +30,8 @@ public interface HomeContract {
         void onStoriesPrepare();
 
         void onStoriesFetched(List<Story> storyList);
+
+        void onSingleStoryFetched(Story story);
     }
 
     interface HomeInteractor extends MvpInteractor {

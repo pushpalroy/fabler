@@ -79,11 +79,12 @@
     <string name="toast_message_widget">Story added to widget!</string>
     <string name="dots_text"><![CDATA[&#8226;]]></string>
     <string name="zero">0</string>
-    <string name="toast_message_comment">Comment has been posted!</string>
+    <string name="toast_message_feedback">Feedback has been posted!</string>
     <string name="toast_message_story">Story has been published!</string>
     <string name="child_users">users</string>
     <string name="child_story">story</string>
-    <string name="child_comment">comment</string>
+    <string name="child_story_data">storyData</string>
+    <string name="child_feedback">feedback</string>
     <string name="def_val_user_full_name">Guest</string>
     <string name="def_val_user_email">Guest@fabler.com</string>
     <string name="def_val_widget_story_title">Title</string>

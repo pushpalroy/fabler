@@ -10,41 +10,59 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.techradge.fabler.R;
 import com.techradge.fabler.data.model.Story;
+import com.techradge.fabler.data.model.StoryData;
 import com.techradge.fabler.di.ApplicationContext;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import timber.log.Timber;
 
 public class StoryFireOp {
 
-    private DatabaseReference storyDatabase;
+    private DatabaseReference storyRef, storyDataRef;
     private String TAG = "StoryFireOp";
     private Context context;
 
     public StoryFireOp(FirebaseDatabase firebaseDatabase, @ApplicationContext Context context) {
-        storyDatabase = firebaseDatabase.getReference().child(context.getString(R.string.child_story));
+        storyRef = firebaseDatabase.getReference().child(context.getString(R.string.child_story));
+        storyDataRef = firebaseDatabase.getReference().child(context.getString(R.string.child_story_data));
         this.context = context;
     }
 
-    public void insertStoryData(Story story) {
-        String key = storyDatabase.push().getKey();
+    public void insertStory(Story story, StoryData storyData) {
+        String key = storyRef.push().getKey();
         try {
-            if (key != null) {
+            if (story != null && storyData != null && key != null) {
                 story.setStoryId(key);
-                storyDatabase.child(key)
+                storyData.setStoryId(key);
+
+                insertStoryData(storyData);
+                storyRef
+                        .child(key)
                         .setValue(story)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(context, context.getString(R.string.toast_message_story), Toast.LENGTH_LONG).show();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                            }
+                        .addOnSuccessListener(aVoid ->
+                                Toast.makeText(context,
+                                        context.getString(R.string.toast_message_story),
+                                        Toast.LENGTH_LONG).show())
+                        .addOnFailureListener(e -> {
+                            Timber.e(e.toString());
+                        });
+            }
+        } catch (Exception e) {
+            Timber.e(e.toString());
+        }
+    }
+
+    private void insertStoryData(StoryData storyData) {
+        try {
+            if (storyData.getStoryId() != null) {
+                storyDataRef
+                        .child(storyData.getStoryId())
+                        .setValue(storyData)
+                        .addOnSuccessListener(aVoid ->
+                                Toast.makeText(context,
+                                        context.getString(R.string.toast_message_story),
+                                        Toast.LENGTH_LONG).show())
+                        .addOnFailureListener(e -> {
+                            Timber.e(e.toString());
                         });
             }
         } catch (Exception e) {
@@ -53,30 +71,10 @@ public class StoryFireOp {
     }
 
     public void postLikeUpdateStory(Story story) {
-        Map<String, Object> postValues = story.toMap();
-        if (story.getLikes() == null)
-            story.setLikes("0");
-        int likes = Integer.parseInt(story.getLikes()) + 1;
-        postValues.put("likes", String.valueOf(likes));
-
-        Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put(story.getStoryId(), postValues);
-
-        storyDatabase.updateChildren(childUpdates)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                    }
-                });
     }
 
-    public void postCommentUpdateStory(String storyId, String comments) {
-        DatabaseReference databaseReference = storyDatabase.child(storyId).child("comments");
+    public void postFeedbackUpdateStory(String storyId, String comments) {
+        DatabaseReference databaseReference = storyRef.child(storyId).child("comments");
         int commentCount;
         if (comments == null)
             commentCount = 0;

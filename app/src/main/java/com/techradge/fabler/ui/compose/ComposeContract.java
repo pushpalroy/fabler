@@ -1,9 +1,8 @@
 package com.techradge.fabler.ui.compose;
 
-import android.content.Context;
-
 import com.techradge.fabler.data.local.viewmodel.MainViewModel;
 import com.techradge.fabler.data.model.Story;
+import com.techradge.fabler.data.model.StoryData;
 import com.techradge.fabler.di.PerActivity;
 import com.techradge.fabler.ui.base.MvpInteractor;
 import com.techradge.fabler.ui.base.MvpPresenter;
@@ -22,7 +21,7 @@ public interface ComposeContract {
             extends MvpPresenter<V, I> {
         void onSaveOptionSelected(Story story);
 
-        void onPublishOptionSelected(Story story);
+        void onPublishOptionSelected(Story story, StoryData storyData);
 
         void onModifyOptionSelected(Story story);
 

@@ -15,7 +15,8 @@ import com.techradge.fabler.data.model.Story;
 import com.techradge.fabler.data.remote.RemoteFireDatabase;
 import com.techradge.fabler.data.remote.operations.story.StoryFireOp;
 import com.techradge.fabler.ui.base.BaseViewHolder;
-import com.techradge.fabler.ui.comment.CommentActivity;
+import com.techradge.fabler.ui.feedback.FeedbackActivity;
+import com.techradge.fabler.utils.CommonUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -64,6 +65,11 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         notifyDataSetChanged();
     }
 
+    public void addItem(Story story) {
+        mStoryList.add(0, story);
+        notifyDataSetChanged();
+    }
+
     public void flushAndAddItems(List<Story> stories) {
         mStoryList.clear();
         Collections.reverse(stories);
@@ -101,48 +107,31 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
             final Story story = mStoryList.get(position);
 
-            if (story.getTitle() != null)
-                titleTv.setText(story.getTitle());
-            if (story.getTime() != null)
-                timeStampTv.setText(story.getTime());
-            if (story.getAuthor() != null)
-                authorTv.setText(story.getAuthor());
-            if (story.getStory() != null)
-                storyTv.setText(story.getStory());
-            if (story.getLikes() != null)
-                likesTv.setText(story.getLikes());
-            else
-                likesTv.setText(itemView.getContext().getString(R.string.zero));
-            if (story.getComments() != null)
-                commentsTv.setText(story.getComments());
-            else
-                commentsTv.setText(itemView.getContext().getString(R.string.zero));
+            if (story.getStoryTitle() != null)
+                titleTv.setText(story.getStoryTitle());
+            if (story.getPublishedOn() != 0)
+                timeStampTv.setText(CommonUtils.getFormattedDateTime(story.getPublishedOn()));
+            if (story.getAuthorName() != null)
+                authorTv.setText(story.getAuthorName());
+            if (story.getStoryBrief() != null)
+                storyTv.setText(story.getStoryBrief());
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mStoryClickListener.onStoryClick(position, story);
+            likesTv.setText(String.valueOf(story.getTotalLikes()));
+            commentsTv.setText(String.valueOf(story.getTotalFeedbacks()));
+
+            itemView.setOnClickListener(v -> mStoryClickListener.onStoryClick(position, story));
+
+            likeButton.setOnCheckStateChangeListener((view, checked) -> {
+                if (checked) {
+                    StoryFireOp storyFireOp = new StoryFireOp(RemoteFireDatabase.getFirebaseDatabase(), itemView.getContext());
+                    storyFireOp.postLikeUpdateStory(story);
                 }
             });
 
-            likeButton.setOnCheckStateChangeListener(new ShineButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(View view, boolean checked) {
-                    if (checked) {
-                        StoryFireOp storyFireOp = new StoryFireOp(RemoteFireDatabase.getFirebaseDatabase(), itemView.getContext());
-                        storyFireOp.postLikeUpdateStory(story);
-                    }
-                }
-            });
-
-            commentButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent commentIntent = new Intent(itemView.getContext(), CommentActivity.class);
-                    commentIntent.putExtra(itemView.getContext().getString(R.string.key_story_id), story.getStoryId());
-                    commentIntent.putExtra(itemView.getContext().getString(R.string.key_comments), story.getComments());
-                    itemView.getContext().startActivity(commentIntent);
-                }
+            commentButton.setOnClickListener(v -> {
+                Intent commentIntent = new Intent(itemView.getContext(), FeedbackActivity.class);
+                commentIntent.putExtra(itemView.getContext().getString(R.string.key_story_id), story.getStoryId());
+                itemView.getContext().startActivity(commentIntent);
             });
         }
 

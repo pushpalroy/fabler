@@ -7,6 +7,8 @@ import com.techradge.fabler.ui.login.LoginContract.LoginInteractor;
 import com.techradge.fabler.ui.login.LoginContract.LoginView;
 import com.techradge.fabler.utils.rx.SchedulerProvider;
 
+import java.util.Calendar;
+
 import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -36,9 +38,11 @@ public class LoginPresenter<V extends LoginView, I extends LoginInteractor>
 
     @Override
     public void onAuthenticated(User user) {
-        String uid = user.getUid();
         getInteractor().insertUserDataLocal(user, mMainViewModel);
+
+        user.setProfileCreatedOn(Calendar.getInstance().getTimeInMillis());
         getInteractor().insertUserDataRemote(user);
+
         onUserDataInserted(user);
     }
 

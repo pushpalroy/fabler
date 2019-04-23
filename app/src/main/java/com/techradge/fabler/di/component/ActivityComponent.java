@@ -2,7 +2,7 @@ package com.techradge.fabler.di.component;
 
 import com.techradge.fabler.di.PerActivity;
 import com.techradge.fabler.di.module.ActivityModule;
-import com.techradge.fabler.ui.comment.CommentActivity;
+import com.techradge.fabler.ui.feedback.FeedbackActivity;
 import com.techradge.fabler.ui.compose.ComposeActivity;
 import com.techradge.fabler.ui.draft.DraftFragment;
 import com.techradge.fabler.ui.home.HomeFragment;
@@ -22,7 +22,7 @@ public interface ActivityComponent {
 
     void inject(ComposeActivity activity);
 
-    void inject(CommentActivity activity);
+    void inject(FeedbackActivity activity);
 
     void inject(ReadActivity activity);
 

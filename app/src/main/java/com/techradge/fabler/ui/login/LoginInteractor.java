@@ -35,24 +35,33 @@ public class LoginInteractor extends BaseInteractor implements LoginContract.Log
         return mPreferencesHelper.isUserLoggedIn();
     }
 
-    // User data insertion
     @Override
-    public void insertUserDataLocal(User user, MainViewModel mainViewModel) {
+    public void insertUserDataRemote(User user) {
         try {
-            mainViewModel.insertUser(user);
-            mPreferencesHelper.setUserLoggedIn(true);
-            mPreferencesHelper.setUserFullName(user.getFullName());
-            mPreferencesHelper.setUserEmail(user.getEmail());
-            mPreferencesHelper.setUserPhotoUrl(user.getPhotoURL());
+            userFireOp.insertUserData(user);
         } catch (Exception e) {
             Timber.e("Exception: %s", e.toString());
         }
     }
 
     @Override
-    public void insertUserDataRemote(User user) {
+    public void insertUserDataLocal(User user, MainViewModel mainViewModel) {
         try {
-            userFireOp.insertUserData(user, mContext);
+            mainViewModel.insertUser(user);
+            insertUserDataPref(user);
+        } catch (Exception e) {
+            Timber.e("Exception: %s", e.toString());
+        }
+    }
+
+    @Override
+    public void insertUserDataPref(User user) {
+        try {
+            mPreferencesHelper.setFirebaseUid(user.getUid());
+            mPreferencesHelper.setUserLoggedIn(true);
+            mPreferencesHelper.setUserFullName(user.getFullName());
+            mPreferencesHelper.setUserEmail(user.getEmail());
+            mPreferencesHelper.setUserPhotoUrl(user.getPhotoURL());
         } catch (Exception e) {
             Timber.e("Exception: %s", e.toString());
         }

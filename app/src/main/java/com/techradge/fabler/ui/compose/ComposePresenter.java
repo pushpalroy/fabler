@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.techradge.fabler.data.local.viewmodel.MainViewModel;
 import com.techradge.fabler.data.model.Story;
+import com.techradge.fabler.data.model.StoryData;
 import com.techradge.fabler.data.remote.RemoteFireDatabase;
 import com.techradge.fabler.data.remote.operations.story.StoryFireOp;
 import com.techradge.fabler.di.ActivityContext;
@@ -50,9 +51,9 @@ public class ComposePresenter<V extends ComposeView, I extends ComposeInteractor
     }
 
     @Override
-    public void onPublishOptionSelected(Story story) {
+    public void onPublishOptionSelected(Story story, StoryData storyData) {
         // Firebase
-        storyFireOp.insertStoryData(story);
+        storyFireOp.insertStory(story, storyData);
     }
 
 

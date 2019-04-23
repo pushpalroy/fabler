@@ -6,5 +6,5 @@ import com.techradge.fabler.data.model.User;
 
 interface UserFirebase {
 
-    void insertUserData(User user, Context context);
+    void insertUserData(User user);
 }

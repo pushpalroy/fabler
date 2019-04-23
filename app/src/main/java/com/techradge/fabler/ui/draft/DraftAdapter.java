@@ -17,6 +17,7 @@ import com.techradge.fabler.data.model.Story;
 import com.techradge.fabler.ui.base.BaseViewHolder;
 import com.techradge.fabler.ui.story.StoryClickListener;
 import com.techradge.fabler.utils.AppConstants;
+import com.techradge.fabler.utils.CommonUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -99,12 +100,11 @@ public class DraftAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
             final Story story = mDraftList.get(position);
 
-            if (story.getTitle() != null)
-                titleTv.setText(story.getTitle());
-            if (story.getTime() != null)
-                timeStampTv.setText(story.getTime());
-            if (story.getStory() != null)
-                storyTv.setText(story.getStory());
+            if (story.getStoryTitle() != null)
+                titleTv.setText(story.getStoryTitle());
+            timeStampTv.setText(CommonUtils.getFormattedDateTime(story.getCreatedOn()));
+            if (story.getStoryBrief() != null)
+                storyTv.setText(story.getStoryBrief());
 
             itemView.setOnClickListener(v -> mStoryClickListener.onStoryClick(position, story));
 

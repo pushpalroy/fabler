@@ -19,9 +19,16 @@ public class UserFireOp implements UserFirebase {
     }
 
     @Override
-    public void insertUserData(final User user, final Context context) {
+    public void insertUserData(final User user) {
         try {
-            usersDatabase.child(user.getUid()).setValue(user);
+            if (user != null) {
+                usersDatabase.child(user.getUid()).setValue(user)
+                        .addOnSuccessListener(aVoid -> {
+                        })
+                        .addOnFailureListener(e -> {
+                        });
+            }
+
         } catch (Exception e) {
             Timber.e(e.toString());
         }

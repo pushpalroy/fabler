@@ -14,9 +14,12 @@ import android.widget.EditText;
 import com.techradge.fabler.R;
 import com.techradge.fabler.data.local.viewmodel.MainViewModel;
 import com.techradge.fabler.data.model.Story;
+import com.techradge.fabler.data.model.StoryData;
 import com.techradge.fabler.ui.base.BaseActivity;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -96,9 +99,9 @@ public class ComposeActivity extends BaseActivity implements ComposeContract.Com
             if (!(titleEditor.getText().toString().isEmpty() &&
                     storyEditor.getText().toString().isEmpty())) {
                 if (mIsEdited)
-                    mPresenter.onModifyOptionSelected(createStory());
+                    mPresenter.onModifyOptionSelected(createStoryForRoom());
                 else
-                    mPresenter.onSaveOptionSelected(createStory());
+                    mPresenter.onSaveOptionSelected(createStoryForRoom());
             }
             return true;
         } else if (id == R.id.action_publish) {
@@ -109,7 +112,9 @@ public class ComposeActivity extends BaseActivity implements ComposeContract.Com
                         .setTitle(R.string.dialog_publish_title)
                         .setPositiveButton(R.string.publish, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                mPresenter.onPublishOptionSelected(createStory());
+                                // Publish Story
+                                mPresenter.onPublishOptionSelected(createStoryForFirebase(),
+                                        createStoryDataForFirebase());
                                 dialog.dismiss();
                                 finish();
                             }
@@ -125,17 +130,49 @@ public class ComposeActivity extends BaseActivity implements ComposeContract.Com
         return super.onOptionsItemSelected(item);
     }
 
-    private Story createStory() {
+    private Story createStoryForRoom() {
         String title = titleEditor.getText().toString();
         String body = storyEditor.getText().toString();
 
         Story story = new Story();
-        story.setId(storyId);
-        story.setTitle(title);
-        story.setStory(body);
-        story.setAuthor(mPresenter.getInteractor().getPreferencesHelper().getUserFullName());
-        story.setTime(Calendar.getInstance().getTime().toString());
+        story.setStoryTitle(title);
+        story.setStoryBody(body);
+        story.setAuthorName(mPresenter.getInteractor().getPreferencesHelper().getUserFullName());
+        story.setCreatedOn(Calendar.getInstance().getTimeInMillis());
         return story;
+    }
+
+    private Story createStoryForFirebase() {
+        String title = titleEditor.getText().toString();
+        String brief = storyEditor.getText().toString();
+
+        if (brief.length() > 40)
+            brief = brief.substring(0, 40);
+
+        Story story = new Story();
+        // Firebase child key will be added in StoryId
+
+        story.setAuthorId(mPresenter.getInteractor().getPreferencesHelper().getFirebaseUid());
+        story.setAuthorName(mPresenter.getInteractor().getPreferencesHelper().getUserFullName());
+        story.setStoryTitle(title);
+        story.setStoryBrief(brief);
+        story.setCreatedOn(Calendar.getInstance().getTimeInMillis());
+        story.setPublishedOn(Calendar.getInstance().getTimeInMillis());
+
+        Map<String, String> contributors = new HashMap<>();
+        contributors.put(mPresenter.getInteractor().getPreferencesHelper().getFirebaseUid(),
+                mPresenter.getInteractor().getPreferencesHelper().getUserFullName());
+        story.setContributors(contributors);
+
+        return story;
+    }
+
+    private StoryData createStoryDataForFirebase() {
+        String body = storyEditor.getText().toString();
+
+        StoryData storyData = new StoryData();
+        storyData.setStoryBody(body);
+        return storyData;
     }
 
     @Override
@@ -144,10 +181,13 @@ public class ComposeActivity extends BaseActivity implements ComposeContract.Com
         if (!(titleEditor.getText().toString().isEmpty() &&
                 storyEditor.getText().toString().isEmpty())) {
 
+            // Saving in local database
             if (mIsEdited)
-                mPresenter.onModifyOptionSelected(createStory());
+                // Update existing
+                mPresenter.onModifyOptionSelected(createStoryForRoom());
             else
-                mPresenter.onSaveOptionSelected(createStory());
+                // Insert new
+                mPresenter.onSaveOptionSelected(createStoryForRoom());
         }
     }
 

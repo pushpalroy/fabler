@@ -52,7 +52,11 @@ public final class CommonUtils {
         return matcher.matches();
     }
 
-    public static String getTimeStamp() {
+    public static String getCurrentDateTime() {
         return new SimpleDateFormat(AppConstants.TIMESTAMP_FORMAT, Locale.US).format(new Date());
+    }
+
+    public static String getFormattedDateTime(long milliSeconds) {
+        return new SimpleDateFormat(AppConstants.TIMESTAMP_FORMAT, Locale.US).format(new Date(milliSeconds));
     }
 }

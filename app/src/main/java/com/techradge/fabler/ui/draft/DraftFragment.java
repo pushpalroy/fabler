@@ -114,8 +114,8 @@ public class DraftFragment extends BaseFragment
         Intent readIntent = ComposeActivity.getStartIntent(getActivity());
         if (story != null) {
             readIntent.putExtra(getString(R.string.key_story_id), story.getId());
-            readIntent.putExtra(getString(R.string.key_title), story.getTitle());
-            readIntent.putExtra(getString(R.string.key_story), story.getStory());
+            readIntent.putExtra(getString(R.string.key_title), story.getStoryTitle());
+            readIntent.putExtra(getString(R.string.key_story), story.getStoryBody());
             readIntent.putExtra(getString(R.string.key_isEdited), true);
         }
 

@@ -21,7 +21,7 @@ public interface StoryDao {
     @Query("SELECT * FROM story WHERE id = :id")
     Story getStoryById(int id);
 
-    @Query("SELECT * FROM story WHERE title = :title")
+    @Query("SELECT * FROM story WHERE storyTitle = :title")
     List<Story> getStoryByTitle(String title);
 
     @Insert

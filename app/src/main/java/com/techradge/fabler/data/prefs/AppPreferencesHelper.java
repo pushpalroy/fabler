@@ -23,6 +23,7 @@ public class AppPreferencesHelper implements PreferencesHelper {
     private static final String PREF_KEY_IS_USER_LOGGED_IN = "PREF_KEY_IS_USER_LOGGED_IN";
     private static final String PREF_KEY_USER_LOGGED_IN_MODE = "PREF_KEY_USER_LOGGED_IN_MODE";
 
+    private static final String PREF_KEY_USER_FIREBASE_UID = "PREF_KEY_USER_FIREBASE_UID";
     private static final String PREF_KEY_USER_FULL_NAME = "PREF_KEY_USER_FULL_NAME";
     private static final String PREF_KEY_USER_EMAIL = "PREF_KEY_USER_EMAIL";
     private static final String PREF_KEY_USER_PHOTO_URL = "PREF_KEY_USER_PHOTO_URL";
@@ -139,5 +140,15 @@ public class AppPreferencesHelper implements PreferencesHelper {
     @Override
     public void setAccessToken(String accessToken) {
         editor.putString(PREF_KEY_ACCESS_TOKEN, accessToken).apply();
+    }
+
+    @Override
+    public String getFirebaseUid() {
+        return pref.getString(PREF_KEY_USER_FIREBASE_UID, null);
+    }
+
+    @Override
+    public void setFirebaseUid(String uid) {
+        editor.putString(PREF_KEY_USER_FIREBASE_UID, uid).apply();
     }
 }

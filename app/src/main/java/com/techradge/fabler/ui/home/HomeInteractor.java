@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.techradge.fabler.data.model.Story;
 import com.techradge.fabler.data.prefs.PreferencesHelper;
@@ -34,20 +35,25 @@ public class HomeInteractor extends BaseInteractor implements HomeContract.HomeI
                 .getReference()
                 .child(story);
 
-        mValueEventListener = mStoriesDatabaseReference
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        mPresenter.onStoriesPrepare();
-                        List<Story> storyList = fetchStoriesFromDataSnapshot(dataSnapshot);
-                        mPresenter.onStoriesFetched(storyList);
-                    }
+        mPresenter.onStoriesPrepare();
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+        //Query fetchStoriesQuery = mStoriesDatabaseReference.orderByKey().endAt("-Lc7lJubGqoFaTqmZEom").limitToLast(4);
+        Query fetchStoriesQuery = mStoriesDatabaseReference.orderByKey().limitToLast(4);
 
-                    }
-                });
+        mValueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Story> storyList = fetchStoriesFromDataSnapshot(dataSnapshot);
+                mPresenter.onStoriesFetched(storyList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+
+        fetchStoriesQuery.addListenerForSingleValueEvent(mValueEventListener);
     }
 
     private List<Story> fetchStoriesFromDataSnapshot(DataSnapshot dataSnapshot) {

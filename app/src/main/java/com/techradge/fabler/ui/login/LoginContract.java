@@ -35,8 +35,10 @@ public interface LoginContract {
     interface LoginInteractor extends MvpInteractor {
         boolean isUserLoggedIn();
 
+        void insertUserDataRemote(User user);
+
         void insertUserDataLocal(User user, MainViewModel mainViewModel);
 
-        void insertUserDataRemote(User user);
+        void insertUserDataPref(User user);
     }
 }
