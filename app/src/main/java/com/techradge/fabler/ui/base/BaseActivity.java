@@ -45,6 +45,9 @@ public abstract class BaseActivity extends AppCompatActivity
                 .activityModule(new ActivityModule(this))
                 .applicationComponent(((MvpApp) getApplication()).getComponent())
                 .build();
+
+        if (!NetworkUtils.isNetworkConnected(this))
+            showSnackBar("No internet connection");
     }
 
     public ActivityComponent getActivityComponent() {
