@@ -6,6 +6,8 @@ import android.support.v7.widget.LinearLayoutManager;
 
 import com.techradge.fabler.di.ActivityContext;
 import com.techradge.fabler.di.PerActivity;
+import com.techradge.fabler.ui.comment.CommentAdapter;
+import com.techradge.fabler.ui.comment.CommentContract;
 import com.techradge.fabler.ui.compose.ComposeContract;
 import com.techradge.fabler.ui.compose.ComposeInteractor;
 import com.techradge.fabler.ui.compose.ComposePresenter;
@@ -13,8 +15,6 @@ import com.techradge.fabler.ui.draft.DraftAdapter;
 import com.techradge.fabler.ui.draft.DraftContract;
 import com.techradge.fabler.ui.draft.DraftInteractor;
 import com.techradge.fabler.ui.draft.DraftPresenter;
-import com.techradge.fabler.ui.feedback.FeedbackAdapter;
-import com.techradge.fabler.ui.feedback.FeedbackContract;
 import com.techradge.fabler.ui.home.HomeContract;
 import com.techradge.fabler.ui.home.HomeInteractor;
 import com.techradge.fabler.ui.home.HomePresenter;
@@ -116,14 +116,14 @@ public class ActivityModule {
 
     @Provides
     @PerActivity
-    FeedbackContract.FeedbackPresenter<FeedbackContract.FeedbackView, FeedbackContract.FeedbackInteractor> provideCommentPresenter(
-            com.techradge.fabler.ui.feedback.FeedbackPresenter presenter) {
+    CommentContract.CommentPresenter<CommentContract.CommentView, CommentContract.CommentInteractor> provideCommentPresenter(
+            com.techradge.fabler.ui.comment.CommentPresenter presenter) {
         return presenter;
     }
 
     @Provides
     @PerActivity
-    FeedbackContract.FeedbackInteractor provideCommentInteractor(com.techradge.fabler.ui.feedback.FeedbackInteractor interactor) {
+    CommentContract.CommentInteractor provideCommentInteractor(com.techradge.fabler.ui.comment.CommentInteractor interactor) {
         return interactor;
     }
 
@@ -176,12 +176,12 @@ public class ActivityModule {
 
     @Provides
     StoryAdapter provideStoryAdapter() {
-        return new StoryAdapter(new ArrayList<>());
+        return new StoryAdapter(new ArrayList<>(), provideContext());
     }
 
     @Provides
-    FeedbackAdapter provideCommentAdapter() {
-        return new FeedbackAdapter(new ArrayList<>());
+    CommentAdapter provideCommentAdapter() {
+        return new CommentAdapter(new ArrayList<>());
     }
 
     @Provides

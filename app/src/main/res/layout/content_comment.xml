@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/feedback_recycler_view"
+        android:id="@+id/comment_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/rl_comment"
@@ -16,7 +16,7 @@
         app:layoutManager="android.support.v7.widget.GridLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:spanCount="1"
-        tools:listitem="@layout/item_feedback" />
+        tools:listitem="@layout/item_comment" />
 
     <include
         layout="@layout/layout_loader"
@@ -32,12 +32,11 @@
         android:padding="10dp">
 
         <EditText
-            android:id="@+id/et_feedback"
+            android:id="@+id/et_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toStartOf="@+id/button_send"
             android:background="#00000000"
-            android:fontFamily="@font/sans_pro"
             android:hint="@string/write_your_comment"
             android:inputType="text"
             android:nextFocusRight="@+id/button_send"
@@ -51,8 +50,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:contentDescription="@string/send"
-            android:nextFocusLeft="@+id/et_feedback"
-            android:nextFocusForward="@+id/et_feedback"
+            android:nextFocusLeft="@+id/et_comment"
+            android:nextFocusForward="@+id/et_comment"
             android:src="@drawable/ic_send" />
     </RelativeLayout>
 </RelativeLayout>

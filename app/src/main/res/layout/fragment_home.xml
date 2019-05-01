@@ -35,7 +35,7 @@
         app:layoutManager="android.support.v7.widget.GridLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:spanCount="1"
-        tools:listitem="@layout/item_story" />
+        tools:listitem="@layout/item_story_feed" />
 
     <include layout="@layout/layout_loader" />
 

@@ -73,7 +73,7 @@ public class StoryFireOp {
     public void postLikeUpdateStory(Story story) {
     }
 
-    public void postFeedbackUpdateStory(String storyId, String comments) {
+    public void postCommentUpdateStory(String storyId, String comments) {
         DatabaseReference databaseReference = storyRef.child(storyId).child("comments");
         int commentCount;
         if (comments == null)

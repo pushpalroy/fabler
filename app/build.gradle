@@ -73,9 +73,6 @@ dependencies {
     compileOnly 'javax.annotation:jsr250-api:1.0'
     implementation 'javax.inject:javax.inject:1'
 
-    // font
-    implementation "uk.co.chrisjenx:calligraphy:$rootProject.calligraphyVersion"
-
     // logging
     implementation "com.jakewharton.timber:timber:$rootProject.timber"
 
@@ -107,8 +104,9 @@ dependencies {
     // Support for Facebook login
     implementation 'com.facebook.android:facebook-android-sdk:4.41.0'
 
-    // Glide: Displaying images
+    // Glide: Image Loading
     implementation "com.github.bumptech.glide:glide:$glideVersion"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
 
     // Circular ImageView
     implementation 'de.hdodenhof:circleimageview:2.2.0'
@@ -116,8 +114,11 @@ dependencies {
     // Loader
     implementation 'com.victor:lib:1.0.4'
 
+    // Custom Toggle Button
+    implementation 'com.github.jd-alexander:LikeButton:0.2.3'
+
     // Custom Button
-    implementation 'com.sackcentury:shinebutton:0.2.0'
+    //implementation 'com.sackcentury:shinebutton:0.2.0'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })

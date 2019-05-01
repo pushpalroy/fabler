@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorTitle">
+    android:background="@color/navHeaderTitle">
 
     <TextView
         android:id="@+id/tv_widget_title"
@@ -15,7 +15,7 @@
         android:paddingEnd="0dp"
         android:paddingBottom="5dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/colorTitle"
+        android:textColor="@color/navHeaderTitle"
         android:textStyle="bold"
         tools:text="@string/title" />
 
@@ -30,7 +30,7 @@
         android:paddingEnd="0dp"
         android:paddingBottom="16dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/colorTitle"
+        android:textColor="@color/navHeaderTitle"
         tools:text="@string/by_author" />
 
     <TextView

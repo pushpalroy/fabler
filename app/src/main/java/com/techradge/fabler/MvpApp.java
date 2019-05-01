@@ -7,18 +7,10 @@ import com.androidnetworking.interceptors.HttpLoggingInterceptor.Level;
 import com.techradge.fabler.di.component.ApplicationComponent;
 import com.techradge.fabler.di.component.DaggerApplicationComponent;
 import com.techradge.fabler.di.module.ApplicationModule;
-import com.techradge.fabler.di.module.DbModule;
 import com.techradge.fabler.utils.AppLogger;
-
-import javax.inject.Inject;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 
 public class MvpApp extends Application {
-
-    @Inject
-    CalligraphyConfig mCalligraphyConfig;
 
     private ApplicationComponent mApplicationComponent;
 
@@ -40,8 +32,6 @@ public class MvpApp extends Application {
         if (BuildConfig.DEBUG) {
             AndroidNetworking.enableLogging(Level.BODY);
         }
-
-        CalligraphyConfig.initDefault(mCalligraphyConfig);
     }
 
     public ApplicationComponent getComponent() {

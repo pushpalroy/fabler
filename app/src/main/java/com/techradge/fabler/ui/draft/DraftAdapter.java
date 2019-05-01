@@ -102,7 +102,7 @@ public class DraftAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
             if (story.getStoryTitle() != null)
                 titleTv.setText(story.getStoryTitle());
-            timeStampTv.setText(CommonUtils.getFormattedDateTime(story.getCreatedOn()));
+            timeStampTv.setText(CommonUtils.getFormattedDateTime(story.getCreatedOn(), mContext));
             if (story.getStoryBrief() != null)
                 storyTv.setText(story.getStoryBrief());
 

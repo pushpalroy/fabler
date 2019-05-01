@@ -79,16 +79,28 @@
     <string name="toast_message_widget">Story added to widget!</string>
     <string name="dots_text"><![CDATA[&#8226;]]></string>
     <string name="zero">0</string>
-    <string name="toast_message_feedback">Feedback has been posted!</string>
+    <string name="toast_message_comment">Comment has been posted!</string>
     <string name="toast_message_story">Story has been published!</string>
     <string name="child_users">users</string>
     <string name="child_story">story</string>
     <string name="child_story_data">storyData</string>
-    <string name="child_feedback">feedback</string>
+    <string name="child_comment">comment</string>
     <string name="def_val_user_full_name">Guest</string>
     <string name="def_val_user_email">Guest@fabler.com</string>
     <string name="def_val_widget_story_title">Title</string>
     <string name="def_val_widget_author">Story</string>
     <string name="def_val_author">Author</string>
+    <string name="category_label">Category</string>
+    <string name="title_label">Title goes here</string>
+    <string name="body_label">The story body goes here. It may be a long story, a short one or even
+        a one liner. All depends on the author.</string>
+    <string name="author_label">Author Name</string>
+    <string name="date_label">27 Feb</string>
+    <string name="dot">.</string>
+    <string name="likes_count">16 likes</string>
+    <string name="comment_count">4 comment</string>
+    <string name="dot_symbol">.</string>
+    <string name="comments_count">4 comments</string>
+    <string name="story_thumbnail">Story Thumbnail</string>
 
 </resources>

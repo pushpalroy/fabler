@@ -2,9 +2,9 @@ package com.techradge.fabler.data.model;
 
 import java.util.Map;
 
-public class Feedback {
+public class Comment {
 
-    private String feedbackId;
+    private String commentId;
 
     private String storyId;
 
@@ -12,7 +12,7 @@ public class Feedback {
 
     private String authorName;
 
-    private String feedbackBody;
+    private String commentBody;
 
     private long timeStamp;
 
@@ -20,22 +20,22 @@ public class Feedback {
 
     private Map<String, String> likes;
 
-    public Feedback() {
+    public Comment() {
     }
 
-    public Feedback(String storyId, String authorName, String feedbackBody, long timeStamp) {
+    public Comment(String storyId, String authorName, String commentBody, long timeStamp) {
         this.storyId = storyId;
         this.authorName = authorName;
-        this.feedbackBody = feedbackBody;
+        this.commentBody = commentBody;
         this.timeStamp = timeStamp;
     }
 
-    public String getFeedbackId() {
-        return feedbackId;
+    public String getCommentId() {
+        return commentId;
     }
 
-    public void setFeedbackId(String feedbackId) {
-        this.feedbackId = feedbackId;
+    public void setCommentId(String commentId) {
+        this.commentId = commentId;
     }
 
     public String getStoryId() {
@@ -62,12 +62,12 @@ public class Feedback {
         this.authorName = authorName;
     }
 
-    public String getFeedbackBody() {
-        return feedbackBody;
+    public String getCommentBody() {
+        return commentBody;
     }
 
-    public void setFeedbackBody(String feedbackBody) {
-        this.feedbackBody = feedbackBody;
+    public void setCommentBody(String commentBody) {
+        this.commentBody = commentBody;
     }
 
     public long getTimeStamp() {

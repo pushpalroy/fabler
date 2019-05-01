@@ -1,6 +1,6 @@
 package com.techradge.fabler.ui.story;
 
-import android.content.Intent;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,13 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sackcentury.shinebuttonlib.ShineButton;
+import com.bumptech.glide.Glide;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 import com.techradge.fabler.R;
 import com.techradge.fabler.data.model.Story;
-import com.techradge.fabler.data.remote.RemoteFireDatabase;
-import com.techradge.fabler.data.remote.operations.story.StoryFireOp;
 import com.techradge.fabler.ui.base.BaseViewHolder;
-import com.techradge.fabler.ui.feedback.FeedbackActivity;
 import com.techradge.fabler.utils.CommonUtils;
 
 import java.util.Collections;
@@ -27,17 +26,19 @@ import butterknife.ButterKnife;
 public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     private List<Story> mStoryList;
+    private Context mContext;
     private StoryClickListener mStoryClickListener;
 
-    public StoryAdapter(List<Story> storyList) {
+    public StoryAdapter(List<Story> storyList, Context context) {
         this.mStoryList = storyList;
+        mContext = context;
     }
 
     @NonNull
     @Override
     public StoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_story, parent, false);
+                .inflate(R.layout.item_story_feed, parent, false);
         return new StoryViewHolder(layoutView);
     }
 
@@ -85,16 +86,22 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         TextView titleTv;
         @BindView(R.id.tv_author)
         TextView authorTv;
-        @BindView(R.id.tv_story)
-        TextView storyTv;
-        @BindView(R.id.tv_likes)
-        TextView likesTv;
-        @BindView(R.id.tv_comments)
-        TextView commentsTv;
-        @BindView(R.id.btn_like)
-        ShineButton likeButton;
-        @BindView(R.id.icon_comment)
-        ImageView commentButton;
+        @BindView(R.id.tv_story_brief)
+        TextView storyBriefTv;
+        @BindView(R.id.tv_category)
+        TextView categoryTv;
+        @BindView(R.id.tv_likes_count)
+        TextView likesCountTv;
+        @BindView(R.id.tv_comments_count)
+        TextView commentsCountTv;
+        @BindView(R.id.tv_dot_1)
+        TextView dotTv01;
+        @BindView(R.id.tv_dot_2)
+        TextView dotTv02;
+        @BindView(R.id.btn_bookmark)
+        LikeButton bookmarkBtn;
+        @BindView(R.id.iv_story_thumbnail)
+        ImageView storyThumbnailIv;
 
         StoryViewHolder(View itemView) {
             super(itemView);
@@ -109,29 +116,53 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
             if (story.getStoryTitle() != null)
                 titleTv.setText(story.getStoryTitle());
-            if (story.getPublishedOn() != 0)
-                timeStampTv.setText(CommonUtils.getFormattedDateTime(story.getPublishedOn()));
+
             if (story.getAuthorName() != null)
                 authorTv.setText(story.getAuthorName());
-            if (story.getStoryBrief() != null)
-                storyTv.setText(story.getStoryBrief());
 
-            likesTv.setText(String.valueOf(story.getTotalLikes()));
-            commentsTv.setText(String.valueOf(story.getTotalFeedbacks()));
+            if (story.getStoryBrief() != null)
+                storyBriefTv.setText(story.getStoryBrief());
+
+            if (story.getCategory() != null)
+                categoryTv.setText(story.getCategory());
+
+            if (story.getPublishedOn() != 0)
+                timeStampTv.setText(CommonUtils.getFormattedRelativeDateTime(story.getPublishedOn()));
+
+            if (story.getPhotoUrl() != null && !story.getPhotoUrl().equals(""))
+                Glide.with(mContext)
+                        .load(story.getPhotoUrl())
+                        .centerCrop()
+                        .into(storyThumbnailIv);
+
+            if (story.getTotalLikes() > 0) {
+                String likes = story.getTotalLikes() + " likes";
+                likesCountTv.setText(likes);
+            } else {
+                dotTv01.setVisibility(View.GONE);
+                likesCountTv.setVisibility(View.GONE);
+            }
+
+            if (story.getTotalComments() > 0) {
+                String comments = story.getTotalComments() + " comments";
+                commentsCountTv.setText(comments);
+            } else {
+                dotTv02.setVisibility(View.GONE);
+                commentsCountTv.setVisibility(View.GONE);
+            }
 
             itemView.setOnClickListener(v -> mStoryClickListener.onStoryClick(position, story));
 
-            likeButton.setOnCheckStateChangeListener((view, checked) -> {
-                if (checked) {
-                    StoryFireOp storyFireOp = new StoryFireOp(RemoteFireDatabase.getFirebaseDatabase(), itemView.getContext());
-                    storyFireOp.postLikeUpdateStory(story);
-                }
-            });
+            bookmarkBtn.setOnLikeListener(new OnLikeListener() {
+                @Override
+                public void liked(LikeButton likeButton) {
 
-            commentButton.setOnClickListener(v -> {
-                Intent commentIntent = new Intent(itemView.getContext(), FeedbackActivity.class);
-                commentIntent.putExtra(itemView.getContext().getString(R.string.key_story_id), story.getStoryId());
-                itemView.getContext().startActivity(commentIntent);
+                }
+
+                @Override
+                public void unLiked(LikeButton likeButton) {
+
+                }
             });
         }
 
@@ -140,9 +171,9 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             titleTv.setText("");
             timeStampTv.setText("");
             authorTv.setText("");
-            storyTv.setText("");
-            likesTv.setText("");
-            commentsTv.setText("");
+            storyBriefTv.setText("");
+            likesCountTv.setText("");
+            commentsCountTv.setText("");
         }
     }
 }

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_story_thumbnail"
+        android:layout_width="@dimen/story_thumbnail_width"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/story_item_padding"
+        android:contentDescription="@string/story_thumbnail"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_story_brief"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_title"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/tv_category"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/story_item_padding"
+        android:layout_marginTop="@dimen/story_item_padding"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/quicksand_regular"
+        android:text="@string/category_label"
+        android:textAllCaps="true"
+        android:textColor="@color/storyText"
+        android:textSize="@dimen/material_text_subhead"
+        app:layout_constraintEnd_toStartOf="@+id/iv_story_thumbnail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/quicksand_bold"
+        android:maxLines="3"
+        android:text="@string/title_label"
+        android:textColor="@color/storyTitle"
+        android:textSize="@dimen/material_text_headline"
+        app:layout_constraintEnd_toEndOf="@+id/tv_category"
+        app:layout_constraintStart_toStartOf="@+id/tv_category"
+        app:layout_constraintTop_toBottomOf="@+id/tv_category" />
+
+    <TextView
+        android:id="@+id/tv_story_brief"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/quicksand_regular"
+        android:maxLines="4"
+        android:text="@string/body_label"
+        android:textColor="@color/storyText"
+        android:textSize="@dimen/material_text_body3"
+        app:layout_constraintEnd_toEndOf="@+id/tv_category"
+        app:layout_constraintStart_toStartOf="@+id/tv_category"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+    <TextView
+        android:id="@+id/tv_author"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="@string/author_label"
+        android:textAlignment="viewStart"
+        android:textColor="@color/storyTitle"
+        android:textSize="@dimen/material_text_body3"
+        app:layout_constraintEnd_toEndOf="@+id/tv_category"
+        app:layout_constraintStart_toStartOf="@+id/tv_category"
+        app:layout_constraintTop_toBottomOf="@+id/tv_story_brief" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/quicksand_regular"
+        android:gravity="bottom"
+        android:text="@string/date_label"
+        android:textColor="@color/storyText"
+        android:textSize="@dimen/material_text_body2"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintStart_toStartOf="@+id/tv_author"
+        app:layout_constraintTop_toBottomOf="@+id/tv_author" />
+
+    <TextView
+        android:id="@+id/tv_dot_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/quicksand_regular"
+        android:text="@string/dot_symbol"
+        android:textAlignment="center"
+        android:textColor="@color/storyDetails"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_time"
+        app:layout_constraintStart_toEndOf="@+id/tv_time"
+        app:layout_constraintTop_toTopOf="@+id/tv_time" />
+
+    <TextView
+        android:id="@+id/tv_likes_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/quicksand_regular"
+        android:gravity="bottom"
+        android:text="@string/likes_count"
+        android:textColor="@color/storyDetails"
+        android:textSize="@dimen/material_text_body1"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_time"
+        app:layout_constraintStart_toEndOf="@+id/tv_dot_1"
+        app:layout_constraintTop_toTopOf="@+id/tv_time" />
+
+    <TextView
+        android:id="@+id/tv_dot_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/quicksand_regular"
+        android:text="@string/dot_symbol"
+        android:textAlignment="center"
+        android:textColor="@color/storyDetails"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_time"
+        app:layout_constraintStart_toEndOf="@+id/tv_likes_count"
+        app:layout_constraintTop_toTopOf="@+id/tv_time" />
+
+    <TextView
+        android:id="@+id/tv_comments_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/quicksand_regular"
+        android:gravity="bottom"
+        android:text="@string/comments_count"
+        android:textColor="@color/storyDetails"
+        android:textSize="@dimen/material_text_body1"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_time"
+        app:layout_constraintStart_toEndOf="@+id/tv_dot_2"
+        app:layout_constraintTop_toTopOf="@+id/tv_time" />
+
+    <com.like.LikeButton
+        android:id="@+id/btn_bookmark"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:anim_scale_factor="10"
+        app:icon_size="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:like_drawable="@drawable/ic_bookmark_fill"
+        app:unlike_drawable="@drawable/ic_bookmark_outline" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorVeryVeryLightGrey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

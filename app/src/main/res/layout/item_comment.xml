@@ -23,7 +23,7 @@
             tools:text="@string/by_author" />
 
         <TextView
-            android:id="@+id/tv_feedback"
+            android:id="@+id/tv_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

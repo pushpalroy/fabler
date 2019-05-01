@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.provider.Settings;
+import android.text.format.DateUtils;
 
 import com.techradge.fabler.R;
 
@@ -56,7 +57,11 @@ public final class CommonUtils {
         return new SimpleDateFormat(AppConstants.TIMESTAMP_FORMAT, Locale.US).format(new Date());
     }
 
-    public static String getFormattedDateTime(long milliSeconds) {
-        return new SimpleDateFormat(AppConstants.TIMESTAMP_FORMAT, Locale.US).format(new Date(milliSeconds));
+    public static String getFormattedDateTime(long milliSeconds, Context context) {
+        return DateUtils.formatDateTime(context, milliSeconds, DateUtils.FORMAT_SHOW_DATE);
+    }
+
+    public static String getFormattedRelativeDateTime(long timeInMillis) {
+        return DateUtils.getRelativeTimeSpanString(timeInMillis, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS).toString();
     }
 }

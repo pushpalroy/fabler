@@ -6,7 +6,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.techradge.fabler.BuildConfig;
-import com.techradge.fabler.R;
 import com.techradge.fabler.data.local.appDatabase.StoryDatabase;
 import com.techradge.fabler.data.local.appDatabase.UserDatabase;
 import com.techradge.fabler.data.prefs.AppPreferencesHelper;
@@ -21,7 +20,6 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 import static com.techradge.fabler.utils.AppConstants.DB_NAME_STORY;
 import static com.techradge.fabler.utils.AppConstants.DB_NAME_USER;
@@ -92,14 +90,5 @@ public class ApplicationModule {
     @DatabaseInfo
     String provideUserDatabaseName() {
         return AppConstants.DB_NAME_USER;
-    }
-
-    @Provides
-    @Singleton
-    CalligraphyConfig provideCalligraphyDefaultConfig() {
-        return new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/source-sans-pro/SourceSansPro-Regular.ttf")
-                .setFontAttrId(R.attr.fontPath)
-                .build();
     }
 }

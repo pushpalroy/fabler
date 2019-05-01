@@ -3,6 +3,7 @@ package com.techradge.fabler.utils;
 public final class AppConstants {
 
     public static final String TIMESTAMP_FORMAT = "yyyyMMdd_HHmmss";
+    public static final String TIMESTAMP_FORMAT1 = "yyyyMMdd_HHmmss";
     // Shared preferences file name
     public static final String PREF_NAME = "PREF_FILE_FABLE";
     public static final String DB_NAME_STORY = "storyDatabase";

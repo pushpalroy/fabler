@@ -1,4 +1,4 @@
-package com.techradge.fabler.ui.feedback;
+package com.techradge.fabler.ui.comment;
 
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.techradge.fabler.R;
-import com.techradge.fabler.data.model.Feedback;
+import com.techradge.fabler.data.model.Comment;
 import com.techradge.fabler.ui.base.BaseActivity;
 import com.victor.loading.newton.NewtonCradleLoading;
 
@@ -22,13 +22,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class FeedbackActivity extends BaseActivity implements FeedbackContract.FeedbackView {
+public class CommentActivity extends BaseActivity implements CommentContract.CommentView {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.et_feedback)
-    EditText feedbackEditor;
-    @BindView(R.id.feedback_recycler_view)
+    @BindView(R.id.et_comment)
+    EditText commentEditor;
+    @BindView(R.id.comment_recycler_view)
     RecyclerView mRecyclerView;
     @BindView(R.id.loader)
     NewtonCradleLoading customLoader;
@@ -36,22 +36,22 @@ public class FeedbackActivity extends BaseActivity implements FeedbackContract.F
     LinearLayout loaderContainer;
 
     @Inject
-    public FeedbackAdapter mAdapter;
+    public CommentAdapter mAdapter;
 
     @Inject
     LinearLayoutManager mLayoutManager;
 
     @Inject
-    public FeedbackPresenter<FeedbackContract.FeedbackView, FeedbackContract.FeedbackInteractor> mPresenter;
+    public CommentPresenter<CommentContract.CommentView, CommentContract.CommentInteractor> mPresenter;
 
-    private final String TAG = FeedbackActivity.class.getSimpleName();
+    private final String TAG = CommentActivity.class.getSimpleName();
     private String storyId;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_feedback);
+        setContentView(R.layout.activity_comment);
         getActivityComponent().inject(this);
         setUnBinder(ButterKnife.bind(this));
 
@@ -64,13 +64,13 @@ public class FeedbackActivity extends BaseActivity implements FeedbackContract.F
 
     @OnClick({R.id.button_send})
     public void onSendButtonClickListener() {
-        String feedbackText = feedbackEditor.getText().toString();
-        mPresenter.onSendButtonClicked(storyId, feedbackText);
+        String commentText = commentEditor.getText().toString();
+        mPresenter.onSendButtonClicked(storyId, commentText);
     }
 
     @Override
     public void setUp() {
-        mPresenter.onAttach(FeedbackActivity.this);
+        mPresenter.onAttach(CommentActivity.this);
         setUpActionBar(mToolbar);
         setUpRecyclerView();
         mPresenter.setUpRemoteDatabase(storyId);
@@ -85,13 +85,13 @@ public class FeedbackActivity extends BaseActivity implements FeedbackContract.F
     }
 
     @Override
-    public void showAllFeedbacks(List<Feedback> feedbackList) {
-        mAdapter.flushAndAddItems(feedbackList);
+    public void showAllComments(List<Comment> commentList) {
+        mAdapter.flushAndAddItems(commentList);
     }
 
     @Override
-    public void resetFeedbackEditor() {
-        feedbackEditor.setText("");
+    public void resetCommentEditor() {
+        commentEditor.setText("");
     }
 
     @Override

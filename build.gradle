@@ -18,6 +18,8 @@ allprojects {
         google()
         jcenter()
         mavenCentral()
+
+        maven { url "https://jitpack.io" }
     }
 }
 
@@ -36,10 +38,9 @@ ext {
     butterknifeVersion = '8.8.1'
     roomVersion = '1.1.1'
     liveDataVer = '1.1.1'
-    glideVersion = '4.7.1'
+    glideVersion = '4.9.0'
     guavaVersion = '27.0.1-android'
     dagger2Version = '2.8'
     rx2FastAndroidNetworking = '1.0.2'
     timber = '4.7.1'
-    calligraphyVersion = '2.2.0'
 }

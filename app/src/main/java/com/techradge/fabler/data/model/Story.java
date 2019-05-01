@@ -54,7 +54,7 @@ public class Story {
     private int totalLikes;
 
     @Ignore
-    private int totalFeedbacks;
+    private int totalComments;
 
     @Ignore
     private boolean isCollaborative;
@@ -146,8 +146,8 @@ public class Story {
         return totalLikes;
     }
 
-    public int getTotalFeedbacks() {
-        return totalFeedbacks;
+    public int getTotalComments() {
+        return totalComments;
     }
 
     public boolean isCollaborative() {
@@ -230,8 +230,8 @@ public class Story {
         this.totalLikes = totalLikes;
     }
 
-    public void setTotalFeedbacks(int totalFeedbacks) {
-        this.totalFeedbacks = totalFeedbacks;
+    public void setTotalComments(int totalComments) {
+        this.totalComments = totalComments;
     }
 
     public void setCollaborative(boolean collaborative) {
