@@ -61,9 +61,14 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public void addItems(List<Story> stories) {
         if (stories.size() > 0) {
+            int insertIndex = mStoryList.size();
             Collections.reverse(stories);
             mStoryList.addAll(stories);
-            notifyDataSetChanged();
+
+            if (insertIndex == 0)
+                notifyDataSetChanged();
+            else
+                notifyItemRangeInserted(insertIndex, stories.size());
         }
     }
 
@@ -191,6 +196,10 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             storyBriefTv.setText("");
             likesCountTv.setText("");
             commentsCountTv.setText("");
+            dotTv01.setVisibility(View.VISIBLE);
+            likesCountTv.setVisibility(View.VISIBLE);
+            dotTv02.setVisibility(View.VISIBLE);
+            commentsCountTv.setVisibility(View.VISIBLE);
         }
     }
 

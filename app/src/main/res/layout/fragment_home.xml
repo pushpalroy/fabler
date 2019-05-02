@@ -33,7 +33,7 @@
             android:id="@+id/story_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorBackground"
+            android:background="@color/white"
             android:clipToPadding="false"
             app:layoutManager="android.support.v7.widget.GridLayoutManager"
             app:spanCount="1"
