@@ -10,22 +10,23 @@ import java.util.List;
 public interface HomeContract {
 
     interface HomeView extends MvpView {
-        void showAllStories(List<Story> storyList);
+        void showStories(List<Story> storyList);
 
-        void showSingleStory(Story story);
+        void showStory(Story story);
 
         void openReadActivity(Story story);
 
-        void showCustomLoader();
+        void showLoader();
 
-        void hideCustomLoader();
+        void hideLoader();
     }
 
     interface HomePresenter<V extends HomeView, I extends HomeInteractor>
             extends MvpPresenter<V, I> {
-        void onViewPrepared();
 
-        void setUpRemoteDatabase(String story);
+        void fetchStories(String story);
+
+        void fetchMoreStories(String previousStoryId);
 
         void onStoriesPrepare();
 
@@ -35,7 +36,12 @@ public interface HomeContract {
     }
 
     interface HomeInteractor extends MvpInteractor {
+
         void setUpFirebaseDatabase(String story);
+
+        void fetchStoriesFromFirebase();
+
+        void fetchMoreStoriesFromFirebase(String previousStoryId);
 
         void setPresenter(HomePresenter homePresenter);
 

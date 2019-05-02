@@ -22,13 +22,14 @@ public class HomePresenter<V extends HomeContract.HomeView, I extends HomeContra
     }
 
     @Override
-    public void onViewPrepared() {
-        getMvpView().showCustomLoader();
+    public void fetchStories(String story) {
+        getInteractor().setUpFirebaseDatabase(story);
+        getInteractor().fetchStoriesFromFirebase();
     }
 
     @Override
-    public void setUpRemoteDatabase(String story) {
-        getInteractor().setUpFirebaseDatabase(story);
+    public void fetchMoreStories(String previousStoryId) {
+        getInteractor().fetchMoreStoriesFromFirebase(previousStoryId);
     }
 
     @Override
@@ -37,14 +38,12 @@ public class HomePresenter<V extends HomeContract.HomeView, I extends HomeContra
 
     @Override
     public void onStoriesFetched(List<Story> storyList) {
-        getMvpView().showAllStories(storyList);
-        getMvpView().hideCustomLoader();
+        getMvpView().showStories(storyList);
     }
 
     @Override
     public void onSingleStoryFetched(Story story) {
-        getMvpView().showSingleStory(story);
-        getMvpView().hideCustomLoader();
+        getMvpView().showStory(story);
     }
 
     @Override

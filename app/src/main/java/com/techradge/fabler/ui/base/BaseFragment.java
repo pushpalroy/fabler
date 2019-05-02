@@ -70,6 +70,15 @@ public abstract class BaseFragment extends Fragment implements MvpView {
         }
     }
 
+    /**
+     * Could handle back press.
+     *
+     * @return true if back press was handled
+     */
+    public boolean onBackPressed() {
+        return false;
+    }
+
     @Override
     public void showMessage(String message) {
         if (mActivity != null) {

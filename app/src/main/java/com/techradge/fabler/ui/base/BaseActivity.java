@@ -26,6 +26,8 @@ import com.techradge.fabler.di.module.ActivityModule;
 import com.techradge.fabler.utils.CommonUtils;
 import com.techradge.fabler.utils.NetworkUtils;
 
+import java.util.List;
+
 import butterknife.Unbinder;
 
 
@@ -121,6 +123,27 @@ public abstract class BaseActivity extends AppCompatActivity
     @Override
     public void showMessage(@StringRes int resId) {
         showMessage(getString(resId));
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        List fragmentList = getSupportFragmentManager().getFragments();
+
+        boolean handled = false;
+        for (Object f : fragmentList) {
+            if (f instanceof BaseFragment) {
+                handled = ((BaseFragment) f).onBackPressed();
+
+                if (handled) {
+                    break;
+                }
+            }
+        }
+
+        if (!handled) {
+            super.onBackPressed();
+        }
     }
 
     @Override

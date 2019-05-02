@@ -23,6 +23,8 @@ public class HomeInteractor extends BaseInteractor implements HomeContract.HomeI
     private DatabaseReference mStoriesDatabaseReference;
     private ValueEventListener mValueEventListener;
 
+    private final int STORIES_PER_PAGE = 4;
+
     @Inject
     public HomeInteractor(PreferencesHelper preferencesHelper) {
         super(preferencesHelper);
@@ -34,16 +36,47 @@ public class HomeInteractor extends BaseInteractor implements HomeContract.HomeI
                 .getFirebaseDatabase()
                 .getReference()
                 .child(story);
+    }
 
+    @Override
+    public void fetchStoriesFromFirebase() {
         mPresenter.onStoriesPrepare();
-
-        //Query fetchStoriesQuery = mStoriesDatabaseReference.orderByKey().endAt("-Lc7lJubGqoFaTqmZEom").limitToLast(4);
-        Query fetchStoriesQuery = mStoriesDatabaseReference.orderByKey().limitToLast(4);
+        Query fetchStoriesQuery = mStoriesDatabaseReference
+                .orderByKey()
+                .limitToLast(STORIES_PER_PAGE);
 
         mValueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<Story> storyList = fetchStoriesFromDataSnapshot(dataSnapshot);
+                mPresenter.onStoriesFetched(storyList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+
+        fetchStoriesQuery.addListenerForSingleValueEvent(mValueEventListener);
+    }
+
+    @Override
+    public void fetchMoreStoriesFromFirebase(String previousStoryId) {
+        Query fetchStoriesQuery = mStoriesDatabaseReference
+                .orderByKey()
+                .endAt(previousStoryId)
+                .limitToLast(STORIES_PER_PAGE);
+
+        mValueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Story> storyList = fetchStoriesFromDataSnapshot(dataSnapshot);
+
+                // Removing duplicate element
+                if (storyList.size() > 0)
+                    storyList.remove(storyList.size() - 1);
+
                 mPresenter.onStoriesFetched(storyList);
             }
 

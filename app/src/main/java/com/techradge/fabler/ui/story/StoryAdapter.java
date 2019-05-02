@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -25,6 +26,8 @@ import butterknife.ButterKnife;
 
 public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
+    private static final int VIEW_TYPE_NORMAL = 1;
+
     private List<Story> mStoryList;
     private Context mContext;
     private StoryClickListener mStoryClickListener;
@@ -36,10 +39,15 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @NonNull
     @Override
-    public StoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View layoutView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_story_feed, parent, false);
-        return new StoryViewHolder(layoutView);
+    public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        switch (viewType) {
+            case VIEW_TYPE_NORMAL:
+                return new StoryViewHolder(LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.item_story_feed, parent, false));
+            default:
+                return null;
+        }
     }
 
     public void setCallback(StoryClickListener storyClickListener) {
@@ -51,31 +59,40 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         holder.onBind(position);
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return super.getItemViewType(position);
+    public void addItems(List<Story> stories) {
+        if (stories.size() > 0) {
+            Collections.reverse(stories);
+            mStoryList.addAll(stories);
+            notifyDataSetChanged();
+        }
+    }
+
+    public void addSingleItem(Story story) {
+        mStoryList.add(story);
+        notifyDataSetChanged();
+    }
+
+    public String getLastStoryId() {
+        return mStoryList.get(mStoryList.size() - 1).getStoryId();
     }
 
     @Override
     public int getItemCount() {
-        return mStoryList.size();
+        return mStoryList == null ? 0 : mStoryList.size();
     }
 
-    public void addItems(List<Story> stories) {
-        mStoryList.addAll(stories);
-        notifyDataSetChanged();
+    @Override
+    public int getItemViewType(int position) {
+        return VIEW_TYPE_NORMAL;
     }
 
-    public void addItem(Story story) {
-        mStoryList.add(0, story);
-        notifyDataSetChanged();
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
-    public void flushAndAddItems(List<Story> stories) {
+    public void clear() {
         mStoryList.clear();
-        Collections.reverse(stories);
-        mStoryList.addAll(stories);
-        notifyDataSetChanged();
     }
 
     class StoryViewHolder extends BaseViewHolder {
@@ -174,6 +191,27 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             storyBriefTv.setText("");
             likesCountTv.setText("");
             commentsCountTv.setText("");
+        }
+    }
+
+    public class LoaderViewHolder extends BaseViewHolder {
+
+        @BindView(R.id.pb_loader)
+        ProgressBar mProgressBar;
+
+        LoaderViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+        @Override
+        public void onBind(int position) {
+            super.onBind(position);
+        }
+
+        @Override
+        protected void clear() {
+
         }
     }
 }

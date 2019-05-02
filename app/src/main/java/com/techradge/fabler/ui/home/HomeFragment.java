@@ -4,13 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.techradge.fabler.R;
 import com.techradge.fabler.data.model.Story;
@@ -18,7 +19,6 @@ import com.techradge.fabler.ui.base.BaseFragment;
 import com.techradge.fabler.ui.read.ReadActivity;
 import com.techradge.fabler.ui.story.StoryAdapter;
 import com.techradge.fabler.ui.story.StoryClickListener;
-import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.util.List;
 
@@ -27,21 +27,17 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeFragment extends BaseFragment implements HomeContract.HomeView, StoryClickListener {
+public class HomeFragment extends BaseFragment implements HomeContract.HomeView, StoryClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.story_recycler_view)
     public RecyclerView mRecyclerView;
-    @BindView(R.id.loader)
-    NewtonCradleLoading customLoader;
-    @BindView(R.id.loader_container)
-    LinearLayout loaderContainer;
+    @BindView(R.id.swipe_refresh_container)
+    SwipeRefreshLayout mSwipeRefresh;
 
     @Inject
     HomePresenter<HomeContract.HomeView, HomeContract.HomeInteractor> mPresenter;
-
     @Inject
     StoryAdapter mStoryAdapter;
-
     @Inject
     LinearLayoutManager mLayoutManager;
 
@@ -70,25 +66,42 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
     @Override
     protected void setUp(View view) {
         setRecyclerView();
-        mPresenter.setUpRemoteDatabase(getResources().getString(R.string.child_story));
-        mPresenter.onViewPrepared();
+        mSwipeRefresh.setOnRefreshListener(this);
+        showLoader();
+        mPresenter.fetchStories(getResources().getString(R.string.child_story));
     }
 
     private void setRecyclerView() {
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mStoryAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        mRecyclerView.addOnScrollListener(new PaginationScrollListener(mLayoutManager) {
+            @Override
+            protected void loadMoreItems() {
+                showLoader();
+                mPresenter.fetchMoreStories(mStoryAdapter.getLastStoryId());
+            }
+
+            @Override
+            public boolean isLoading() {
+                return mSwipeRefresh.isRefreshing();
+            }
+        });
     }
 
     @Override
-    public void showAllStories(List<Story> storyList) {
-        mStoryAdapter.flushAndAddItems(storyList);
+    public void showStories(List<Story> storyList) {
+        mStoryAdapter.addItems(storyList);
+        hideLoader();
     }
 
     @Override
-    public void showSingleStory(Story story) {
-        mStoryAdapter.addItem(story);
+    public void showStory(Story story) {
+        mStoryAdapter.addSingleItem(story);
+        hideLoader();
     }
 
     @Override
@@ -119,20 +132,45 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
 
     @Override
     // Show custom loader
-    public void showCustomLoader() {
-        if (customLoader != null) {
-            customLoader.setLoadingColor(R.color.colorAccent);
-            loaderContainer.setVisibility(View.VISIBLE);
-            customLoader.start();
-        }
+    public void showLoader() {
+        if (!mSwipeRefresh.isRefreshing())
+            mSwipeRefresh.setRefreshing(true);
     }
 
     @Override
     // Hide custom loader
-    public void hideCustomLoader() {
-        if (customLoader != null && customLoader.isStart()) {
-            loaderContainer.setVisibility(View.INVISIBLE);
-            customLoader.stop();
-        }
+    public void hideLoader() {
+        if (mSwipeRefresh.isRefreshing())
+            mSwipeRefresh.setRefreshing(false);
+    }
+
+    @Override
+    public void onRefresh() {
+        mStoryAdapter.clear();
+        mPresenter.fetchStories(getResources().getString(R.string.child_story));
+    }
+
+    /**
+     * Back pressed send from activity.
+     *
+     * @return if event is consumed, it will return true.
+     */
+    @Override
+    public boolean onBackPressed() {
+        if (mLayoutManager.findFirstVisibleItemPosition() != 0) {
+            RecyclerView.SmoothScroller smoothScroller =
+                    new LinearSmoothScroller(getBaseActivity()) {
+                        @Override
+                        protected int getVerticalSnapPreference() {
+                            return LinearSmoothScroller.SNAP_TO_START;
+                        }
+                    };
+
+            smoothScroller.setTargetPosition(0);
+            mLayoutManager.startSmoothScroll(smoothScroller);
+
+            return true;
+        } else
+            return false;
     }
 }
