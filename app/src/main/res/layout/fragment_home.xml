@@ -35,12 +35,8 @@
             android:layout_height="match_parent"
             android:background="@color/white"
             android:clipToPadding="false"
-            app:layoutManager="android.support.v7.widget.GridLayoutManager"
             app:spanCount="1"
             tools:listitem="@layout/item_story_feed" />
     </android.support.v4.widget.SwipeRefreshLayout>
-
-
-    <include layout="@layout/layout_loader" />
 
 </android.support.design.widget.CoordinatorLayout>

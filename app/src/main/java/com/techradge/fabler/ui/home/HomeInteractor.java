@@ -17,6 +17,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 public class HomeInteractor extends BaseInteractor implements HomeContract.HomeInteractor {
 
     private HomeContract.HomePresenter mPresenter;
@@ -92,8 +94,12 @@ public class HomeInteractor extends BaseInteractor implements HomeContract.HomeI
     private List<Story> fetchStoriesFromDataSnapshot(DataSnapshot dataSnapshot) {
         List<Story> storyList = new ArrayList<>();
         for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
-            Story story = singleSnapshot.getValue(Story.class);
-            storyList.add(story);
+            try {
+                Story story = singleSnapshot.getValue(Story.class);
+                storyList.add(story);
+            } catch (Exception e) {
+                Timber.e(e);
+            }
         }
         return storyList;
     }

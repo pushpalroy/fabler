@@ -156,6 +156,8 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                         .load(story.getPhotoUrl())
                         .centerCrop()
                         .into(storyThumbnailIv);
+            else
+                storyThumbnailIv.setVisibility(View.GONE);
 
             if (story.getTotalLikes() > 0) {
                 String likes = story.getTotalLikes() + " likes";
@@ -190,16 +192,19 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         protected void clear() {
-            titleTv.setText("");
-            timeStampTv.setText("");
-            authorTv.setText("");
-            storyBriefTv.setText("");
-            likesCountTv.setText("");
-            commentsCountTv.setText("");
             dotTv01.setVisibility(View.VISIBLE);
             likesCountTv.setVisibility(View.VISIBLE);
             dotTv02.setVisibility(View.VISIBLE);
             commentsCountTv.setVisibility(View.VISIBLE);
+            storyThumbnailIv.setVisibility(View.VISIBLE);
+
+            titleTv.setText("");
+            timeStampTv.setText("");
+            authorTv.setText("");
+            storyBriefTv.setText("");
+            categoryTv.setText(mContext.getResources().getString(R.string.writing));
+            likesCountTv.setText("");
+            commentsCountTv.setText("");
         }
     }
 
