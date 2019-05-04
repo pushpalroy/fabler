@@ -8,8 +8,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,9 +26,10 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity
-        implements MainContract.MainView, NavigationView.OnNavigationItemSelectedListener {
+        implements MainContract.MainView {
 
     @BindView(R.id.toolbar)
     public Toolbar mToolbar;
@@ -67,18 +66,14 @@ public class MainActivity extends BaseActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView.setNavigationItemSelectedListener(this);
-
-        navigationView.getMenu().getItem(0).setChecked(true);
         onHomeSelected();
     }
 
     @Override
     public void populateUserDetails(String userFullName, String userEmail, String userPhotoUrl) {
-        View headerView = navigationView.getHeaderView(0);
-        TextView name = headerView.findViewById(R.id.tv_name);
-        TextView email = headerView.findViewById(R.id.tv_email);
-        ImageView profileImage = headerView.findViewById(R.id.profile_image);
+        TextView name = findViewById(R.id.tv_name);
+        TextView email = findViewById(R.id.tv_email);
+        ImageView profileImage = findViewById(R.id.profile_image);
 
         name.setText(userFullName);
         email.setText(userEmail);
@@ -88,21 +83,7 @@ public class MainActivity extends BaseActivity
                     .into(profileImage);
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.nav_home)
-            onHomeSelected();
-        else if (id == R.id.nav_compose)
-            onComposeSelected();
-        else if (id == R.id.nav_draft)
-            onDraftSelected();
-        else if (id == R.id.nav_logout)
-            onLogoutSelected();
-        closeNavDrawer();
-        return true;
-    }
-
+    @OnClick(R.id.nav_item_home)
     @Override
     public void onHomeSelected() {
         mToolbar.setTitle(getResources().getString(R.string.home));
@@ -110,15 +91,20 @@ public class MainActivity extends BaseActivity
                 .beginTransaction()
                 .replace(R.id.content_frame, HomeFragment.newInstance())
                 .commit();
+
+        closeNavDrawer();
     }
 
+    @OnClick(R.id.nav_item_compose)
     @Override
     public void onComposeSelected() {
         Intent composeIntent = new Intent(MainActivity.this, ComposeActivity.class);
-        navigationView.getMenu().getItem(0).setChecked(true);
         startActivity(composeIntent);
+
+        closeNavDrawer();
     }
 
+    @OnClick(R.id.nav_item_drafts)
     @Override
     public void onDraftSelected() {
         mToolbar.setTitle(getResources().getString(R.string.drafts));
@@ -126,6 +112,8 @@ public class MainActivity extends BaseActivity
                 .beginTransaction()
                 .replace(R.id.content_frame, DraftFragment.newInstance())
                 .commit();
+
+        closeNavDrawer();
     }
 
     @Override
@@ -135,6 +123,7 @@ public class MainActivity extends BaseActivity
         finish();
     }
 
+    @OnClick(R.id.nav_item_logout)
     @Override
     public void onLogoutSelected() {
         AuthUI.getInstance()
@@ -145,6 +134,7 @@ public class MainActivity extends BaseActivity
                         openLoginActivity();
                     }
                 });
+        closeNavDrawer();
     }
 
     @Override

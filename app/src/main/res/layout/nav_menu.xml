@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/navMenuBackground"
+    android:orientation="vertical"
+    android:paddingTop="16dp">
+
+    <TextView
+        android:id="@+id/nav_item_home"
+        style="@style/NavItem"
+        android:text="@string/home" />
+
+    <TextView
+        android:id="@+id/nav_item_compose"
+        style="@style/NavItem"
+        android:text="@string/compose" />
+
+    <TextView
+        android:id="@+id/nav_item_drafts"
+        style="@style/NavItem"
+        android:text="@string/drafts" />
+
+    <TextView
+        android:id="@+id/nav_item_bookmarks"
+        style="@style/NavItem"
+        android:text="@string/bookmarks" />
+
+    <TextView
+        android:id="@+id/nav_item_logout"
+        style="@style/NavItem"
+        android:text="@string/logout" />
+
+</LinearLayout>

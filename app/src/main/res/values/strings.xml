@@ -103,5 +103,6 @@
     <string name="comments_count">4 comments</string>
     <string name="story_thumbnail">Story Thumbnail</string>
     <string name="writing">WRITING</string>
+    <string name="bookmarks">Bookmarks</string>
 
 </resources>

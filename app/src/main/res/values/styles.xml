@@ -47,4 +47,16 @@
     <style name="AppTheme.AppBarOverlay" parent="AppTheme" />
 
     <style name="AppTheme.PopupOverlay" parent="AppTheme" />
+
+    <style name="NavItem" parent="AppTheme">
+        <item name="android:fontFamily">@font/quicksand_regular</item>
+        <item name="android:textColor">@color/textDarkPrimary</item>
+        <item name="android:textSize">@dimen/material_text_body1</item>
+        <item name="android:background">@drawable/selector_nav_item</item>
+        <item name="android:padding">@dimen/nav_item_padding</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
 </resources>
