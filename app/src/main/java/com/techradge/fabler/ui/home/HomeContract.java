@@ -16,9 +16,9 @@ public interface HomeContract {
 
         void openReadActivity(Story story);
 
-        void showLoader();
+        void showRefreshLoader();
 
-        void hideLoader();
+        void hideRefreshLoader();
     }
 
     interface HomePresenter<V extends HomeView, I extends HomeInteractor>

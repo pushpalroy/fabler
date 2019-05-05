@@ -26,11 +26,13 @@ import butterknife.ButterKnife;
 
 public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
+    private static final int VIEW_TYPE_LOADER = 0;
     private static final int VIEW_TYPE_NORMAL = 1;
 
     private List<Story> mStoryList;
     private Context mContext;
     private StoryClickListener mStoryClickListener;
+    private boolean mIsLoading = false;
 
     public StoryAdapter(List<Story> storyList, Context context) {
         this.mStoryList = storyList;
@@ -40,11 +42,13 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     @NonNull
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         switch (viewType) {
             case VIEW_TYPE_NORMAL:
                 return new StoryViewHolder(LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.item_story_feed, parent, false));
+            case VIEW_TYPE_LOADER:
+                return new LoaderViewHolder(LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.item_loader, parent, false));
             default:
                 return null;
         }
@@ -74,7 +78,12 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public void addSingleItem(Story story) {
         mStoryList.add(story);
-        notifyDataSetChanged();
+        notifyItemInserted(mStoryList.size() - 1);
+    }
+
+    private void removeSingleItem(int position) {
+        mStoryList.remove(position);
+        notifyItemRemoved(position);
     }
 
     public String getLastStoryId() {
@@ -88,12 +97,29 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        return VIEW_TYPE_NORMAL;
+        if (mIsLoading &&
+                (mStoryList.size() - 1) == position) return VIEW_TYPE_LOADER;
+        else return VIEW_TYPE_NORMAL;
     }
 
     @Override
     public long getItemId(int position) {
         return position;
+    }
+
+    public void showLoader() {
+        if (mStoryList.get(mStoryList.size() - 1).getStoryId() != null) {
+            mIsLoading = true;
+            addSingleItem(new Story());
+        }
+    }
+
+    public void removeLoader() {
+        mIsLoading = false;
+        if (mStoryList.size() > 0) {
+            if (mStoryList.get(mStoryList.size() - 1).getStoryId() == null)
+                removeSingleItem(mStoryList.size() - 1);
+        }
     }
 
     public void clear() {
@@ -225,7 +251,6 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         protected void clear() {
-
         }
     }
 }

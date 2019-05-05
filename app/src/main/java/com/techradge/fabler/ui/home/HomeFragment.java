@@ -33,6 +33,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
     public RecyclerView mRecyclerView;
     @BindView(R.id.swipe_refresh_container)
     SwipeRefreshLayout mSwipeRefresh;
+    private boolean mIsLoading = false;
 
     @Inject
     HomePresenter<HomeContract.HomeView, HomeContract.HomeInteractor> mPresenter;
@@ -67,7 +68,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
     protected void setUp(View view) {
         setRecyclerView();
         mSwipeRefresh.setOnRefreshListener(this);
-        showLoader();
+        showRefreshLoader();
         mPresenter.fetchStories(getResources().getString(R.string.child_story));
     }
 
@@ -81,27 +82,31 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
         mRecyclerView.addOnScrollListener(new PaginationScrollListener(mLayoutManager) {
             @Override
             protected void loadMoreItems() {
-                showLoader();
+                mIsLoading = true;
                 mPresenter.fetchMoreStories(mStoryAdapter.getLastStoryId());
+                mStoryAdapter.showLoader();
             }
 
             @Override
             public boolean isLoading() {
-                return mSwipeRefresh.isRefreshing();
+                return mSwipeRefresh.isRefreshing() || mIsLoading;
             }
         });
     }
 
     @Override
     public void showStories(List<Story> storyList) {
+        mIsLoading = false;
+        hideRefreshLoader();
+        mStoryAdapter.removeLoader();
         mStoryAdapter.addItems(storyList);
-        hideLoader();
     }
 
     @Override
     public void showStory(Story story) {
+        mIsLoading = false;
+        hideRefreshLoader();
         mStoryAdapter.addSingleItem(story);
-        hideLoader();
     }
 
     @Override
@@ -132,14 +137,14 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
 
     @Override
     // Show custom loader
-    public void showLoader() {
+    public void showRefreshLoader() {
         if (!mSwipeRefresh.isRefreshing())
             mSwipeRefresh.setRefreshing(true);
     }
 
     @Override
     // Hide custom loader
-    public void hideLoader() {
+    public void hideRefreshLoader() {
         if (mSwipeRefresh.isRefreshing())
             mSwipeRefresh.setRefreshing(false);
     }
