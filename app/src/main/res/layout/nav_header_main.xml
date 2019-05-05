@@ -20,7 +20,7 @@
         android:id="@+id/tv_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/quicksand_bold"
+        android:fontFamily="@font/muli_bold"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:textColor="@color/textDarkPrimary"
         android:textSize="@dimen/material_text_body3"
@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:fontFamily="@font/quicksand_regular"
+        android:fontFamily="@font/muli_regular"
         android:textColor="@color/textDarkSecondary"
         android:textSize="@dimen/material_text_body1"
         tools:text="@string/email_address" />

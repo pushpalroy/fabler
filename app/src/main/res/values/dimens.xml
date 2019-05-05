@@ -9,14 +9,21 @@
     <dimen name="slide_title">30sp</dimen>
     <dimen name="slide_desc">16sp</dimen>
     <dimen name="desc_padding">40dp</dimen>
-    <dimen name="nav_header_vertical_spacing">8dp</dimen>
-    <dimen name="nav_header_height">240dp</dimen>
+
+    <!-- Story Item-->
     <dimen name="story_thumbnail_height">80dp</dimen>
     <dimen name="story_thumbnail_width">80dp</dimen>
     <dimen name="story_item_padding">16dp</dimen>
     <dimen name="story_item_height">250dp</dimen>
     <dimen name="story_item_padding_top">24dp</dimen>
-    <dimen name="nav_item_padding">24dp</dimen>
+
+    <!--Navigation Drawer-->
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">240dp</dimen>
+    <dimen name="nav_item_padding_top">18dp</dimen>
+    <dimen name="nav_item_padding_bottom">18dp</dimen>
+    <dimen name="nav_item_padding_left">24dp</dimen>
+    <dimen name="nav_item_padding_right">16dp</dimen>
 
     <dimen name="material_text_button">14sp</dimen>
     <dimen name="material_text_menu">14sp</dimen>

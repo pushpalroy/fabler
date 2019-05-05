@@ -15,6 +15,7 @@
 
     <color name="navHeaderTitle">#ffffff</color>
     <color name="navMenuBackground">#F1F1F1</color>
+    <color name="textNavigationItem">#CD000000</color>
 
     <!-- Dark Text Color for Light Background -->
     <color name="textDarkPrimary">#DE000000</color> <!--DE for %87 opacity-->
