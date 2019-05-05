@@ -15,7 +15,6 @@ import com.techradge.fabler.R;
 import com.techradge.fabler.data.local.viewmodel.MainViewModel;
 import com.techradge.fabler.data.model.Story;
 import com.techradge.fabler.ui.base.BaseViewHolder;
-import com.techradge.fabler.ui.story.StoryClickListener;
 import com.techradge.fabler.utils.AppConstants;
 import com.techradge.fabler.utils.CommonUtils;
 
@@ -29,8 +28,7 @@ public class DraftAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     private Context mContext;
     private List<Story> mDraftList;
-    private StoryClickListener mStoryClickListener;
-    private DraftModificationListener mDraftModificationListener;
+    private DraftClickListener mDraftClickListener;
     private final String TAG = DraftAdapter.class.getSimpleName();
     private MainViewModel mMainViewModel;
 
@@ -47,9 +45,8 @@ public class DraftAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         return new DraftsViewHolder(layoutView);
     }
 
-    void setCallback(StoryClickListener storyClickListener, DraftModificationListener draftModificationListener) {
-        mStoryClickListener = storyClickListener;
-        mDraftModificationListener = draftModificationListener;
+    void setCallback(DraftClickListener draftClickListener) {
+        mDraftClickListener = draftClickListener;
     }
 
     void setMainViewModel(MainViewModel mainViewModel) {
@@ -106,7 +103,7 @@ public class DraftAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             if (story.getStoryBrief() != null)
                 storyTv.setText(story.getStoryBrief());
 
-            itemView.setOnClickListener(v -> mStoryClickListener.onStoryClick(position, story));
+            itemView.setOnClickListener(v -> mDraftClickListener.onDraftClick(position, story));
 
             deleteButton.setOnClickListener(v -> new AlertDialog.Builder(mContext)
                     .setMessage(R.string.dialog_delete_message)
@@ -118,7 +115,7 @@ public class DraftAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                                     if (integer != null &&
                                             integer == AppConstants.RoomDeletion
                                                     .DELETION_STATUS_DELETED.getType())
-                                        mDraftModificationListener.onStoryDeleted(position, story);
+                                        mDraftClickListener.onDraftDeleted(position, story);
                                 });
                     })
                     .setNegativeButton(R.string.cancel, (dialog, id) -> dialog.dismiss()).create().show());

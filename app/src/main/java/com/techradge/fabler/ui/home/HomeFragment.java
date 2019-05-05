@@ -126,6 +126,16 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
     }
 
     @Override
+    public void onBookmarked(int position, Story story) {
+        showMessage(getResources().getString(R.string.msg_bookmarked));
+    }
+
+    @Override
+    public void onBookmarkRemoved(int position, Story story) {
+        showMessage(getResources().getString(R.string.msg_bookmark_removed));
+    }
+
+    @Override
     public void openReadActivity(Story story) {
         Intent readIntent = new Intent(getActivity(), ReadActivity.class);
         readIntent.putExtra("title", story.getStoryTitle());

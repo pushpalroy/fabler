@@ -104,5 +104,8 @@
     <string name="story_thumbnail">Story Thumbnail</string>
     <string name="writing">WRITING</string>
     <string name="bookmarks">Bookmarks</string>
+    <string name="msg_bookmarked">Added to Bookmarks</string>
+    <string name="msg_bookmark_removed">Bookmark removed</string>
+    <string name="msg_draft_deleted">Draft Deleted!</string>
 
 </resources>

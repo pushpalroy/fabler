@@ -18,7 +18,6 @@ import com.techradge.fabler.data.local.viewmodel.MainViewModel;
 import com.techradge.fabler.data.model.Story;
 import com.techradge.fabler.ui.base.BaseFragment;
 import com.techradge.fabler.ui.compose.ComposeActivity;
-import com.techradge.fabler.ui.story.StoryClickListener;
 
 import java.util.List;
 
@@ -29,7 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class DraftFragment extends BaseFragment
-        implements DraftContract.DraftView, StoryClickListener, DraftModificationListener {
+        implements DraftContract.DraftView, DraftClickListener {
     @BindView(R.id.fab)
     public FloatingActionButton fab;
     @BindView(R.id.drafts_recycler_view)
@@ -63,7 +62,7 @@ public class DraftFragment extends BaseFragment
             getActivityComponent().inject(this);
             setUnBinder(ButterKnife.bind(this, view));
             mPresenter.onAttach(this);
-            mDraftAdapter.setCallback(this, this);
+            mDraftAdapter.setCallback(this);
             mDraftAdapter.setMainViewModel(mMainViewModel);
         }
         return view;
@@ -100,13 +99,13 @@ public class DraftFragment extends BaseFragment
     }
 
     @Override
-    public void onStoryClick(int position, final Story story) {
+    public void onDraftClick(int position, final Story story) {
         openComposeActivity(story);
     }
 
     @Override
-    public void onStoryDeleted(int position, Story story) {
-        showMessage("Draft Deleted!");
+    public void onDraftDeleted(int position, Story story) {
+        showMessage(getResources().getString(R.string.msg_draft_deleted));
     }
 
     @Override

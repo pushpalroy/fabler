@@ -24,6 +24,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
+
 public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     private static final int VIEW_TYPE_LOADER = 0;
@@ -181,6 +183,8 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 Glide.with(mContext)
                         .load(story.getPhotoUrl())
                         .centerCrop()
+                        .placeholder(R.color.colorVeryVeryLightGrey)
+                        .transition(withCrossFade())
                         .into(storyThumbnailIv);
             else
                 storyThumbnailIv.setVisibility(View.GONE);
@@ -206,12 +210,12 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             bookmarkBtn.setOnLikeListener(new OnLikeListener() {
                 @Override
                 public void liked(LikeButton likeButton) {
-
+                    mStoryClickListener.onBookmarked(position, story);
                 }
 
                 @Override
                 public void unLiked(LikeButton likeButton) {
-
+                    mStoryClickListener.onBookmarkRemoved(position, story);
                 }
             });
         }
