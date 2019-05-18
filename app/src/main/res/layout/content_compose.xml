@@ -1,43 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:scrollbars="none">
+    tools:context=".ui.compose.ComposeActivity">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/format_bar"
+        android:background="#ffffff">
 
-        <EditText
-            android:id="@+id/et_title"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorEditTextBg"
-            android:hint="@string/title"
-            android:inputType="text"
-            android:maxLines="3"
-            android:nextFocusDown="@+id/et_body"
-            android:nextFocusForward="@+id/et_body"
-            android:padding="10dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textStyle="bold"
-            tools:ignore="Autofill" />
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/et_body"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/et_title"
-            android:layout_marginTop="10dp"
-            android:background="@color/colorEditTextBg"
-            android:hint="@string/story"
-            android:inputType="text"
-            android:nextFocusUp="@+id/et_title"
-            android:nextFocusForward="@+id/et_title"
-            android:padding="10dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            tools:ignore="Autofill" />
-    </RelativeLayout>
-</ScrollView>
+            <ImageView
+                android:id="@+id/iv_story_image"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginBottom="20dp"
+                android:contentDescription="@string/story_image"
+                android:scaleType="centerCrop"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/et_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorEditTextBg"
+                android:fontFamily="@font/muli_bold"
+                android:hint="@string/title"
+                android:inputType="textMultiLine"
+                android:maxLines="3"
+                android:nextFocusDown="@+id/editor_fabled"
+                android:nextFocusForward="@+id/editor_fabled"
+                android:padding="16dp"
+                android:textSize="@dimen/material_text_display1"
+                android:textStyle="bold"
+                tools:ignore="Autofill" />
+
+            <fabler.fablededitor.FabledEditor
+                android:id="@+id/editor_fabled"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+    </ScrollView>
+
+    <fabler.fablededitor.FormattingBar
+        android:id="@+id/format_bar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

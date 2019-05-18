@@ -18,8 +18,7 @@
             android:layout_height="?android:attr/actionBarSize"
             android:background="@color/colorPrimary"
             android:fitsSystemWindows="true"
-            android:theme="@style/ToolBarStyle"
-            app:title="@string/compose" />
+            android:theme="@style/ComposeToolBarStyle" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -27,6 +26,6 @@
         layout="@layout/content_compose"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior" />
 
 </android.support.design.widget.CoordinatorLayout>

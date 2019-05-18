@@ -29,8 +29,6 @@ import butterknife.OnClick;
 
 public class DraftFragment extends BaseFragment
         implements DraftContract.DraftView, DraftClickListener {
-    @BindView(R.id.fab)
-    public FloatingActionButton fab;
     @BindView(R.id.drafts_recycler_view)
     public RecyclerView mRecyclerView;
     private final String TAG = DraftFragment.class.getSimpleName();
@@ -99,16 +97,6 @@ public class DraftFragment extends BaseFragment
     }
 
     @Override
-    public void onDraftClick(int position, final Story story) {
-        openComposeActivity(story);
-    }
-
-    @Override
-    public void onDraftDeleted(int position, Story story) {
-        showMessage(getResources().getString(R.string.msg_draft_deleted));
-    }
-
-    @Override
     public void openComposeActivity(Story story) {
         Intent readIntent = ComposeActivity.getStartIntent(getActivity());
         if (story != null) {
@@ -121,8 +109,13 @@ public class DraftFragment extends BaseFragment
         startActivity(readIntent);
     }
 
-    @OnClick(R.id.fab)
-    public void openComposeActivity() {
-        startActivity(new Intent(getActivity(), ComposeActivity.class));
+    @Override
+    public void onDraftClick(int position, final Story story) {
+        openComposeActivity(story);
+    }
+
+    @Override
+    public void onDraftDeleted(int position, Story story) {
+        showMessage(getResources().getString(R.string.msg_draft_deleted));
     }
 }

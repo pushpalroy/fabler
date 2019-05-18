@@ -73,7 +73,7 @@ public class ReadActivity extends BaseActivity implements ReadContract.ReadView 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.read, menu);
+        inflater.inflate(R.menu.menu_read, menu);
         return true;
     }
 

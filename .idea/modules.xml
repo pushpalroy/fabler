@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Fabler.iml" filepath="$PROJECT_DIR$/Fabler.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fablededitor/fablededitor.iml" filepath="$PROJECT_DIR$/fablededitor/fablededitor.iml" />
     </modules>
   </component>
 </project>

@@ -107,5 +107,12 @@
     <string name="msg_bookmarked">Added to Bookmarks</string>
     <string name="msg_bookmark_removed">Bookmark removed</string>
     <string name="msg_draft_deleted">Draft Deleted!</string>
+    <string name="undo">Undo</string>
+    <string name="redo">Redo</string>
+    <string name="add_image">Add image</string>
+    <string name="story_image">Story Image</string>
+    <string name="story_options">Story options</string>
+    <string name="option_share">Share</string>
+    <string name="label_collaborative">Collaborative</string>
 
 </resources>

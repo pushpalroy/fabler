@@ -1,12 +1,14 @@
 package com.techradge.fabler.ui.story;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -23,6 +25,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
@@ -152,6 +155,8 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         LikeButton bookmarkBtn;
         @BindView(R.id.iv_story_thumbnail)
         ImageView storyThumbnailIv;
+        @BindView(R.id.tv_label_collaborative)
+        TextView collaborativeLabelTv;
 
         StoryViewHolder(View itemView) {
             super(itemView);
@@ -179,14 +184,17 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             if (story.getPublishedOn() != 0)
                 timeStampTv.setText(CommonUtils.getFormattedRelativeDateTime(story.getPublishedOn()));
 
-            if (story.getPhotoUrl() != null && !story.getPhotoUrl().equals(""))
+            if (story.getPhotoUrl() != null && !story.getPhotoUrl().equals("")) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                    storyThumbnailIv.setClipToOutline(true);
+
                 Glide.with(mContext)
                         .load(story.getPhotoUrl())
                         .centerCrop()
                         .placeholder(R.color.colorVeryVeryLightGrey)
                         .transition(withCrossFade())
                         .into(storyThumbnailIv);
-            else
+            } else
                 storyThumbnailIv.setVisibility(View.GONE);
 
             if (story.getTotalLikes() > 0) {
@@ -205,6 +213,12 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 commentsCountTv.setVisibility(View.GONE);
             }
 
+            if (story.isCollaborative())
+                collaborativeLabelTv.setVisibility(View.VISIBLE);
+            else
+                collaborativeLabelTv.setVisibility(View.GONE);
+
+
             itemView.setOnClickListener(v -> mStoryClickListener.onStoryClick(position, story));
 
             bookmarkBtn.setOnLikeListener(new OnLikeListener() {
@@ -218,6 +232,18 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                     mStoryClickListener.onBookmarkRemoved(position, story);
                 }
             });
+        }
+
+        @OnClick(R.id.iv_story_options)
+        public void onStoryOptionsSelected(View view) {
+            showPopup(mContext, view);
+        }
+
+        void showPopup(Context context, View v) {
+            PopupMenu popup = new PopupMenu(context, v);
+            popup.getMenuInflater().inflate(R.menu.menu_story_item, popup.getMenu());
+            popup.setOnMenuItemClickListener(item -> false);
+            popup.show();
         }
 
         @Override

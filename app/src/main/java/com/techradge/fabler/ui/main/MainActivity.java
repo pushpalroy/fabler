@@ -3,11 +3,14 @@ package com.techradge.fabler.ui.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,6 +40,8 @@ public class MainActivity extends BaseActivity
     public DrawerLayout drawer;
     @BindView(R.id.nav_view)
     public NavigationView navigationView;
+    @BindView(R.id.fab)
+    public FloatingActionButton compose_fab;
 
     @Inject
     public MainPresenter<MainContract.MainView, MainContract.MainInteractor> mPresenter;
@@ -86,10 +91,32 @@ public class MainActivity extends BaseActivity
     @OnClick(R.id.nav_item_home)
     @Override
     public void onHomeSelected() {
+        CoordinatorLayout.LayoutParams p = (CoordinatorLayout.LayoutParams) compose_fab.getLayoutParams();
+        p.setAnchorId(View.NO_ID);
+        compose_fab.setLayoutParams(p);
+        compose_fab.hide();
+
         mToolbar.setTitle(getResources().getString(R.string.home));
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content_frame, HomeFragment.newInstance())
+                .commit();
+
+        closeNavDrawer();
+    }
+
+    @OnClick(R.id.nav_item_drafts)
+    @Override
+    public void onDraftSelected() {
+        CoordinatorLayout.LayoutParams p = (CoordinatorLayout.LayoutParams) compose_fab.getLayoutParams();
+        p.setAnchorId(View.NO_ID);
+        compose_fab.setLayoutParams(p);
+        compose_fab.show();
+
+        mToolbar.setTitle(getResources().getString(R.string.drafts));
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_frame, DraftFragment.newInstance())
                 .commit();
 
         closeNavDrawer();
@@ -102,25 +129,6 @@ public class MainActivity extends BaseActivity
         startActivity(composeIntent);
 
         closeNavDrawer();
-    }
-
-    @OnClick(R.id.nav_item_drafts)
-    @Override
-    public void onDraftSelected() {
-        mToolbar.setTitle(getResources().getString(R.string.drafts));
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.content_frame, DraftFragment.newInstance())
-                .commit();
-
-        closeNavDrawer();
-    }
-
-    @Override
-    public void openLoginActivity() {
-        Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(loginIntent);
-        finish();
     }
 
     @OnClick(R.id.nav_item_logout)
@@ -138,6 +146,13 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
+    public void openLoginActivity() {
+        Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(loginIntent);
+        finish();
+    }
+
+    @Override
     public void closeNavDrawer() {
         if (drawer.isDrawerOpen(GravityCompat.START))
             drawer.closeDrawer(GravityCompat.START);
@@ -146,6 +161,11 @@ public class MainActivity extends BaseActivity
     @Override
     public void returnToHome() {
         onHomeSelected();
+    }
+
+    @OnClick(R.id.fab)
+    public void openComposeActivity() {
+        startActivity(new Intent(this, ComposeActivity.class));
     }
 
     @Override

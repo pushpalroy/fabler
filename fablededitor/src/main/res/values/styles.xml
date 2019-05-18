@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextFormattingItem">
+        <item name="android:background">@drawable/selector_nav_item</item>
+        <item name="android:padding">12dp</item>
+    </style>
+</resources>

@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/option_share"
+        android:title="@string/option_share" />
+    <item
+        android:id="@+id/option_delete"
+        android:title="@string/delete" />
+</menu>

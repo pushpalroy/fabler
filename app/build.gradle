@@ -117,8 +117,9 @@ dependencies {
     // Custom Toggle Button
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
 
-    // Custom Button
-    //implementation 'com.sackcentury:shinebutton:0.2.0'
+    // Editor Library
+    implementation project(':fablededitor')
+
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
