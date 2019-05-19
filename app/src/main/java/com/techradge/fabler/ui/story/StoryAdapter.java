@@ -235,7 +235,7 @@ public class StoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         }
 
         @OnClick(R.id.iv_story_options)
-        public void onStoryOptionsSelected(View view) {
+        void onStoryOptionsSelected(View view) {
             showPopup(mContext, view);
         }
 
