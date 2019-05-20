@@ -7,7 +7,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.0'
+        classpath 'com.android.tools.build:gradle:3.4.1'
         classpath 'com.google.gms:google-services:4.2.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
@@ -39,10 +39,10 @@ ext {
     supportLibVersion = '28.0.0'
     butterknifeVersion = '8.8.1'
     roomVersion = '1.1.1'
-    liveDataVer = '1.1.1'
     glideVersion = '4.9.0'
     guavaVersion = '27.0.1-android'
     dagger2Version = '2.8'
     rx2FastAndroidNetworking = '1.0.2'
     timber = '4.7.1'
+    lifecycle_version = "2.0.0"
 }

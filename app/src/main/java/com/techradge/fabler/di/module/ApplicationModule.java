@@ -1,9 +1,9 @@
 package com.techradge.fabler.di.module;
 
 import android.app.Application;
-import android.arch.persistence.room.Room;
+import androidx.room.Room;
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.techradge.fabler.BuildConfig;
 import com.techradge.fabler.data.local.appDatabase.StoryDatabase;

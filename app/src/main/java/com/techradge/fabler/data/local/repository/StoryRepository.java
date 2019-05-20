@@ -1,10 +1,11 @@
 package com.techradge.fabler.data.local.repository;
 
 import android.annotation.SuppressLint;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.techradge.fabler.data.local.appDatabase.StoryDatabase;
 import com.techradge.fabler.data.local.dao.StoryDao;

@@ -2,7 +2,7 @@ package com.techradge.fabler.ui.base;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 

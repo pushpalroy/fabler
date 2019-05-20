@@ -1,6 +1,6 @@
 package com.techradge.fabler.ui.base;
 
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 
 /**
  * Base interface that any class that wants to act as a View in the MVP (Model View Presenter)
