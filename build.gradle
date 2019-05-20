@@ -10,6 +10,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.4.1'
         classpath 'com.google.gms:google-services:4.2.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.jakewharton:butterknife-gradle-plugin:10.1.0'
     }
     // NOTE: Do not place your application dependencies here; they belong
     // in the individual module build.gradle files
@@ -37,7 +38,7 @@ ext {
 
     // App dependencies
     supportLibVersion = '28.0.0'
-    butterknifeVersion = '8.8.1'
+    butterknifeVersion = '10.1.0'
     roomVersion = '1.1.1'
     glideVersion = '4.9.0'
     guavaVersion = '27.0.1-android'
