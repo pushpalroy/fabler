@@ -17,10 +17,10 @@ public class ExampleUnitTest {
   public void addition_isCorrect() {
     RenderingUtils renderingUtils = new RenderingUtils();
     ArrayList<DraftDataItemModel> types = new ArrayList<>();
-    types.add(new TextType());
-    types.add(new TextType());
-    types.add(new ImageType());
-    types.add(new HRType());
+    //types.add(new TextType());
+    //types.add(new TextType());
+    //types.add(new ImageType());
+    //types.add(new HRType());
     renderingUtils.render(types);
   }
 
