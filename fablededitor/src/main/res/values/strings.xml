@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">FabledEditor</string>
+    <string name="caption_optional">Caption (Optional)</string>
+    <string name="msg_failed_to_upload_image">Failed to upload image.</string>
+    <string name="story_image">Story image</string>
+    <string name="remove_button">Remove button</string>
+    <string name="plain_text_button">Plain text button</string>
+    <string name="h">H</string>
+    <string name="bullet_button">Bullet button</string>
+    <string name="block_quote">Block quote</string>
+    <string name="insert_link_button">Insert link button</string>
+    <string name="insert_line_button">Insert line button</string>
+    <string name="insert_image_button">Insert image button</string>
+    <string name="your_story_here">Your story here</string>
+    <string name="b">B</string>
+    <string name="next_line_button">Next line button</string>
+</resources>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="@color/bg_format_bar"
+    android:padding="0dp">
+
+    <FrameLayout
+        android:id="@+id/container1"
+        android:layout_width="44dp"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/normalTextBtn"
+            style="@style/TextFormattingItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:contentDescription="@string/plain_text_button"
+            android:focusable="true"
+            android:padding="10dp"
+            android:src="@drawable/ic_text" />
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/container2"
+        android:layout_width="44dp"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@+id/container1">
+
+        <TextView
+            android:id="@+id/headingBtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@drawable/selector_nav_item"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="serif-monospace"
+            android:gravity="center"
+            android:text="@string/b"
+            android:textColor="#2a2a2a"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/headingNumberBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:fontFamily="serif-monospace"
+            android:text=""
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/container3"
+        android:layout_width="44dp"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@+id/container2">
+
+        <ImageView
+            android:id="@+id/bulletBtn"
+            style="@style/TextFormattingItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:contentDescription="@string/bullet_button"
+            android:focusable="true"
+            android:padding="10dp"
+            android:src="@drawable/ic_numbering" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/container4"
+        android:layout_width="44dp"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@+id/container3">
+
+        <ImageView
+            android:id="@+id/blockQuoteBtn"
+            style="@style/TextFormattingItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:contentDescription="@string/block_quote"
+            android:focusable="true"
+            android:padding="10dp"
+            android:src="@drawable/ic_quote" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/container5"
+        android:layout_width="44dp"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@+id/container4">
+
+        <ImageView
+            android:id="@+id/insertLinkBtn"
+            style="@style/TextFormattingItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:contentDescription="@string/insert_link_button"
+            android:focusable="true"
+            android:padding="10dp"
+            android:src="@drawable/ic_link" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/container6"
+        android:layout_width="44dp"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@+id/container5">
+
+        <ImageView
+            android:id="@+id/insertHrBtn"
+            style="@style/TextFormattingItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:contentDescription="@string/insert_line_button"
+            android:focusable="true"
+            android:padding="10dp"
+            android:src="@drawable/ic_dots" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/container7"
+        android:layout_width="44dp"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@+id/container6">
+
+        <ImageView
+            android:id="@+id/nextLineBtn"
+            style="@style/TextFormattingItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:contentDescription="@string/next_line_button"
+            android:focusable="true"
+            android:padding="10dp"
+            android:src="@drawable/ic_arrow_down" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/container8"
+        android:layout_width="44dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true">
+
+        <ImageView
+            android:id="@+id/insertImageBtn"
+            style="@style/TextFormattingItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:contentDescription="@string/insert_image_button"
+            android:focusable="true"
+            android:padding="10dp"
+            android:src="@drawable/ic_add_image" />
+
+    </FrameLayout>
+
+</RelativeLayout>
