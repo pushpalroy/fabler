@@ -2,14 +2,15 @@ package fabler.fablededitor;
 
 import android.content.Context;
 import android.graphics.Color;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import static fabler.fablededitor.components.text.TextComponentItem.MODE_BULLET;
 import static fabler.fablededitor.components.text.TextComponentItem.MODE_NUMBERING;
@@ -39,8 +40,19 @@ public class FormattingBar extends FrameLayout implements FabledEditor.EditorFoc
     private boolean bulletsEnabled;
     private boolean blockQuoteEnabled;
 
+    //    6 - BLOCK_QUOTE
+    //    5 - BOLD
+    //    4 - H4
+    //    3 - H3
+    //    2 - H2
+    //    1 - H1
+    //    0 - NORMAL
+
     public static final int MIN_HEADING = 1;
     public static final int MAX_HEADING = 5;
+
+    // currentHeading  = 6
+
     private int currentHeading;
 
     private EditorControlListener editorControlListener;

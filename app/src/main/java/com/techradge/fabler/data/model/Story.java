@@ -86,6 +86,13 @@ public class Story {
         this.category = category;
     }
 
+    @Ignore
+    public Story(String storyId, String authorId, String authorName) {
+        this.storyId = storyId;
+        this.authorId = authorId;
+        this.authorName = authorName;
+    }
+
     public int getId() {
         return id;
     }

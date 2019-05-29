@@ -54,6 +54,15 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    // Robolectric support
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
+
+    useLibrary 'android.test.runner'
+    useLibrary 'android.test.base'
+    useLibrary 'android.test.mock'
 }
 
 dependencies {
@@ -78,25 +87,25 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     // Dependency injection
-    implementation "com.google.dagger:dagger:$rootProject.dagger2Version"
-    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
+    implementation "com.google.dagger:dagger:$dagger2Version"
+    annotationProcessor "com.google.dagger:dagger-compiler:$dagger2Version"
     compileOnly 'javax.annotation:jsr250-api:1.0'
     implementation 'javax.inject:javax.inject:1'
 
     // logging
-    implementation "com.jakewharton.timber:timber:$rootProject.timber"
+    implementation "com.jakewharton.timber:timber:$timber"
 
     // Guava
-    implementation "com.google.guava:guava:$rootProject.guavaVersion"
+    implementation "com.google.guava:guava:$guavaVersion"
 
     // network
-    implementation "com.amitshekhar.android:rx2-android-networking:$rootProject.rx2FastAndroidNetworking"
+    implementation "com.amitshekhar.android:rx2-android-networking:$rx2FastAndroidNetworking"
 
     // Room - Database
     implementation 'androidx.room:room-runtime:2.0.0'
     annotationProcessor 'androidx.room:room-compiler:2.0.0'
 
-    // Jetpack: Architecture components
+    // Architecture components: Lifecycle Components (ViewModel and LiveData)
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
 
     // ButterKnife
@@ -128,10 +137,28 @@ dependencies {
     // Editor Library
     implementation project(':fablededitor')
 
-    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testImplementation 'junit:junit:4.12'
+    // *************** Testing *************** //
+
+    // ***** AndroidX Test ***** //
+
+    // Core library, Robolectric environment
+    testImplementation 'androidx.test:core:1.1.0'
+
+    // AndroidJUnitRunner and JUnit Rules
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test:rules:1.1.1'
+
+    // Assertions
+    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    androidTestImplementation 'androidx.test.ext:truth:1.1.0'
+    testImplementation 'com.google.truth:truth:0.42'
+
+    // Robolectric
+    testImplementation "org.robolectric:robolectric:4.0.2"
+
+    // Espresso
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestImplementation 'androidx.test.espresso.idling:idling-concurrent:3.1.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

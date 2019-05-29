@@ -42,7 +42,9 @@ public final class CommonUtils {
         return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
-    public static boolean isEmailValid(String email) {
+    static boolean isEmailValid(String email) {
+        if (email == null)
+            return false;
         Pattern pattern;
         Matcher matcher;
         final String EMAIL_PATTERN =

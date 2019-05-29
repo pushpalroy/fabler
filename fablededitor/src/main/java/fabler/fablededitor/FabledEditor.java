@@ -1,10 +1,11 @@
 package fabler.fablededitor;
 
 import android.content.Context;
-import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,7 +127,7 @@ public class FabledEditor extends FabledCore implements
         componentTag.setComponent(textComponentModel);
         textComponentItem.setTag(componentTag);
         addView(textComponentItem, insertIndex);
-        __textComponent.updateComponent(textComponentItem);
+        __textComponent.updateComponent(textComponentItem, 0, 0);
         setFocus(textComponentItem);
         reComputeTagsAfter(insertIndex);
         refreshViewOrder();
@@ -143,7 +144,12 @@ public class FabledEditor extends FabledCore implements
             ((TextComponentItem) _activeView).setMode(currentInputMode);
             ComponentTag componentTag = (ComponentTag) _activeView.getTag();
             ((TextComponentModel) componentTag.getComponent()).setHeadingStyle(heading);
-            __textComponent.updateComponent(_activeView);
+
+            int startSelection = ((TextComponentItem) _activeView).getInputBox().getSelectionStart();
+            int endSelection = ((TextComponentItem) _activeView).getInputBox().getSelectionEnd();
+
+
+            __textComponent.updateComponent(_activeView, startSelection, endSelection);
         }
         refreshViewOrder();
     }
@@ -225,7 +231,7 @@ public class FabledEditor extends FabledCore implements
         textComponentItem.setTag(componentTag);
         textComponentItem.setText(content);
         addView(textComponentItem, insertIndex);
-        __textComponent.updateComponent(textComponentItem);
+        __textComponent.updateComponent(textComponentItem, 0, 0);
         setFocus(textComponentItem);
         reComputeTagsAfter(insertIndex);
         refreshViewOrder();
@@ -344,7 +350,7 @@ public class FabledEditor extends FabledCore implements
             ((TextComponentItem) _activeView).setMode(currentInputMode);
             ComponentTag componentTag = (ComponentTag) _activeView.getTag();
             ((TextComponentModel) componentTag.getComponent()).setHeadingStyle(BLOCK_QUOTE);
-            __textComponent.updateComponent(_activeView);
+            __textComponent.updateComponent(_activeView, 0, 0);
         }
         refreshViewOrder();
     }
@@ -359,7 +365,7 @@ public class FabledEditor extends FabledCore implements
             ((TextComponentItem) _activeView).setMode(currentInputMode);
             ComponentTag componentTag = (ComponentTag) _activeView.getTag();
             ((TextComponentModel) componentTag.getComponent()).setHeadingStyle(NORMAL);
-            __textComponent.updateComponent(_activeView);
+            __textComponent.updateComponent(_activeView, 0, 0);
         }
         refreshViewOrder();
     }
@@ -374,7 +380,7 @@ public class FabledEditor extends FabledCore implements
             ((TextComponentItem) _activeView).setMode(currentInputMode);
             ComponentTag componentTag = (ComponentTag) _activeView.getTag();
             ((TextComponentModel) componentTag.getComponent()).setHeadingStyle(NORMAL);
-            __textComponent.updateComponent(_activeView);
+            __textComponent.updateComponent(_activeView, 0, 0);
         }
         refreshViewOrder();
     }

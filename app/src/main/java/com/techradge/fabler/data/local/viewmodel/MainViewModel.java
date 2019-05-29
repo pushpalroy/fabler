@@ -24,11 +24,11 @@ public class MainViewModel extends AndroidViewModel {
     private MutableLiveData<List<Story>> storiesByTitleSearchResults;
     private LiveData<List<User>> users;
 
-    public MainViewModel(Application application) {
-        super(application);
+    public MainViewModel(Application applicationContext) {
+        super(applicationContext);
 
-        storyRepository = new StoryRepository(application);
-        userRepository = new UserRepository(application);
+        storyRepository = new StoryRepository(applicationContext);
+        userRepository = new UserRepository(applicationContext);
 
         allStories = storyRepository.getAllStories();
         storiesByTitleSearchResults = storyRepository.getStoriesByTitleSearchResults();

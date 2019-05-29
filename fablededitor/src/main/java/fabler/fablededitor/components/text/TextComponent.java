@@ -2,13 +2,18 @@ package fabler.fablededitor.components.text;
 
 import android.content.Context;
 import android.content.res.Resources;
-import androidx.core.content.res.ResourcesCompat;
+import android.graphics.Typeface;
 import android.text.Editable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.text.style.StyleSpan;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import androidx.core.content.res.ResourcesCompat;
 
 import fabler.fablededitor.R;
 import fabler.fablededitor.models.ComponentTag;
@@ -19,6 +24,7 @@ import static fabler.fablededitor.components.text.TextComponentItem.MODE_PLAIN;
 import static fabler.fablededitor.styles.TextComponentStyle.BLOCK_QUOTE;
 import static fabler.fablededitor.styles.TextComponentStyle.BOLD;
 import static fabler.fablededitor.styles.TextComponentStyle.H1;
+import static fabler.fablededitor.styles.TextComponentStyle.H4;
 import static fabler.fablededitor.styles.TextComponentStyle.NORMAL;
 
 public class TextComponent {
@@ -134,7 +140,7 @@ public class TextComponent {
      *
      * @param view to be updated.
      */
-    public void updateComponent(View view) {
+    public void updateComponent(View view, int startSelection, int endSelection) {
         ComponentTag componentTag = (ComponentTag) view.getTag();
         //get heading
         int style = ((TextComponentModel) componentTag.getComponent()).getHeadingStyle();
@@ -142,6 +148,23 @@ public class TextComponent {
         textComponentItem.getInputBox().setTextSize(FontSize.getFontSize(style));
         //get mode
         int mode = textComponentItem.getMode();
+
+//        if (style == BOLD) {
+//            CharSequence text = (((TextComponentItem) view).getInputBox()).getText().toString()
+//                    .substring(startSelection, endSelection);
+//            SpannableString span = new SpannableString(text);
+//            span.setSpan(new StyleSpan(Typeface.BOLD), startSelection, endSelection, 0);
+//            (((TextComponentItem) view).getInputBox()).setText(span, TextView.BufferType.SPANNABLE);
+//
+//            (((TextComponentItem) view).getInputBox()).setBackgroundResource(R.drawable.text_input_bg);
+//            ((TextComponentItem) view).getInputBox().setPadding(
+//                    dpToPx(16),//left
+//                    dpToPx(8),//top
+//                    dpToPx(16),//right
+//                    dpToPx(8)//bottom
+//            );
+//            ((TextComponentItem) view).getInputBox().setLineSpacing(2f, 1.1f);
+//        }
 
         if (style >= H1 && style <= BOLD) {
             ((TextComponentItem) view).getInputBox().setTypeface(ResourcesCompat.getFont(mContext, R.font.muli_bold));

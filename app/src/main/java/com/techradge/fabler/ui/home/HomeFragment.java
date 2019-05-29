@@ -3,15 +3,16 @@ package com.techradge.fabler.ui.home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.techradge.fabler.R;
 import com.techradge.fabler.data.model.Story;
@@ -121,17 +122,17 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
     }
 
     @Override
-    public void onStoryClick(int position, Story story) {
+    public void onStoryClick(int position, @NonNull Story story) {
         openReadActivity(story);
     }
 
     @Override
-    public void onBookmarked(int position, Story story) {
+    public void onBookmarked(int position, @NonNull Story story) {
         showMessage(getResources().getString(R.string.msg_bookmarked));
     }
 
     @Override
-    public void onBookmarkRemoved(int position, Story story) {
+    public void onBookmarkRemoved(int position, @NonNull Story story) {
         showMessage(getResources().getString(R.string.msg_bookmark_removed));
     }
 

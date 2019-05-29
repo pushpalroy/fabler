@@ -13,6 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <uses-library
+            android:name="android.test.runner"
+            android:required="false" />
+
         <activity android:name=".ui.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,8 +28,7 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".ui.compose.ComposeActivity"/>
+        <activity android:name=".ui.compose.ComposeActivity" />
         <activity android:name=".ui.read.ReadActivity" />
         <activity android:name=".ui.comment.CommentActivity" />
 
