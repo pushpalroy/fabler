@@ -1,4 +1,4 @@
-<img src="icon.png" height = "100" width = "100"  align="right" />
+<img src="icon.png" height = "150" width = "150"  align="right" />
 
 # Fabler
 > A community for writers
