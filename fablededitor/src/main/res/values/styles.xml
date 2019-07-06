@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="TextFormattingItem">
         <item name="android:background">@drawable/selector_nav_item</item>
         <item name="android:padding">12dp</item>
+    </style>
+
+    <style name="PrimaryFlatButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless.Colored</item>
+        <item name="android:textColor">@color/black_effective</item>
+        <item name="colorControlHighlight">@color/colorVeryLightGrey</item>
+    </style>
+
+    <style name="popup_window_animation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
     </style>
 </resources>

@@ -10,13 +10,13 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import fabler.fablededitor.components.divider.HorizontalDividerComponent;
-import fabler.fablededitor.components.divider.HorizontalDividerComponentItem;
-import fabler.fablededitor.components.image.ImageComponent;
-import fabler.fablededitor.components.image.ImageComponentItem;
-import fabler.fablededitor.components.text.TextComponent;
-import fabler.fablededitor.components.text.TextComponentItem;
 import fabler.fablededitor.datatype.DraftDataItemModel;
+import fabler.fablededitor.formatbar.components.divider.HorizontalDividerComponent;
+import fabler.fablededitor.formatbar.components.divider.HorizontalDividerComponentItem;
+import fabler.fablededitor.formatbar.components.image.ImageComponent;
+import fabler.fablededitor.formatbar.components.image.ImageComponentItem;
+import fabler.fablededitor.formatbar.components.text.TextComponent;
+import fabler.fablededitor.formatbar.components.text.TextComponentItem;
 import fabler.fablededitor.models.ComponentTag;
 import fabler.fablededitor.models.DraftModel;
 import fabler.fablededitor.models.ImageComponentModel;
@@ -26,11 +26,12 @@ import fabler.fablededitor.utilities.DraftManager;
 import fabler.fablededitor.utilities.MarkDownConverter;
 import fabler.fablededitor.utilities.RenderingUtils;
 
-import static fabler.fablededitor.components.text.TextComponentItem.MODE_BULLET;
-import static fabler.fablededitor.components.text.TextComponentItem.MODE_NUMBERING;
-import static fabler.fablededitor.components.text.TextComponentItem.MODE_PLAIN;
-import static fabler.fablededitor.styles.TextComponentStyle.BLOCK_QUOTE;
+import static fabler.fablededitor.formatbar.components.text.TextComponentItem.MODE_BULLET;
+import static fabler.fablededitor.formatbar.components.text.TextComponentItem.MODE_NUMBERING;
+import static fabler.fablededitor.formatbar.components.text.TextComponentItem.MODE_PLAIN;
+import static fabler.fablededitor.styles.TextComponentAlignment.LEFT_ALIGNMENT;
 import static fabler.fablededitor.styles.TextComponentStyle.NORMAL;
+import static fabler.fablededitor.styles.TextComponentStyle.QUOTE;
 
 public class FabledEditor extends FabledCore implements
         TextComponent.TextComponentCallback,
@@ -49,6 +50,7 @@ public class FabledEditor extends FabledCore implements
     private EditorFocusReporter editorFocusReporter;
     private String startHintText;
     private int defaultHeadingType = NORMAL;
+    private int defaultAlignment = LEFT_ALIGNMENT;
     private boolean isFreshEditor;
     private DraftModel oldDraft;
     private EditorCallback editorCallback;
@@ -106,7 +108,8 @@ public class FabledEditor extends FabledCore implements
         //starts basic editor with single text component.
         this.isFreshEditor = true;
         addTextComponent(0);
-        setHeading(defaultHeadingType);
+        setStyle(defaultHeadingType);
+        setAlignment(defaultAlignment);
     }
 
     /**
@@ -134,22 +137,38 @@ public class FabledEditor extends FabledCore implements
     }
 
     /**
-     * sets heading to text component
+     * sets style to text component
      *
-     * @param heading number to be set
+     * @param style number to be set
      */
-    public void setHeading(int heading) {
+    public void setStyle(int style) {
         currentInputMode = MODE_PLAIN;
         if (_activeView instanceof TextComponentItem) {
             ((TextComponentItem) _activeView).setMode(currentInputMode);
             ComponentTag componentTag = (ComponentTag) _activeView.getTag();
-            ((TextComponentModel) componentTag.getComponent()).setHeadingStyle(heading);
+            ((TextComponentModel) componentTag.getComponent()).setStyle(style);
 
             int startSelection = ((TextComponentItem) _activeView).getInputBox().getSelectionStart();
             int endSelection = ((TextComponentItem) _activeView).getInputBox().getSelectionEnd();
 
-
             __textComponent.updateComponent(_activeView, startSelection, endSelection);
+        }
+        refreshViewOrder();
+    }
+
+    /**
+     * sets alignment to text component
+     *
+     * @param alignment number to be set
+     */
+    public void setAlignment(int alignment) {
+        currentInputMode = MODE_PLAIN;
+        if (_activeView instanceof TextComponentItem) {
+            ((TextComponentItem) _activeView).setMode(currentInputMode);
+            ComponentTag componentTag = (ComponentTag) _activeView.getTag();
+            ((TextComponentModel) componentTag.getComponent()).setAlignment(alignment);
+
+            __textComponent.updateComponent(_activeView, 0, 0);
         }
         refreshViewOrder();
     }
@@ -188,7 +207,7 @@ public class FabledEditor extends FabledCore implements
      */
     private void reportStylesOfFocusedView(TextComponentItem view) {
         if (editorFocusReporter != null) {
-            editorFocusReporter.onFocusedViewHas(view.getMode(), view.getTextHeadingStyle());
+            editorFocusReporter.onFocusedViewHas(view.getMode(), view.getTextHeadingStyle(), view.getTextAlignment());
         }
     }
 
@@ -344,12 +363,12 @@ public class FabledEditor extends FabledCore implements
     /**
      * changes the current text into blockQuote.
      */
-    public void changeToBlockQuote() {
+    public void changeToQuote() {
         currentInputMode = MODE_PLAIN;
         if (_activeView instanceof TextComponentItem) {
             ((TextComponentItem) _activeView).setMode(currentInputMode);
             ComponentTag componentTag = (ComponentTag) _activeView.getTag();
-            ((TextComponentModel) componentTag.getComponent()).setHeadingStyle(BLOCK_QUOTE);
+            ((TextComponentModel) componentTag.getComponent()).setStyle(QUOTE);
             __textComponent.updateComponent(_activeView, 0, 0);
         }
         refreshViewOrder();
@@ -364,7 +383,7 @@ public class FabledEditor extends FabledCore implements
         if (_activeView instanceof TextComponentItem) {
             ((TextComponentItem) _activeView).setMode(currentInputMode);
             ComponentTag componentTag = (ComponentTag) _activeView.getTag();
-            ((TextComponentModel) componentTag.getComponent()).setHeadingStyle(NORMAL);
+            ((TextComponentModel) componentTag.getComponent()).setStyle(NORMAL);
             __textComponent.updateComponent(_activeView, 0, 0);
         }
         refreshViewOrder();
@@ -379,7 +398,8 @@ public class FabledEditor extends FabledCore implements
         if (_activeView instanceof TextComponentItem) {
             ((TextComponentItem) _activeView).setMode(currentInputMode);
             ComponentTag componentTag = (ComponentTag) _activeView.getTag();
-            ((TextComponentModel) componentTag.getComponent()).setHeadingStyle(NORMAL);
+            ((TextComponentModel) componentTag.getComponent()).setStyle(NORMAL);
+            ((TextComponentModel) componentTag.getComponent()).setAlignment(LEFT_ALIGNMENT);
             __textComponent.updateComponent(_activeView, 0, 0);
         }
         refreshViewOrder();
@@ -580,7 +600,7 @@ public class FabledEditor extends FabledCore implements
     }
 
     public interface EditorFocusReporter {
-        void onFocusedViewHas(int mode, int textComponentStyle);
+        void onFocusedViewHas(int mode, int textComponentStyle, int textAlignment);
     }
 
     public interface EditorCallback {

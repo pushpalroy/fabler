@@ -14,4 +14,9 @@
     <string name="your_story_here">Your story here</string>
     <string name="b">B</string>
     <string name="next_line_button">Next line button</string>
+    <string name="desc_format_bold">Bold</string>
+
+    <string name="popup_text_plain">Plain</string>
+    <string name="popup_text_large">Large</string>
+    <string name="popup_text_huge">Huge</string>
 </resources>

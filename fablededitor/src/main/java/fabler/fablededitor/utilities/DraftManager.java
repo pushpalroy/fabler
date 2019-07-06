@@ -5,18 +5,18 @@ import android.view.View;
 import java.util.ArrayList;
 
 import fabler.fablededitor.FabledEditor;
-import fabler.fablededitor.components.divider.HorizontalDividerComponentItem;
-import fabler.fablededitor.components.image.ImageComponentItem;
-import fabler.fablededitor.components.text.TextComponentItem;
+import fabler.fablededitor.formatbar.components.divider.HorizontalDividerComponentItem;
+import fabler.fablededitor.formatbar.components.image.ImageComponentItem;
+import fabler.fablededitor.formatbar.components.text.TextComponentItem;
 import fabler.fablededitor.datatype.DraftDataItemModel;
 import fabler.fablededitor.models.ComponentTag;
 import fabler.fablededitor.models.DraftModel;
 import fabler.fablededitor.models.TextComponentModel;
 
 import static fabler.fablededitor.styles.TextComponentStyle.NORMAL;
-import static fabler.fablededitor.components.text.TextComponentItem.MODE_NUMBERING;
-import static fabler.fablededitor.components.text.TextComponentItem.MODE_PLAIN;
-import static fabler.fablededitor.components.text.TextComponentItem.MODE_BULLET;
+import static fabler.fablededitor.formatbar.components.text.TextComponentItem.MODE_NUMBERING;
+import static fabler.fablededitor.formatbar.components.text.TextComponentItem.MODE_PLAIN;
+import static fabler.fablededitor.formatbar.components.text.TextComponentItem.MODE_BULLET;
 
 public class DraftManager {
     public DraftManager() {
@@ -43,7 +43,7 @@ public class DraftManager {
                 if (mode == MODE_PLAIN) {
                     //check for styles {H1-BOLD Blockquote Normal}
                     componentTag = (ComponentTag) view.getTag();
-                    textStyle = ((TextComponentModel) componentTag.getComponent()).getHeadingStyle();
+                    textStyle = ((TextComponentModel) componentTag.getComponent()).getStyle();
                     drafts.add(getPlainModel(textStyle, ((TextComponentItem) view).getContent()));
                 } else if (mode == MODE_BULLET) {
                     drafts.add(getUlModel(((TextComponentItem) view).getContent()));
@@ -65,7 +65,7 @@ public class DraftManager {
     /**
      * Models Text information.
      *
-     * @param textStyle style associated with the text (NORMAL,H1-BOLD,BLOCK_QUOTE)
+     * @param textStyle style associated with the text (NORMAL,H1-BOLD,QUOTE)
      * @param content   text content
      * @return a Generic TextType Object containing information.
      */

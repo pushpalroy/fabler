@@ -6,15 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fabler.fablededitor.FabledEditor;
-import fabler.fablededitor.components.divider.HorizontalDividerComponentItem;
-import fabler.fablededitor.components.image.ImageComponentItem;
-import fabler.fablededitor.components.text.TextComponentItem;
+import fabler.fablededitor.formatbar.components.divider.HorizontalDividerComponentItem;
+import fabler.fablededitor.formatbar.components.image.ImageComponentItem;
+import fabler.fablededitor.formatbar.components.text.TextComponentItem;
 import fabler.fablededitor.models.ComponentTag;
 import fabler.fablededitor.models.TextComponentModel;
 
-import static fabler.fablededitor.components.text.TextComponentItem.MODE_NUMBERING;
-import static fabler.fablededitor.components.text.TextComponentItem.MODE_PLAIN;
-import static fabler.fablededitor.components.text.TextComponentItem.MODE_BULLET;
+import static fabler.fablededitor.formatbar.components.text.TextComponentItem.MODE_NUMBERING;
+import static fabler.fablededitor.formatbar.components.text.TextComponentItem.MODE_PLAIN;
+import static fabler.fablededitor.formatbar.components.text.TextComponentItem.MODE_BULLET;
 
 public class MarkDownConverter {
     private StringBuilder stringBuilder;
@@ -40,7 +40,7 @@ public class MarkDownConverter {
                 if (mode == MODE_PLAIN) {
                     //check for styles {H1-BOLD Blockquote Normal}
                     componentTag = (ComponentTag) view.getTag();
-                    textStyle = ((TextComponentModel) componentTag.getComponent()).getHeadingStyle();
+                    textStyle = ((TextComponentModel) componentTag.getComponent()).getStyle();
                     stringBuilder.append(MarkDownFormat.getTextFormat(textStyle, ((TextComponentItem) view).getContent()));
                 } else if (mode == MODE_BULLET) {
                     stringBuilder.append(MarkDownFormat.getULFormat(((TextComponentItem) view).getContent()));

@@ -1,14 +1,15 @@
-package fabler.fablededitor.components.text;
+package fabler.fablededitor.formatbar.components.text;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import fabler.fablededitor.R;
 import fabler.fablededitor.models.ComponentTag;
@@ -82,7 +83,13 @@ public class TextComponentItem extends FrameLayout {
     public int getTextHeadingStyle() {
         ComponentTag componentTag = (ComponentTag) getTag();
         //check heading
-        return ((TextComponentModel) componentTag.getComponent()).getHeadingStyle();
+        return ((TextComponentModel) componentTag.getComponent()).getStyle();
+    }
+
+    public int getTextAlignment() {
+        ComponentTag componentTag = (ComponentTag) getTag();
+        //check heading
+        return ((TextComponentModel) componentTag.getComponent()).getAlignment();
     }
 
     public void setIndicator(String bullet) {

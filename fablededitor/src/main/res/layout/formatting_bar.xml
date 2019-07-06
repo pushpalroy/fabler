@@ -1,174 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="48dp"
-    android:background="@color/bg_format_bar"
-    android:padding="0dp">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <FrameLayout
-        android:id="@+id/container1"
-        android:layout_width="44dp"
-        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="#EEEEEE"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/normalTextBtn"
-            style="@style/TextFormattingItem"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:contentDescription="@string/plain_text_button"
-            android:focusable="true"
-            android:padding="10dp"
-            android:src="@drawable/ic_text" />
-
-    </FrameLayout>
-
-    <RelativeLayout
-        android:id="@+id/container2"
-        android:layout_width="44dp"
-        android:layout_height="match_parent"
-        android:layout_toEndOf="@+id/container1">
-
-        <TextView
-            android:id="@+id/headingBtn"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:background="@drawable/selector_nav_item"
-            android:clickable="true"
-            android:focusable="true"
-            android:fontFamily="serif-monospace"
-            android:gravity="center"
-            android:text="@string/b"
-            android:textColor="#2a2a2a"
-            android:textSize="26sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/headingNumberBtn"
+        <ImageButton
+            android:id="@+id/btn_format_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="5dp"
+            android:layout_margin="5dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/desc_format_bold"
+            android:padding="5dp"
+            android:src="@drawable/ic_format_bold" />
+
+        <ImageButton
+            android:id="@+id/btn_format_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/desc_format_bold"
+            android:padding="5dp"
+            android:src="@drawable/ic_format_size" />
+
+        <ImageButton
+            android:id="@+id/btn_format_quote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/desc_format_bold"
+            android:padding="5dp"
+            android:src="@drawable/ic_format_quote" />
+
+        <ImageButton
+            android:id="@+id/btn_format_divider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/desc_format_bold"
+            android:padding="5dp"
+            android:src="@drawable/ic_format_divider" />
+
+        <ImageButton
+            android:id="@+id/btn_format_insert_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/desc_format_bold"
+            android:padding="5dp"
+            android:src="@drawable/ic_format_insert_link" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:background="?selectableItemBackgroundBorderless"
-            android:fontFamily="serif-monospace"
-            android:text=""
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:background="#D6D6D6" />
 
-    </RelativeLayout>
+        <ImageButton
+            android:id="@+id/btn_format_alignment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/desc_format_bold"
+            android:padding="5dp"
+            android:src="@drawable/ic_format_align_left" />
 
-    <FrameLayout
-        android:id="@+id/container3"
-        android:layout_width="44dp"
-        android:layout_height="match_parent"
-        android:layout_toEndOf="@+id/container2">
-
-        <ImageView
-            android:id="@+id/bulletBtn"
-            style="@style/TextFormattingItem"
-            android:layout_width="match_parent"
+        <View
+            android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:clickable="true"
-            android:contentDescription="@string/bullet_button"
-            android:focusable="true"
-            android:padding="10dp"
-            android:src="@drawable/ic_numbering" />
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="#D6D6D6" />
 
-    </FrameLayout>
+        <ImageButton
+            android:id="@+id/btn_format_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/desc_format_bold"
+            android:padding="5dp"
+            android:src="@drawable/ic_format_list_bulleted" />
+    </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/container4"
-        android:layout_width="44dp"
-        android:layout_height="match_parent"
-        android:layout_toEndOf="@+id/container3">
+    <LinearLayout
+        android:id="@+id/ll_list_menu"
+        android:layout_width="140dp"
+        android:layout_height="52dp"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"
+        android:background="#EEEEEE"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/blockQuoteBtn"
-            style="@style/TextFormattingItem"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:contentDescription="@string/block_quote"
-            android:focusable="true"
-            android:padding="10dp"
-            android:src="@drawable/ic_quote" />
-    </FrameLayout>
+        <ImageButton
+            android:id="@+id/btn_format_bullets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/desc_format_bold"
+            android:padding="5dp"
+            android:src="@drawable/ic_format_list_bulleted" />
 
-    <FrameLayout
-        android:id="@+id/container5"
-        android:layout_width="44dp"
-        android:layout_height="match_parent"
-        android:layout_toEndOf="@+id/container4">
-
-        <ImageView
-            android:id="@+id/insertLinkBtn"
-            style="@style/TextFormattingItem"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:contentDescription="@string/insert_link_button"
-            android:focusable="true"
-            android:padding="10dp"
-            android:src="@drawable/ic_link" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/container6"
-        android:layout_width="44dp"
-        android:layout_height="match_parent"
-        android:layout_toEndOf="@+id/container5">
-
-        <ImageView
-            android:id="@+id/insertHrBtn"
-            style="@style/TextFormattingItem"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:contentDescription="@string/insert_line_button"
-            android:focusable="true"
-            android:padding="10dp"
-            android:src="@drawable/ic_dots" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/container7"
-        android:layout_width="44dp"
-        android:layout_height="match_parent"
-        android:layout_toEndOf="@+id/container6">
-
-        <ImageView
-            android:id="@+id/nextLineBtn"
-            style="@style/TextFormattingItem"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:contentDescription="@string/next_line_button"
-            android:focusable="true"
-            android:padding="10dp"
-            android:src="@drawable/ic_arrow_down" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/container8"
-        android:layout_width="44dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentEnd="true">
-
-        <ImageView
-            android:id="@+id/insertImageBtn"
-            style="@style/TextFormattingItem"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:contentDescription="@string/insert_image_button"
-            android:focusable="true"
-            android:padding="10dp"
-            android:src="@drawable/ic_add_image" />
-
-    </FrameLayout>
-
+        <ImageButton
+            android:id="@+id/btn_format_numbering"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/desc_format_bold"
+            android:padding="5dp"
+            android:src="@drawable/ic_format_list_numbered" />
+    </LinearLayout>
 </RelativeLayout>

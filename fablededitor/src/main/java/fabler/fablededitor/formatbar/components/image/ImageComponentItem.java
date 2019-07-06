@@ -1,8 +1,6 @@
-package fabler.fablededitor.components.image;
+package fabler.fablededitor.formatbar.components.image;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -13,6 +11,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import fabler.fablededitor.R;
 import fabler.fablededitor.api.ImageUploader;
@@ -72,19 +73,12 @@ public class ImageComponentItem extends FrameLayout implements ImageUploader.Ima
     }
 
     private void attachListeners() {
-        retryUpload.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setImageInformation(filePath, serverToken, false, "");
-            }
-        });
+        retryUpload.setOnClickListener(view ->
+                setImageInformation(filePath, serverToken, false, ""));
 
-        removeImageButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (imageComponentListener != null) {
-                    imageComponentListener.onImageRemove(getSelfIndex());
-                }
+        removeImageButton.setOnClickListener(view -> {
+            if (imageComponentListener != null) {
+                imageComponentListener.onImageRemove(getSelfIndex());
             }
         });
 

@@ -1,4 +1,4 @@
-package fabler.fablededitor.components.image;
+package fabler.fablededitor.formatbar.components.image;
 
 import android.content.Context;
 

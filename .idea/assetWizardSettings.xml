@@ -167,7 +167,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/Y:/Android/Android_Studio_Stable/plugins/android/lib/android.jar!/images/material_design_icons/editor/ic_text_fields_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/Y:/Android/Android_Studio_Stable/plugins/android/lib/android.jar!/images/material_design_icons/editor/ic_insert_link_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -177,7 +177,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_text_size" />
+                            <entry key="color" value="6e6e6e" />
+                            <entry key="outputName" value="ic_format_insert_link" />
                             <entry key="sourceFile" value="C:\Users\PUSHPAL\Downloads\baseline-format_size-24px.svg" />
                           </map>
                         </option>

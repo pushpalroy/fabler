@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:padding="5dp"
+    android:weightSum="3">
+
+    <Button
+        android:id="@+id/btn_plain_text"
+        android:theme="@style/PrimaryFlatButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="@font/muli_regular"
+        android:text="@string/popup_text_plain"
+        android:textColor="#6E6E6E"
+        android:textSize="12sp" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:background="#D6D6D6" />
+
+    <Button
+        android:id="@+id/btn_large_text"
+        android:theme="@style/PrimaryFlatButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="@font/muli_bold"
+        android:text="@string/popup_text_large"
+        android:textColor="#6E6E6E"
+        android:textSize="14sp" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:background="#D6D6D6" />
+
+    <Button
+        android:id="@+id/btn_huge_text"
+        android:theme="@style/PrimaryFlatButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="@font/muli_bold"
+        android:text="@string/popup_text_huge"
+        android:textColor="#6E6E6E"
+        android:textSize="18sp" />
+</LinearLayout>

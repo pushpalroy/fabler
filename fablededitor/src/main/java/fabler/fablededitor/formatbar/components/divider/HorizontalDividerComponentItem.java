@@ -1,4 +1,4 @@
-package fabler.fablededitor.components.divider;
+package fabler.fablededitor.formatbar.components.divider;
 
 import android.content.Context;
 import androidx.annotation.NonNull;

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:weightSum="4">
+
+    <ImageButton
+        android:id="@+id/btn_alignment_left"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/desc_format_bold"
+        android:padding="5dp"
+        android:src="@drawable/ic_format_align_left" />
+
+    <ImageButton
+        android:id="@+id/btn_alignment_center"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/desc_format_bold"
+        android:padding="5dp"
+        android:src="@drawable/ic_format_align_center" />
+
+    <ImageButton
+        android:id="@+id/btn_alignment_right"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/desc_format_bold"
+        android:padding="5dp"
+        android:src="@drawable/ic_format_align_right" />
+
+    <ImageButton
+        android:id="@+id/btn_alignment_justify"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/desc_format_bold"
+        android:padding="5dp"
+        android:src="@drawable/ic_format_align_justify" />
+
+</LinearLayout>

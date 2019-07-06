@@ -1,31 +1,26 @@
-package fabler.fablededitor.components.text;
+package fabler.fablededitor.formatbar.components.text;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Typeface;
 import android.text.Editable;
-import android.text.SpannableString;
 import android.text.TextWatcher;
-import android.text.style.StyleSpan;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.core.content.res.ResourcesCompat;
 
 import fabler.fablededitor.R;
 import fabler.fablededitor.models.ComponentTag;
 import fabler.fablededitor.models.TextComponentModel;
+import fabler.fablededitor.utilities.Alignment;
 import fabler.fablededitor.utilities.FontSize;
 
-import static fabler.fablededitor.components.text.TextComponentItem.MODE_PLAIN;
-import static fabler.fablededitor.styles.TextComponentStyle.BLOCK_QUOTE;
 import static fabler.fablededitor.styles.TextComponentStyle.BOLD;
 import static fabler.fablededitor.styles.TextComponentStyle.H1;
-import static fabler.fablededitor.styles.TextComponentStyle.H4;
 import static fabler.fablededitor.styles.TextComponentStyle.NORMAL;
+import static fabler.fablededitor.styles.TextComponentStyle.QUOTE;
 
 public class TextComponent {
     private final Context mContext;
@@ -50,29 +45,23 @@ public class TextComponent {
         final TextComponentItem customInput = new TextComponentItem(mContext, mode);
         final EditText et = customInput.getInputBox();
         et.setImeActionLabel("Enter", KeyEvent.KEYCODE_ENTER);
-        et.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-                if (keyCode == KeyEvent.KEYCODE_BACK)
-                    _textComponentCallback.onBackPressed();
-                if (keyEvent.getAction() != KeyEvent.ACTION_DOWN)
-                    return true;
-                if (keyCode == KeyEvent.KEYCODE_DEL) {
-                    if (_textComponentCallback != null) {
-                        _textComponentCallback.onRemoveTextComponent(((ComponentTag) customInput.getTag()).getComponentIndex());
-                    }
+        et.setOnKeyListener((view, keyCode, keyEvent) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK)
+                _textComponentCallback.onBackPressed();
+            if (keyEvent.getAction() != KeyEvent.ACTION_DOWN)
+                return true;
+            if (keyCode == KeyEvent.KEYCODE_DEL) {
+                if (_textComponentCallback != null) {
+                    _textComponentCallback.onRemoveTextComponent(((ComponentTag) customInput.getTag()).getComponentIndex());
                 }
-                return false;
             }
+            return false;
         });
 
-        et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean inFocus) {
-                if (inFocus) {
-                    if (_textComponentCallback != null) {
-                        _textComponentCallback.onFocusGained(customInput);
-                    }
+        et.setOnFocusChangeListener((view, inFocus) -> {
+            if (inFocus) {
+                if (_textComponentCallback != null) {
+                    _textComponentCallback.onFocusGained(customInput);
                 }
             }
         });
@@ -142,11 +131,15 @@ public class TextComponent {
      */
     public void updateComponent(View view, int startSelection, int endSelection) {
         ComponentTag componentTag = (ComponentTag) view.getTag();
-        //get heading
-        int style = ((TextComponentModel) componentTag.getComponent()).getHeadingStyle();
         TextComponentItem textComponentItem = (TextComponentItem) view;
+
+        // Get Heading Style
+        int style = ((TextComponentModel) componentTag.getComponent()).getStyle();
+        int alignment = ((TextComponentModel) componentTag.getComponent()).getAlignment();
         textComponentItem.getInputBox().setTextSize(FontSize.getFontSize(style));
-        //get mode
+        textComponentItem.getInputBox().setGravity(Alignment.getGravity(alignment));
+
+        // Get Mode
         int mode = textComponentItem.getMode();
 
 //        if (style == BOLD) {
@@ -166,7 +159,7 @@ public class TextComponent {
 //            ((TextComponentItem) view).getInputBox().setLineSpacing(2f, 1.1f);
 //        }
 
-        if (style >= H1 && style <= BOLD) {
+        if (style == BOLD) {
             ((TextComponentItem) view).getInputBox().setTypeface(ResourcesCompat.getFont(mContext, R.font.muli_bold));
             (((TextComponentItem) view).getInputBox()).setBackgroundResource(R.drawable.text_input_bg);
             ((TextComponentItem) view).getInputBox().setPadding(
@@ -176,12 +169,30 @@ public class TextComponent {
                     dpToPx(8)//bottom
             );
             ((TextComponentItem) view).getInputBox().setLineSpacing(2f, 1.1f);
-        }
-
-        if (style == NORMAL) {
+        } else if (style == QUOTE) {
+            ((TextComponentItem) view).getInputBox().setTypeface(ResourcesCompat.getFont(mContext, R.font.muli_italic));
+            (((TextComponentItem) view).getInputBox()).setBackgroundResource(R.drawable.block_quote_bg);
+            ((TextComponentItem) view).getInputBox().setPadding(
+                    dpToPx(16),//left
+                    dpToPx(2),//top
+                    dpToPx(16),//right
+                    dpToPx(2)//bottom
+            );
+            ((TextComponentItem) view).getInputBox().setLineSpacing(2f, 1.2f);
+        } else if (style >= H1 && style <= BOLD) {
+            ((TextComponentItem) view).getInputBox().setTypeface(ResourcesCompat.getFont(mContext, R.font.muli_bold));
+            (((TextComponentItem) view).getInputBox()).setBackgroundResource(R.drawable.text_input_bg);
+            ((TextComponentItem) view).getInputBox().setPadding(
+                    dpToPx(16),//left
+                    dpToPx(8),//top
+                    dpToPx(16),//right
+                    dpToPx(8)//bottom
+            );
+            ((TextComponentItem) view).getInputBox().setLineSpacing(2f, 1.1f);
+        } else if (style == NORMAL) {
             ((TextComponentItem) view).getInputBox().setTypeface(ResourcesCompat.getFont(mContext, R.font.muli_regular));
             (((TextComponentItem) view).getInputBox()).setBackgroundResource(R.drawable.text_input_bg);
-            if (mode == MODE_PLAIN) {
+            if (mode == TextComponentItem.MODE_PLAIN) {
                 ((TextComponentItem) view).getInputBox().setPadding(
                         dpToPx(16),//left
                         dpToPx(4),//top
@@ -197,18 +208,6 @@ public class TextComponent {
                 );
             }
             ((TextComponentItem) view).getInputBox().setLineSpacing(2f, 1.1f);
-        }
-
-        if (style == BLOCK_QUOTE) {
-            ((TextComponentItem) view).getInputBox().setTypeface(ResourcesCompat.getFont(mContext, R.font.muli_italic));
-            (((TextComponentItem) view).getInputBox()).setBackgroundResource(R.drawable.block_quote_bg);
-            ((TextComponentItem) view).getInputBox().setPadding(
-                    dpToPx(16),//left
-                    dpToPx(2),//top
-                    dpToPx(16),//right
-                    dpToPx(2)//bottom
-            );
-            ((TextComponentItem) view).getInputBox().setLineSpacing(2f, 1.2f);
         }
     }
 

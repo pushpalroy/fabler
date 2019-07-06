@@ -1,18 +1,19 @@
 package fabler.fablededitor;
 
 import android.content.Context;
-import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 
-import fabler.fablededitor.components.text.TextComponentItem;
+import fabler.fablededitor.formatbar.components.text.TextComponentItem;
 import fabler.fablededitor.models.BulletGroupModel;
 
-import static fabler.fablededitor.components.text.TextComponentItem.MODE_NUMBERING;
+import static fabler.fablededitor.formatbar.components.text.TextComponentItem.MODE_NUMBERING;
 
 public class FabledCore extends LinearLayout {
     ArrayList<BulletGroupModel> bulletGroupModels;

@@ -1,6 +1,6 @@
 package fabler.fablededitor.utilities;
 
-import static fabler.fablededitor.styles.TextComponentStyle.BLOCK_QUOTE;
+import static fabler.fablededitor.styles.TextComponentStyle.QUOTE;
 import static fabler.fablededitor.styles.TextComponentStyle.H1;
 import static fabler.fablededitor.styles.TextComponentStyle.H2;
 import static fabler.fablededitor.styles.TextComponentStyle.H3;
@@ -27,7 +27,7 @@ public class MarkDownFormat {
             case BOLD:
                 pref = "##### ";
                 break;
-            case BLOCK_QUOTE:
+            case QUOTE:
                 pref = "> ";
                 break;
             default:

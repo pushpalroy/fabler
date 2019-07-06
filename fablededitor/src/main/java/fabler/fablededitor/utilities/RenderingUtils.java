@@ -6,10 +6,10 @@ import fabler.fablededitor.FabledEditor;
 import fabler.fablededitor.datatype.DraftDataItemModel;
 import fabler.fablededitor.models.DraftModel;
 
-import static fabler.fablededitor.components.text.TextComponentItem.MODE_BULLET;
-import static fabler.fablededitor.components.text.TextComponentItem.MODE_NUMBERING;
-import static fabler.fablededitor.components.text.TextComponentItem.MODE_PLAIN;
-import static fabler.fablededitor.styles.TextComponentStyle.BLOCK_QUOTE;
+import static fabler.fablededitor.formatbar.components.text.TextComponentItem.MODE_BULLET;
+import static fabler.fablededitor.formatbar.components.text.TextComponentItem.MODE_NUMBERING;
+import static fabler.fablededitor.formatbar.components.text.TextComponentItem.MODE_PLAIN;
+import static fabler.fablededitor.styles.TextComponentStyle.QUOTE;
 import static fabler.fablededitor.styles.TextComponentStyle.H1;
 import static fabler.fablededitor.styles.TextComponentStyle.H2;
 import static fabler.fablededitor.styles.TextComponentStyle.H3;
@@ -70,13 +70,13 @@ public class RenderingUtils {
             case H3:
             case H4:
             case BOLD:
-            case BLOCK_QUOTE:
+            case QUOTE:
                 markDEditor.addTextComponent(getInsertIndex(), item.getContent());
-                markDEditor.setHeading(item.getStyle());
+                markDEditor.setStyle(item.getStyle());
                 break;
             default:
                 markDEditor.addTextComponent(getInsertIndex(), item.getContent());
-                markDEditor.setHeading(NORMAL);
+                markDEditor.setStyle(NORMAL);
         }
     }
 
