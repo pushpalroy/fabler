@@ -111,9 +111,9 @@ public class DraftAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                     .setPositiveButton(R.string.delete, (dialog, id) -> {
                         mMainViewModel.deleteStory(story);
                         mMainViewModel.getDeletionStatus()
-                                .observe((LifecycleOwner) mContext, integer -> {
-                                    if (integer != null &&
-                                            integer == AppConstants.RoomDeletion
+                                .observe((LifecycleOwner) mContext, status -> {
+                                    if (status != null &&
+                                            status == AppConstants.RoomDeletion
                                                     .DELETION_STATUS_DELETED.getType())
                                         mDraftClickListener.onDraftDeleted(position, story);
                                 });

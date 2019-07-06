@@ -20,5 +20,4 @@ public class AppSchedulerProvider implements SchedulerProvider {
     public Scheduler io() {
         return Schedulers.io();
     }
-
 }

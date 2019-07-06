@@ -62,9 +62,7 @@ public class StoryRepository {
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((result) -> {
-                    insertionStatus.setValue(result);
-                });
+                .subscribe(result -> insertionStatus.setValue(result));
     }
 
     @SuppressLint("CheckResult")

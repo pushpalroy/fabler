@@ -50,10 +50,10 @@
 
     </ScrollView>
 
-    <fabler.fablededitor.FormattingBar
+    <fabler.fablededitor.formatbar.FormatBar
         android:id="@+id/format_bar"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

@@ -1,20 +1,21 @@
 package com.techradge.fabler.ui.compose;
 
 import android.Manifest;
-import androidx.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.techradge.fabler.R;
 import com.techradge.fabler.data.local.viewmodel.MainViewModel;
@@ -27,13 +28,13 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fabler.fablededitor.FabledEditor;
-import fabler.fablededitor.FormattingBar;
+import fabler.fablededitor.formatbar.FormatBar;
 import fabler.fablededitor.utilities.FilePathUtils;
 
 import static fabler.fablededitor.styles.TextComponentStyle.NORMAL;
 
 public class ComposeActivity extends BaseActivity implements ComposeContract.ComposeView,
-        FormattingBar.EditorControlListener, FabledEditor.EditorCallback {
+        FormatBar.EditorControlListener, FabledEditor.EditorCallback {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -45,7 +46,7 @@ public class ComposeActivity extends BaseActivity implements ComposeContract.Com
     @BindView(R.id.editor_fabled)
     FabledEditor mEditor;
     @BindView(R.id.format_bar)
-    FormattingBar mFormatBar;
+    FormatBar mFormatBar;
 
     @Inject
     public ComposePresenter<ComposeContract.ComposeView, ComposeInteractor> mPresenter;
