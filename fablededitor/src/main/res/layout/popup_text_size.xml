@@ -10,14 +10,14 @@
 
     <Button
         android:id="@+id/btn_plain_text"
-        android:theme="@style/PrimaryFlatButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:fontFamily="@font/muli_regular"
         android:text="@string/popup_text_plain"
         android:textColor="#6E6E6E"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:theme="@style/PrimaryFlatButton" />
 
     <View
         android:layout_width="1dp"
@@ -29,14 +29,14 @@
 
     <Button
         android:id="@+id/btn_large_text"
-        android:theme="@style/PrimaryFlatButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:fontFamily="@font/muli_bold"
         android:text="@string/popup_text_large"
         android:textColor="#6E6E6E"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:theme="@style/PrimaryFlatButton" />
 
     <View
         android:layout_width="1dp"
@@ -48,12 +48,12 @@
 
     <Button
         android:id="@+id/btn_huge_text"
-        android:theme="@style/PrimaryFlatButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:fontFamily="@font/muli_bold"
         android:text="@string/popup_text_huge"
         android:textColor="#6E6E6E"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:theme="@style/PrimaryFlatButton" />
 </LinearLayout>

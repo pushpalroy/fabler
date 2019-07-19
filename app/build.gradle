@@ -57,7 +57,11 @@ android {
 
     // Robolectric support
     testOptions {
-        unitTests.includeAndroidResources = true
+        //unitTests.includeAndroidResources = true
+    }
+
+    dataBinding {
+        enabled true
     }
 
     useLibrary 'android.test.runner'

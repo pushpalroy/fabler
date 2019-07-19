@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="editorControlListener"
+            type="fabler.fablededitor.formatbar.FormatBar.EditorControlListener" />
+
+        <variable
+            name="popupWindowAlignment"
+            type="android.widget.PopupWindow" />
+
+        <variable
+            name="popupWindowTextSize"
+            type="android.widget.PopupWindow" />
+
+        <variable
+            name="formatViewModel"
+            type="fabler.fablededitor.formatbar.FormatViewModel" />
+
+        <variable
+            name="mEditor"
+            type="fabler.fablededitor.FabledEditor" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/ll_format_options"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="#EEEEEE"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/btn_format_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@{formatViewModel.isBoldEnabled() ? @color/formatGrey : @color/transparent}"
+                android:contentDescription="@string/desc_format_bold"
+                android:onClick="@{()->formatViewModel.onBoldClicked()}"
+                android:padding="5dp"
+                android:src="@drawable/ic_format_bold" />
+
+            <ImageButton
+                android:id="@+id/btn_format_text_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@{formatViewModel.isLargeEnabled()|| formatViewModel.isHugeEnabled()? @color/formatGrey : @color/transparent}"
+                android:contentDescription="@string/desc_format_bold"
+                android:onClick="@{(v)->popupWindowTextSize.showAsDropDown(v, 0, -270)}"
+                android:padding="5dp"
+                android:src="@drawable/ic_format_size" />
+
+            <ImageButton
+                android:id="@+id/btn_format_quote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@{formatViewModel.isQuoteEnabled() ? @color/formatGrey : @color/transparent}"
+                android:contentDescription="@string/desc_format_bold"
+                android:onClick="@{()->formatViewModel.onQuoteClicked()}"
+                android:padding="5dp"
+                android:src="@drawable/ic_format_quote" />
+
+            <ImageButton
+                android:id="@+id/btn_format_divider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/desc_format_bold"
+                android:onClick="@{()->mEditor.insertHorizontalDivider()}"
+                android:padding="5dp"
+                android:src="@drawable/ic_format_divider" />
+
+            <ImageButton
+                android:id="@+id/btn_format_insert_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/desc_format_bold"
+                android:onClick="@{()->editorControlListener.onInsertLinkClicked()}"
+                android:padding="5dp"
+                android:src="@drawable/ic_format_insert_link" />
+
+            <View
+                android:id="@+id/view_1"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="#D6D6D6" />
+
+            <ImageButton
+                android:id="@+id/btn_format_alignment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/desc_format_bold"
+                android:onClick="@{(v)->(popupWindowAlignment.showAsDropDown(v, -35, -630))}"
+                android:padding="5dp"
+                android:src="@drawable/ic_format_align_left" />
+
+            <View
+                android:id="@+id/view_2"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="#D6D6D6" />
+
+            <ImageButton
+                android:id="@+id/btn_format_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/transparent"
+                android:contentDescription="@string/desc_format_bold"
+                android:onClick="@{()->formatViewModel.onBulletClicked()}"
+                android:padding="5dp"
+                android:src="@drawable/ic_format_list_bullet" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_list_menu"
+            android:layout_width="140dp"
+            android:layout_height="52dp"
+            android:layout_alignParentEnd="true"
+            android:background="#EEEEEE"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal"
+            android:visibility="@{formatViewModel.isListEnabled() ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/ll_format_options"
+            app:layout_constraintEnd_toEndOf="@+id/ll_format_options"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/btn_format_bullets"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@{formatViewModel.isBulletEnabled() ? @color/formatGrey : @color/transparent}"
+                android:contentDescription="@string/desc_format_bold"
+                android:onClick="@{()->formatViewModel.onBulletClicked()}"
+                android:padding="5dp"
+                android:src="@drawable/ic_format_list_bullet" />
+
+            <ImageButton
+                android:id="@+id/btn_format_numbering"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@{formatViewModel.isNumberingEnabled() ? @color/formatGrey : @color/transparent}"
+                android:contentDescription="@string/desc_format_bold"
+                android:onClick="@{()->formatViewModel.onNumberingClicked()}"
+                android:padding="5dp"
+                android:src="@drawable/ic_format_list_numbered" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
