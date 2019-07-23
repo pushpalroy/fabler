@@ -39,8 +39,7 @@ public class FormatBar extends FrameLayout implements FabledEditor.EditorFocusRe
     private FabledEditor mEditor;
     private Button btnLargeText, btnHugeText, btnTextPlain;
     private PopupWindow popupWindowTextSize, popupWindowAlignment;
-    private int mTextAlignment;
-    private int mTextStyle;
+    private int mTextAlignment, mTextStyle;
     FormatBarBinding mBinding;
     FormatViewModel mViewModel;
     LifecycleOwner mLifecycleOwner;
@@ -246,7 +245,7 @@ public class FormatBar extends FrameLayout implements FabledEditor.EditorFocusRe
 
     @Override
     public void onFocusedViewHas(int mode, int textComponentStyle, int textAlignment) {
-        mViewModel.resetAll();
+        mViewModel.onFocusHas(mode, textComponentStyle, textAlignment);
     }
 
     private void subscribeForStyles() {

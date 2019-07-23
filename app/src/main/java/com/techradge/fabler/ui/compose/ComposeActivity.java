@@ -123,7 +123,9 @@ public class ComposeActivity extends BaseActivity implements ComposeContract.Com
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_save) {
+        if (id == R.id.action_add_image) {
+            onInsertImageClicked();
+        } else if (id == R.id.action_save) {
 //            if (!(titleEditor.getText().toString().isEmpty() &&
 //                    storyEditor.getText().toString().isEmpty())) {
 //                if (mIsEdited)

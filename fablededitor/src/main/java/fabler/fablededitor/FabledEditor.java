@@ -51,7 +51,7 @@ public class FabledEditor extends FabledCore implements
     private String startHintText;
     private int defaultHeadingType = NORMAL;
     private int defaultAlignment = LEFT_ALIGNMENT;
-    private boolean isFreshEditor;
+    private boolean isFreshEditor, isImageAdded;
     private DraftModel oldDraft;
     private EditorCallback editorCallback;
 
@@ -66,6 +66,7 @@ public class FabledEditor extends FabledCore implements
         bulletGroupModels = new ArrayList<>();
         markDownConverter = new MarkDownConverter();
         currentInputMode = MODE_PLAIN;
+        isImageAdded = false;
         __textComponent = new TextComponent(context, this);
         __imageComponent = new ImageComponent(context);
         __horizontalComponent = new HorizontalDividerComponent(context);
@@ -416,10 +417,12 @@ public class FabledEditor extends FabledCore implements
      */
     public void insertImage(String filePath) {
         // int insertIndex = checkInvalidateAndCalculateInsertIndex();
+        if (isImageAdded)
+            removeViewAt(0);
 
         // Image will always be added on the top
         int insertIndex = 0;
-        ImageComponentItem imageComponentItem = __imageComponent.getNewImageComponentItem(this);
+        ImageComponentItem imageComponentItem = __imageComponent.getImageComponentItem(this);
 
         // Prepare tag
         ImageComponentModel imageComponentModel = new ImageComponentModel();
@@ -427,10 +430,12 @@ public class FabledEditor extends FabledCore implements
         imageComponentTag.setComponent(imageComponentModel);
         imageComponentItem.setTag(imageComponentTag);
         imageComponentItem.setImageInformation(filePath, serverToken, false, "");
+
         addView(imageComponentItem, insertIndex);
         reComputeTagsAfter(insertIndex);
         refreshViewOrder();
 
+        isImageAdded = true;
         // Add another text component below image
         // insertIndex++;
         // currentInputMode = MODE_PLAIN;
@@ -479,7 +484,7 @@ public class FabledEditor extends FabledCore implements
      * @param filePath uri of image to be inserted.
      */
     public void insertImage(int insertIndex, String filePath, boolean uploaded, String caption) {
-        ImageComponentItem imageComponentItem = __imageComponent.getNewImageComponentItem(this);
+        ImageComponentItem imageComponentItem = __imageComponent.getImageComponentItem(this);
         //prepare tag
         ImageComponentModel imageComponentModel = new ImageComponentModel();
         ComponentTag imageComponentTag = ComponentMetadataHelper.getNewComponentTag(insertIndex);
@@ -543,6 +548,7 @@ public class FabledEditor extends FabledCore implements
             //insert 1 text component
             removeViewAt(0);
             //addTextComponent(0);
+            isImageAdded = false;
         } else {
             removeViewAt(removeIndex);
         }

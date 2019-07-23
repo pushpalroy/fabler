@@ -3,6 +3,18 @@ package fabler.fablededitor.formatbar;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import static fabler.fablededitor.formatbar.components.text.TextComponentItem.MODE_BULLET;
+import static fabler.fablededitor.formatbar.components.text.TextComponentItem.MODE_NUMBERING;
+import static fabler.fablededitor.formatbar.components.text.TextComponentItem.MODE_PLAIN;
+import static fabler.fablededitor.styles.TextComponentAlignment.CENTER_ALIGNMENT;
+import static fabler.fablededitor.styles.TextComponentAlignment.LEFT_ALIGNMENT;
+import static fabler.fablededitor.styles.TextComponentAlignment.RIGHT_ALIGNMENT;
+import static fabler.fablededitor.styles.TextComponentStyle.BOLD;
+import static fabler.fablededitor.styles.TextComponentStyle.H1;
+import static fabler.fablededitor.styles.TextComponentStyle.H3;
+import static fabler.fablededitor.styles.TextComponentStyle.NORMAL;
+import static fabler.fablededitor.styles.TextComponentStyle.QUOTE;
+
 public class FormatViewModel extends ViewModel {
 
     private MutableLiveData<Boolean> boldEnabled, quoteEnabled;
@@ -269,7 +281,7 @@ public class FormatViewModel extends ViewModel {
         }
     }
 
-    void resetAll() {
+    private void resetAll() {
         resetStyle();
         resetAlignment();
         resetList();
@@ -304,5 +316,44 @@ public class FormatViewModel extends ViewModel {
     private void resetListSubOptionsOnly() {
         bulletsEnabled.setValue(false);
         numberingEnabled.setValue(false);
+    }
+
+    void onFocusHas(int mode, int textComponentStyle, int textAlignment) {
+        resetAll();
+        switch (mode) {
+            case MODE_PLAIN:
+                onPlainClicked();
+                switch (textComponentStyle) {
+                    case NORMAL:
+                        break;
+                    case BOLD:
+                        onBoldClicked();
+                        break;
+                    case H1:
+                        onHugeClicked();
+                        break;
+                    case H3:
+                        onLargeClicked();
+                        break;
+                    case QUOTE:
+                        onQuoteClicked();
+                }
+                switch (textAlignment) {
+                    case LEFT_ALIGNMENT:
+                        onLeftClicked();
+                        break;
+                    case CENTER_ALIGNMENT:
+                        onCenterClicked();
+                        break;
+                    case RIGHT_ALIGNMENT:
+                        onRightClicked();
+                }
+                break;
+            case MODE_BULLET:
+                onBulletClicked();
+                break;
+            case MODE_NUMBERING:
+                onNumberingClicked();
+        }
     }
 }

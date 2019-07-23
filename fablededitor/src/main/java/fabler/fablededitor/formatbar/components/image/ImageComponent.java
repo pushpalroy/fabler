@@ -9,7 +9,7 @@ public class ImageComponent {
         this.context = context;
     }
 
-    public ImageComponentItem getNewImageComponentItem(ImageComponentItem.ImageComponentListener imageRemoveListener) {
+    public ImageComponentItem getImageComponentItem(ImageComponentItem.ImageComponentListener imageRemoveListener) {
         ImageComponentItem imageComponentItem = new ImageComponentItem(context);
         imageComponentItem.setImageComponentListener(imageRemoveListener);
         return imageComponentItem;

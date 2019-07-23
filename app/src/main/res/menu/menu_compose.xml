@@ -3,7 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_add_image"
+        android:icon="@drawable/ic_add_image"
+        android:orderInCategory="50"
+        android:title="@string/add_image"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/action_save"
+        android:icon="@drawable/ic_save"
         android:orderInCategory="50"
         android:title="@string/save"
         app:showAsAction="ifRoom" />
